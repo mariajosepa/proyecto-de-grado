@@ -1,0 +1,23 @@
+{
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": ["-pdf","-lualatex","-interaction=nonstopmode","-synctex=1","%DOC%"]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    { "name": "latexmk (lualatex)", "tools": ["latexmk"] }
+  ],
+
+  "latex-workshop.view.pdf.viewer": "tab",
+
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux","*.bbl","*.bcf","*.blg","*.fdb_latexmk","*.fls",
+    "*.lof","*.log","*.lot","*.out","*.run.xml","*.synctex.gz","*.toc"
+  ],
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+
+  // Optional: build on save (or use "onFileChange" if you prefer)
+  "latex-workshop.latex.autoBuild.run": "onSave"
+}

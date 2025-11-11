@@ -1,0 +1,48 @@
+% !TeX program = lualatex
+\documentclass[12pt,oneside]{book}
+
+% =======================
+% Preambulo y metadatos
+% =======================
+\input{preamble}
+\input{metadata}
+
+\begin{document}
+
+% --------- Portada y preliminares ---------
+\frontmatter
+\input{frontmatter/portada}
+\cleardoublepage
+\input{frontmatter/resumen}
+\cleardoublepage
+\input{frontmatter/abstract}
+\cleardoublepage
+\input{frontmatter/agradecimientos}
+\cleardoublepage
+\tableofcontents
+\listoffigures
+\listoftables
+
+% --------- Cuerpo ---------
+\mainmatter
+\include{chapters/01-introduccion}
+\include{chapters/02-problema}
+\include{chapters/03-justificacion}
+\include{chapters/04-objetivos}
+\include{chapters/05-marco-referencia}
+\include{chapters/06-metodologia}
+\include{chapters/07-implementacion}
+\include{chapters/08-resultados}
+\include{chapters/09-conclusiones}
+\include{chapters/10-recomendaciones}
+
+% --------- Bibliografía ---------
+\cleardoublepage
+\printbibliography
+
+% --------- Anexos ---------
+\appendix
+\include{anexos/A-datos}
+\include{anexos/B-codigo}
+
+\end{document}
