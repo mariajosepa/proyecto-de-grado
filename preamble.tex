@@ -1,10 +1,12 @@
 % Paquetes generales
 \usepackage{graphicx}
+% Mejora el ajuste de texto y las micro-justificaciones (reduce Overfull/Underfull hbox)
+\usepackage[protrusion=true,expansion=true]{microtype}
 
-% Bibliografía (BibLaTeX + biber)
+% Bibliografía (BibLaTeX + biber) — usar estilo numérico ([1])
 \usepackage[
   backend=biber,
-  style=apa,
-  sorting=nyt
+  style=numeric,
+  sorting=none
 ]{biblatex}
 \addbibresource{referencias.bib}
