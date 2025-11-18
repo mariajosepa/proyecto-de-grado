@@ -1,19 +1,143 @@
 \chapter{Desarrollo de la Solución}
 
-\section{Modelado del problema como problema de optimización}
-    \subsection{Variables}
-    \subsection{Restricciones}
-    \subsection{Función objetivo}
+\section{Modelado del Problema como Problema de Optimización}
 
-\section{Diseño del algoritmo genético}
-    \subsection{Representación}
-    \subsection{Selección}
-    \subsection{Cruce}
-    \subsection{Mutación}
-    \subsection{Parámetros}
+El problema se formula como un problema de asignación y secuenciación de tareas sujeto a múltiples restricciones operativas. El objetivo general consiste en maximizar el número de tareas programadas dentro de un horizonte diario de 8 horas por operario, garantizando la factibilidad respecto a precedencias, disponibilidad de repuestos y cualificación del personal.
 
-\section{Implementación del método SPT}
+\subsection{Variables}
 
-\section{Integración con el entorno simulado}
+\textbf{Variables de decisión:}
 
-\section{Arquitectura general del sistema desarrollado}
+\begin{itemize}
+    \item $y_i$: operario asignado a la tarea $i$, donde $y_i \in E(\mathrm{tipo}(i))$.
+    \item $\pi_i \in [0,1]$: prioridad asignada a la tarea $i$ para determinar su orden de intento de programación.
+\end{itemize}
+
+\textbf{Variables auxiliares utilizadas en la simulación:}
+
+\begin{itemize}
+    \item $tpo[o]$: tiempo total utilizado por el operario $o$.
+    \item $\mathrm{comp}[ot]$: conjunto de tareas completadas dentro de la orden de trabajo $ot$.
+    \item $\mathrm{occ}[ot]$: intervalos ocupados en la orden de trabajo $ot$.
+\end{itemize}
+
+\subsection{Restricciones}
+
+\begin{itemize}
+    \item \textbf{Aptitud del operario:}  
+    $y_i \in E(\mathrm{tipo}(i))$.
+    \item \textbf{Disponibilidad de repuesto:}  
+    Solo puede programarse una tarea si el repuesto asociado a su orden de trabajo está disponible.
+    \item \textbf{Precedencias internas de la misma OT:}  
+    \[
+        \forall t' \in (\mathcal{P}(\mathrm{tipo}(i)) \cap \text{OT}(i)): \; t' \in \mathrm{comp}[\mathrm{ot}(i)]
+    \]
+    \item \textbf{Horizon­te máximo diario:}  
+    $f_i \leq H$.
+    \item \textbf{No solapamiento dentro de la misma OT:}  
+    \[
+        \neg (s_i < f' \land f_i > s'), \quad \forall [s', f') \in \mathrm{occ}[\mathrm{ot}(i)]
+    \]
+\end{itemize}
+
+\subsection{Función Objetivo}
+
+La función objetivo maximiza el número de tareas programadas y penaliza violaciones a las restricciones:
+
+\[
+\operatorname{fitness} =
+100 N_{\text{exec}}
+- 10 P_{\text{prec}}
+- 10 P_{\text{rep}}
+- 15 P_{\text{apt}}
+- 12 P_{\text{ot}}
+- 0.1 E_{\text{hor}}
+- 0.5 \sigma
+- 0.1 C_{\max}
+\]
+
+donde los términos representan:  
+$N_{\text{exec}}$ tareas ejecutadas,  
+$P_{\text{prec}}$ violaciones de precedencia,  
+$P_{\text{rep}}$ faltas de repuestos,  
+$P_{\text{apt}}$ asignaciones a operarios no aptos,  
+$P_{\text{ot}}$ solapamientos en la misma orden,  
+$E_{\text{hor}}$ excede del horizonte,  
+$\sigma$ desviación estándar (balance de carga),  
+$C_{\max}$ makespan.
+
+% --------------------------------------------------------
+
+\section{Diseño del Algoritmo Genético}
+
+El algoritmo genético se diseñó para explorar combinaciones de asignación y secuenciación que respeten la estructura operativa del taller. Cada individuo representa un cronograma potencial que es evaluado mediante una simulación determinista.
+
+\subsection{Representación}
+
+Cada individuo se define como un vector de $2n$ dimensiones:
+
+\[
+[\, y_1, \dots, y_n \,] \;\Vert\; [\, \pi_1, \dots, \pi_n \,]
+\]
+
+\begin{itemize}
+    \item Primeros $n$ genes: operario asignado, restringido al conjunto $E(\mathrm{tipo}(i))$.
+    \item Últimos $n$ genes: prioridades en $[0,1]$.
+\end{itemize}
+
+\subsection{Selección}
+
+Se empleó selección por \textbf{ranking}, adecuada para entornos donde la distribución de aptitud puede ser muy desigual debido a penalizaciones fuertes.
+
+\subsection{Cruce}
+
+Se utilizó cruce de tipo \textbf{single\_point}, apropiado debido a que el cromosoma posee dos mitades homogéneas: asignación y prioridad.
+
+\subsection{Mutación}
+
+Mutación aleatoria sobre el \textbf{15\%} de los genes:
+
+\begin{itemize}
+    \item Para asignaciones: se elige aleatoriamente un nuevo operario dentro de $E(\mathrm{tipo}(i))$.
+    \item Para prioridades: se asigna un valor continuo uniforme en $[0,1]$.
+\end{itemize}
+
+\subsection{Parámetros}
+
+\begin{itemize}
+    \item Generaciones: 250
+    \item Población: 100 individuos
+    \item Padres por generación: 10
+    \item Padres preservados: 5
+    \item Semilla: 42 (reproducibilidad)
+\end{itemize}
+
+\subsection*{Evaluación del Individuo}
+
+La simulación determina:
+
+\begin{itemize}
+    \item tareas ejecutadas,
+    \item tareas rechazadas por precedencias, repuestos, aptitud o solapamiento,
+    \item balance de carga entre operarios,
+    \item makespan del sistema.
+\end{itemize}
+
+% --------------------------------------------------------
+
+\section{Implementación del Método SPT}
+
+Texto pendiente.
+
+% --------------------------------------------------------
+
+\section{Integración con el Entorno Simulado}
+
+Texto pendiente.
+
+% --------------------------------------------------------
+
+\section{Arquitectura General del Sistema Desarrollado}
+
+Texto pendiente.
+
