@@ -146,13 +146,13 @@ Chapter 3.
 
 [7]
 [8]
-Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--25
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
 \TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
 un con-junto de metodologías,
 
 [9]
 [10]
-Overfull \hbox (13.03722pt too wide) in paragraph at lines 62--63
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
 []\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
 
 [11]
@@ -240,7 +240,7 @@ mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
 20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (32 pages, 300538 bytes).
+Output written on main.pdf (32 pages, 300531 bytes).
 Transcript written on main.log.
 Latexmk: Getting log file 'main.log'
 Latexmk: Examining 'main.fls'
@@ -275,8 +275,8 @@ INFO - Processing section 0
 INFO - Looking for bibtex file 'referencias.bib' for section 0
 INFO - LaTeX decoding ...
 INFO - Found BibTeX data source 'referencias.bib'
-INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
 INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
 INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
 INFO - No sort tailoring available for locale 'en-US'
 INFO - Writing 'main.bbl' with encoding 'UTF-8'
@@ -452,13 +452,13 @@ Chapter 3.
 
 [7]
 [8]
-Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--25
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
 \TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
 un con-junto de metodologías,
 
 [9]
 [10]
-Overfull \hbox (13.03722pt too wide) in paragraph at lines 62--63
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
 []\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
 
 [11]
@@ -527,7 +527,7 @@ mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
 20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (34 pages, 304747 bytes).
+Output written on main.pdf (34 pages, 304744 bytes).
 Transcript written on main.log.
 Latexmk: Getting log file 'main.log'
 Latexmk: Examining 'main.fls'
@@ -692,13 +692,13 @@ Chapter 3.
 
 [7]
 [8]
-Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--25
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
 \TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
 un con-junto de metodologías,
 
 [9]
 [10]
-Overfull \hbox (13.03722pt too wide) in paragraph at lines 62--63
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
 []\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
 
 [11]
@@ -767,7 +767,7 @@ mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
 20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (34 pages, 304747 bytes).
+Output written on main.pdf (34 pages, 304744 bytes).
 Transcript written on main.log.
 Latexmk: Getting log file 'main.log'
 Latexmk: Examining 'main.fls'

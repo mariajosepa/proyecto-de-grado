@@ -21,7 +21,9 @@ A diferencia de los métodos tradicionales de asignación de tareas, que pueden 
 
 \section{Técnicas de Automatización en Ingeniería Industrial}
 
-La automatización en ingeniería industrial comprende un conjunto de metodologías, técnicas y herramientas orientadas a optimizar el uso de recursos, reducir desperdicios y mejorar el rendimiento operativo en entornos productivos. Diversos estudios han señalado que la mejora de la eficiencia en talleres y plantas manufactureras depende directamente de la capacidad para programar tareas, asignar recursos y minimizar tiempos improductivos \cite{flowshop,flexjobshop}. En los talleres industriales modernos, donde existe alta variabilidad de tareas y heterogeneidad en los tiempos de ejecución, la automatización se convierte en un elemento clave para garantizar un flujo de trabajo continuo y una gestión eficiente de las órdenes de trabajo \cite{industry4}.
+\begin{sloppypar}
+La auto\-matización en in\-geniería industrial comprende un conjunto de metodologías, técnicas y herramientas orientadas a optimizar el uso de recursos, reducir desperdicios y mejorar el rendimiento operativo en entornos productivos. Diversos estudios han señalado que la mejora de la eficiencia en talleres y plantas manu\-factureras depende directamente de la capacidad para programar tareas, asignar recursos y minimizar tiempos improductivos \cite{flowshop,flexjobshop}. En los talleres industriales modernos, donde existe alta variabilidad de tareas y hetero\-geneidad en los tiempos de ejecución, la auto\-matización se convierte en un elemento clave para garantizar un flujo de trabajo continuo y una gestión eficiente de las órdenes de trabajo \cite{industry4}.
+\end{sloppypar}
 
 Estas técnicas abarcan desde enfoques de mejora continua, como Lean Manufacturing y Six Sigma, hasta métodos formales de secuenciación basados en reglas de prioridad —tales como SPT, FCFS y EDD— que constituyen la base histórica de la programación industrial \cite{meisel2010,valletesis}. Asimismo, la literatura reciente destaca la importancia de combinar estas metodologías con algoritmos avanzados de optimización, dada la complejidad creciente de los sistemas productivos y la naturaleza NP-hard de muchos problemas de scheduling \cite{flowshop, industry4}.
 
@@ -59,7 +61,7 @@ Las reglas de prioridad constituyen uno de los métodos clásicos más utilizado
 
 Las reglas más representativas incluyen:
 \begin{description}
-    \item[SPT (Shortest Processing Time)] Prioriza las tareas más cortas, reduciendo el tiempo promedio de flujo y el tiempo total en el sistema. Es una técnica particularmente eficiente en sistemas sin restricciones complejas \cite{flowshop}. Esta regla se utiliza como base comparativa en esta investigación.
+    \item[SPT (Shortest Processing Time)] \begin{sloppypar}Prioriza las tareas más cortas, reduciendo el tiempo promedio de flujo y el tiempo total en el sistema. Es una técnica particular\-mente eficiente en sistemas sin res\-tric\-ciones complejas \cite{flowshop}. Esta regla se utiliza como base comparativa en esta investigación.\end{sloppypar}
     \item[FCFS (First Come, First Served)] Procesa tareas en el orden en que llegan. Aunque sencilla, puede generar tiempos improductivos o cargas desbalanceadas \cite{flexjobshop}.
     \item[EDD (Earliest Due Date)] Minimiza el retraso (tardiness) priorizando tareas con fechas de entrega más próximas. Es una regla ampliamente usada en la industria gráfica y manufactura ligera \cite{meisel2010}.
     \item[LPT (Longest Processing Time)] Favorece las tareas más largas y es útil en escenarios donde se busca balancear carga entre máquinas paralelas.
