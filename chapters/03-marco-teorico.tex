@@ -60,13 +60,13 @@ Por esta razón, en escenarios industriales complejos se emplean heurísticas, r
 Las reglas de prioridad constituyen uno de los métodos clásicos más utilizados para la programación de tareas en entornos industriales debido a su simplicidad, bajo coste computacional y fácil implementación. Estas reglas se basan en atributos específicos de las tareas, como tiempo de procesamiento, fecha de entrega o urgencia.
 
 Las reglas más representativas incluyen:
-\begin{description}
-    \item[SPT (Shortest Processing Time)] \begin{sloppypar}Prioriza las tareas más cortas, reduciendo el tiempo promedio de flujo y el tiempo total en el sistema. Es una técnica particular\-mente eficiente en sistemas sin res\-tric\-ciones complejas \cite{flowshop}. Esta regla se utiliza como base comparativa en esta investigación.\end{sloppypar}
-    \item[FCFS (First Come, First Served)] Procesa tareas en el orden en que llegan. Aunque sencilla, puede generar tiempos improductivos o cargas desbalanceadas \cite{flexjobshop}.
-    \item[EDD (Earliest Due Date)] Minimiza el retraso (tardiness) priorizando tareas con fechas de entrega más próximas. Es una regla ampliamente usada en la industria gráfica y manufactura ligera \cite{meisel2010}.
-    \item[LPT (Longest Processing Time)] Favorece las tareas más largas y es útil en escenarios donde se busca balancear carga entre máquinas paralelas.
-    \item[Reglas híbridas] Combinan múltiples criterios como tiempo, urgencia y vencimiento. Son más flexibles y representan la transición entre heurísticas clásicas y metaheurísticas \cite{valletesis}.
-\end{description}
+\begin{itemize}
+    \item \textbf{SPT (Shortest Processing Time)} \begin{sloppypar}Prioriza las tareas más cortas, reduciendo el tiempo promedio de flujo y el tiempo total en el sistema. Es una técnica particular\-mente eficiente en sistemas sin res\-tric\-ciones complejas \cite{flowshop}. Esta regla se utiliza como base comparativa en esta investigación.\end{sloppypar}
+    \item \textbf{FCFS (First Come, First Served)} Procesa tareas en el orden en que llegan. Aunque sencilla, puede generar tiempos improductivos o cargas desbalanceadas \cite{flexjobshop}.
+    \item \textbf{EDD (Earliest Due Date)} Minimiza el retraso (tardiness) priorizando tareas con fechas de entrega más próximas. Es una regla ampliamente usada en la industria gráfica y manufactura ligera \cite{meisel2010}.
+    \item \textbf{LPT (Longest Processing Time)} Favorece las tareas más largas y es útil en escenarios donde se busca balancear carga entre máquinas paralelas.
+    \item \textbf{Reglas híbridas} Combinan múltiples criterios como tiempo, urgencia y vencimiento. Son más flexibles y representan la transición entre heurísticas clásicas y metaheurísticas \cite{valletesis}.
+\end{itemize}
 
 Estas reglas son consideradas baseline industrial y sirven como punto de referencia para evaluar técnicas más avanzadas como algoritmos genéticos o algoritmos híbridos \cite{meisel2010,valletesis}.
 
@@ -126,4 +126,3 @@ En cuanto a la asignación de tareas en problemas de tipo Task Assignment Proble
 Por otra parte, investigaciones sobre heurísticas industriales, como las reglas de despacho SPT, EDD y FCFS, han demostrado ser métodos simples y eficientes para problemas básicos de secuenciación, pero con limitaciones marcadas en problemas con múltiples restricciones o estructuras complejas de precedencia \cite{valletesis,flowshop}. Esta brecha entre simplicidad y capacidad de adaptación es precisamente lo que motiva la comparación entre SPT y algoritmos evolutivos en el presente estudio.
 
 En conjunto, estos antecedentes evidencian que los algoritmos genéticos han sido utilizados con éxito en diversos dominios de la optimización industrial, mientras que las heurísticas tradicionales siguen siendo herramientas fundamentales como métodos comparativos o de referencia. En el caso particular de un taller industrial basado en un sistema ERP, la literatura existente es limitada. Por ello, el presente proyecto aporta un enfoque novedoso al integrar un algoritmo genético dentro de un entorno simulado que replica el flujo real de un taller automotriz, comparándolo directamente con una heurística industrialmente aceptada como SPT. Esta comparación permite evaluar el potencial de los AG para mejorar la asignación de tareas y la eficiencia operativa en un contexto aplicado.
-
