@@ -1,0 +1,780 @@
+Rc files read:
+  latexmkrc
+Latexmk: This is Latexmk, John Collins, 27 Dec. 2024. Version 4.86a.
+No existing .aux file, so I'll make a simple one, and require run of *latex.
+Latexmk: applying rule 'lualatex'...
+Rule 'lualatex':  Reasons for rerun
+Category 'other':
+  Rerun of 'lualatex' forced or previously required:
+    Reason or flag: 'Initial setup'
+
+------------
+Run number 1 of rule 'lualatex'
+------------
+------------
+Running 'lualatex  -recorder  "main.tex"'
+------------
+This is LuaHBTeX, Version 1.21.0 (TeX Live 2025/Homebrew) 
+ restricted system commands enabled.
+(./main.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/book.c
+ls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/bk12.c
+lo)) (./preamble.tex
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphicx.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/ke
+yval.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphics.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/tr
+ig.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-cf
+g/graphics.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-de
+f/luatex.def)))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/etoolbox/et
+oolbox.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype-luatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+math.sty
+For additional information on amsmath, use the `?' option.
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+text.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+gen.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+bsy.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+opn.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+ssymb.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+sfonts.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/pdftexcmd
+s/pdftexcmds.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/infwarerr
+/infwarerr.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/iftex/ift
+ex.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/ltxcmds/l
+txcmds.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvoptions/k
+voptions.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvsetkeys/k
+vsetkeys.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/ifthen
+.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/url/url.sty
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-dm.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-unicode.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-compat.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/numeric.bbx
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/standard.bbx))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/cb
+x/numeric.cbx)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3kernel/ex
+pl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3backend/l
+3backend-luatex.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-case-expl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3packages/
+xparse/xparse.sty)))) (./metadata.tex) (./main.aux)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/context/base/mkii
+/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/epstopdf-pk
+g/epstopdf-base.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/latexconfig
+/epstopdf-sys.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-LatinModernRoman.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/lb
+x/english.lbx) (./main.bbl) (./frontmatter/portada.tex
+[1{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/pdftex/up
+dmap/pdftex.map}<./images/logopuj.png>]) (./frontmatter/resumen.tex)
+(./frontmatter/abstract.tex) (./frontmatter/agradecimientos.tex)
+No file main.toc.
+
+[1]
+No file main.lof.
+
+[2]
+No file main.lot.
+
+[3] (./chapters/01-introduccion.tex
+Chapter 1.
+
+[1])
+[2] (./chapters/02-problema.tex
+Chapter 2.
+
+[3]
+[4]
+[5])
+[6] (./chapters/03-marco-teorico.tex
+Chapter 3.
+
+[7]
+[8]
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
+\TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
+un con-junto de metodologías,
+
+[9]
+[10]
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
+[]\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
+
+[11]
+[12]
+[13])
+[14] (./chapters/04-diseno-datos-simulacion.tex
+Chapter 4.
+)
+[15]
+Overfull \vbox (251.45233pt too high) has occurred while \output is active
+
+Overfull \hbox (26.5735pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 CHAP-TER 4.  ES-TRUC-TURA DE DATOS Y MOD-ELACIÓN DEL SIS-TEMA 
+\TU/lmr/m/n/12 16
+[16] (./chapters/05-solucion-desarrollo.tex
+Chapter 5.
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-cmr.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sa.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msa.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sb.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msb.cfg)
+[17]
+[18]
+[19])
+[20] (./chapters/06-implementacion.tex
+Chapter 6.
+)
+[21] (./chapters/07-resultados.tex
+Chapter 7.
+)
+[22]
+Overfull \vbox (18.52475pt too high) has occurred while \output is active
+[23] (./chapters/08-conclusiones.tex
+Chapter 8.
+)
+[24] (./chapters/09-trabajo-futuro.tex
+Chapter 9.
+)
+[25] (./chapters/10-glosario.tex
+Chapter 10.
+)
+[26]
+[27]
+[28] (./anexos/A-datos.tex) (./anexos/B-codigo.tex) (./main.aux
+(./chapters/01-introduccion.aux) (./chapters/02-problema.aux)
+(./chapters/03-marco-teorico.aux) (./chapters/04-diseno-datos-simulacion.aux)
+(./chapters/05-solucion-desarrollo.aux) (./chapters/06-implementacion.aux)
+(./chapters/07-resultados.aux) (./chapters/08-conclusiones.aux)
+(./chapters/09-trabajo-futuro.aux) (./chapters/10-glosario.aux)
+(./anexos/A-datos.aux) (./anexos/B-codigo.aux))
+
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                main
+(biblatex)                and rerun LaTeX afterwards.
+
+)
+(see the transcript file for additional information)
+ 666 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 1 local_par, 4 glue, 4 kern, 1 penalty, 3 glyph, 1
+8 attribute, 66 glue_spec, 18 attribute_list, 7 write nodes
+   avail lists: 1:2,2:527,3:197,4:59,5:229,6:59,7:5563,8:82,9:190,10:19,11:576
+</opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/public
+/lm/lmmono12-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-d
+ist/fonts/opentype/public/lm/lmromancaps10-regular.otf></opt/homebrew/Cellar/te
+xlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-italic.otf
+></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/publi
+c/lm/lmroman8-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-
+dist/fonts/opentype/public/lm/lmromanslant12-regular.otf></opt/homebrew/Cellar/
+texlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.
+otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/pu
+blic/lm/lmroman12-bold.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/2
+0250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></opt/homeb
+rew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
+20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (32 pages, 300531 bytes).
+Transcript written on main.log.
+Latexmk: Getting log file 'main.log'
+Latexmk: Examining 'main.fls'
+Latexmk: Examining 'main.log'
+Latexmk: Found input bbl file 'main.bbl'
+Latexmk: Missing input file 'main.toc' (or dependence on it) from following:
+  No file main.toc.
+Latexmk: Missing input file 'main.lof' (or dependence on it) from following:
+  No file main.lof.
+Latexmk: Missing input file 'main.lot' (or dependence on it) from following:
+  No file main.lot.
+Latexmk: Log file says output to 'main.pdf'
+Latexmk: Bibliography file(s) from .bcf file:
+  referencias.bib
+Latexmk: applying rule 'biber main'...
+Rule 'biber main':  Reasons for rerun
+Category 'other':
+  Rerun of 'biber main' forced or previously required:
+    Reason or flag: 'Initial set up of rule'
+
+------------
+Run number 1 of rule 'biber main'
+------------
+------------
+Running 'biber  "main.bcf"'
+------------
+INFO - This is Biber 2.21
+INFO - Logfile is 'main.blg'
+INFO - Reading 'main.bcf'
+INFO - Found 15 citekeys in bib section 0
+INFO - Processing section 0
+INFO - Looking for bibtex file 'referencias.bib' for section 0
+INFO - LaTeX decoding ...
+INFO - Found BibTeX data source 'referencias.bib'
+INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+INFO - No sort tailoring available for locale 'en-US'
+INFO - Writing 'main.bbl' with encoding 'UTF-8'
+INFO - Output to main.bbl
+Latexmk: Found biber source file(s) [main.bcf, referencias.bib]
+Latexmk: applying rule 'lualatex'...
+Rule 'lualatex':  Reasons for rerun
+Changed files or newly in use/created:
+  anexos/A-datos.aux
+  anexos/B-codigo.aux
+  chapters/01-introduccion.aux
+  chapters/02-problema.aux
+  chapters/03-marco-teorico.aux
+  chapters/04-diseno-datos-simulacion.aux
+  chapters/05-solucion-desarrollo.aux
+  chapters/06-implementacion.aux
+  chapters/07-resultados.aux
+  chapters/08-conclusiones.aux
+  chapters/09-trabajo-futuro.aux
+  chapters/10-glosario.aux
+  main.aux
+  main.lof
+  main.lot
+  main.toc
+
+------------
+Run number 2 of rule 'lualatex'
+------------
+------------
+Running 'lualatex  -recorder  "main.tex"'
+------------
+This is LuaHBTeX, Version 1.21.0 (TeX Live 2025/Homebrew) 
+ restricted system commands enabled.
+(./main.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/book.c
+ls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/bk12.c
+lo)) (./preamble.tex
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphicx.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/ke
+yval.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphics.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/tr
+ig.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-cf
+g/graphics.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-de
+f/luatex.def)))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/etoolbox/et
+oolbox.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype-luatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+math.sty
+For additional information on amsmath, use the `?' option.
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+text.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+gen.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+bsy.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+opn.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+ssymb.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+sfonts.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/pdftexcmd
+s/pdftexcmds.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/infwarerr
+/infwarerr.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/iftex/ift
+ex.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/ltxcmds/l
+txcmds.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvoptions/k
+voptions.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvsetkeys/k
+vsetkeys.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/ifthen
+.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/url/url.sty
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-dm.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-unicode.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-compat.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/numeric.bbx
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/standard.bbx))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/cb
+x/numeric.cbx)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3kernel/ex
+pl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3backend/l
+3backend-luatex.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-case-expl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3packages/
+xparse/xparse.sty)))) (./metadata.tex) (./main.aux
+(./chapters/01-introduccion.aux) (./chapters/02-problema.aux)
+(./chapters/03-marco-teorico.aux) (./chapters/04-diseno-datos-simulacion.aux)
+(./chapters/05-solucion-desarrollo.aux) (./chapters/06-implementacion.aux)
+(./chapters/07-resultados.aux) (./chapters/08-conclusiones.aux)
+(./chapters/09-trabajo-futuro.aux) (./chapters/10-glosario.aux)
+(./anexos/A-datos.aux) (./anexos/B-codigo.aux))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/context/base/mkii
+/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/epstopdf-pk
+g/epstopdf-base.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/latexconfig
+/epstopdf-sys.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-LatinModernRoman.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/lb
+x/english.lbx) (./main.bbl) (./frontmatter/portada.tex
+[1{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/pdftex/up
+dmap/pdftex.map}<./images/logopuj.png>]) (./frontmatter/resumen.tex)
+(./frontmatter/abstract.tex) (./frontmatter/agradecimientos.tex) (./main.toc
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-cmr.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sa.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msa.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sb.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msb.cfg)
+[1]
+[2])
+[3] (./main.lof)
+[4] (./main.lot)
+[5] (./chapters/01-introduccion.tex
+Chapter 1.
+
+[1])
+[2] (./chapters/02-problema.tex
+Chapter 2.
+
+[3]
+[4]
+[5])
+[6] (./chapters/03-marco-teorico.tex
+Chapter 3.
+
+[7]
+[8]
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
+\TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
+un con-junto de metodologías,
+
+[9]
+[10]
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
+[]\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
+
+[11]
+[12]
+[13])
+[14] (./chapters/04-diseno-datos-simulacion.tex
+Chapter 4.
+)
+[15]
+Overfull \vbox (251.45233pt too high) has occurred while \output is active
+
+Overfull \hbox (26.5735pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 CHAP-TER 4.  ES-TRUC-TURA DE DATOS Y MOD-ELACIÓN DEL SIS-TEMA 
+\TU/lmr/m/n/12 16
+[16] (./chapters/05-solucion-desarrollo.tex
+Chapter 5.
+
+[17]
+[18]
+[19])
+[20] (./chapters/06-implementacion.tex
+Chapter 6.
+)
+[21] (./chapters/07-resultados.tex
+Chapter 7.
+)
+[22]
+Overfull \vbox (18.52475pt too high) has occurred while \output is active
+[23] (./chapters/08-conclusiones.tex
+Chapter 8.
+)
+[24] (./chapters/09-trabajo-futuro.tex
+Chapter 9.
+)
+[25] (./chapters/10-glosario.tex
+Chapter 10.
+)
+[26]
+[27]
+[28] (./anexos/A-datos.tex) (./anexos/B-codigo.tex) (./main.aux
+(./chapters/01-introduccion.aux) (./chapters/02-problema.aux)
+(./chapters/03-marco-teorico.aux) (./chapters/04-diseno-datos-simulacion.aux)
+(./chapters/05-solucion-desarrollo.aux) (./chapters/06-implementacion.aux)
+(./chapters/07-resultados.aux) (./chapters/08-conclusiones.aux)
+(./chapters/09-trabajo-futuro.aux) (./chapters/10-glosario.aux)
+(./anexos/A-datos.aux) (./anexos/B-codigo.aux)))
+(see the transcript file for additional information)
+ 666 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 1 local_par, 4 glue, 4 kern, 1 penalty, 3 glyph, 1
+8 attribute, 66 glue_spec, 18 attribute_list, 7 write nodes
+   avail lists: 1:2,2:752,3:298,4:59,5:420,6:91,7:5563,8:82,9:520,10:19,11:576
+</opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/public
+/lm/lmmono12-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-d
+ist/fonts/opentype/public/lm/lmromancaps10-regular.otf></opt/homebrew/Cellar/te
+xlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-italic.otf
+></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/publi
+c/lm/lmroman8-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-
+dist/fonts/opentype/public/lm/lmromanslant12-regular.otf></opt/homebrew/Cellar/
+texlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.
+otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/pu
+blic/lm/lmroman12-bold.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/2
+0250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></opt/homeb
+rew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
+20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (34 pages, 304744 bytes).
+Transcript written on main.log.
+Latexmk: Getting log file 'main.log'
+Latexmk: Examining 'main.fls'
+Latexmk: Examining 'main.log'
+Latexmk: Found input bbl file 'main.bbl'
+Latexmk: Log file says output to 'main.pdf'
+Latexmk: Bibliography file(s) from .bcf file:
+  referencias.bib
+Latexmk: applying rule 'lualatex'...
+Rule 'lualatex':  Reasons for rerun
+Changed files or newly in use/created:
+  main.aux
+  main.run.xml
+
+------------
+Run number 3 of rule 'lualatex'
+------------
+------------
+Running 'lualatex  -recorder  "main.tex"'
+------------
+This is LuaHBTeX, Version 1.21.0 (TeX Live 2025/Homebrew) 
+ restricted system commands enabled.
+(./main.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/book.c
+ls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/bk12.c
+lo)) (./preamble.tex
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphicx.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/ke
+yval.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/gr
+aphics.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/tr
+ig.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-cf
+g/graphics.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics-de
+f/luatex.def)))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/etoolbox/et
+oolbox.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype-luatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+icrotype.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+math.sty
+For additional information on amsmath, use the `?' option.
+
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+text.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+gen.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+bsy.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsmath/ams
+opn.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+ssymb.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/am
+sfonts.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/pdftexcmd
+s/pdftexcmds.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/infwarerr
+/infwarerr.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/iftex/ift
+ex.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/generic/ltxcmds/l
+txcmds.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvoptions/k
+voptions.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/kvsetkeys/k
+vsetkeys.sty))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/logreq/logr
+eq.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/ifthen
+.sty)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/url/url.sty
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-dm.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-unicode.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-compat.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.def)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/numeric.bbx
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bb
+x/standard.bbx))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/cb
+x/numeric.cbx)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bi
+blatex.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3kernel/ex
+pl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3backend/l
+3backend-luatex.def))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/bl
+x-case-expl3.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3packages/
+xparse/xparse.sty)))) (./metadata.tex) (./main.aux
+(./chapters/01-introduccion.aux) (./chapters/02-problema.aux)
+(./chapters/03-marco-teorico.aux) (./chapters/04-diseno-datos-simulacion.aux)
+(./chapters/05-solucion-desarrollo.aux) (./chapters/06-implementacion.aux)
+(./chapters/07-resultados.aux) (./chapters/08-conclusiones.aux)
+(./chapters/09-trabajo-futuro.aux) (./chapters/10-glosario.aux)
+(./anexos/A-datos.aux) (./anexos/B-codigo.aux))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/context/base/mkii
+/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/epstopdf-pk
+g/epstopdf-base.sty
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/latexconfig
+/epstopdf-sys.cfg))
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-LatinModernRoman.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/biblatex/lb
+x/english.lbx) (./main.bbl) (./frontmatter/portada.tex
+[1{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/pdftex/up
+dmap/pdftex.map}<./images/logopuj.png>]) (./frontmatter/resumen.tex)
+(./frontmatter/abstract.tex) (./frontmatter/agradecimientos.tex) (./main.toc
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-cmr.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sa.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msa.cfg)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/amsfonts/um
+sb.fd)
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/microtype/m
+t-msb.cfg)
+[1]
+[2])
+[3] (./main.lof)
+[4] (./main.lot)
+[5] (./chapters/01-introduccion.tex
+Chapter 1.
+
+[1])
+[2] (./chapters/02-problema.tex
+Chapter 2.
+
+[3]
+[4]
+[5])
+[6] (./chapters/03-marco-teorico.tex
+Chapter 3.
+
+[7]
+[8]
+Overfull \hbox (20.83762pt too wide) in paragraph at lines 24--26
+\TU/lmr/m/n/12 La au-tom-a-ti-zación en in-ge-niería in-dus-trial com-prende 
+un con-junto de metodologías,
+
+[9]
+[10]
+Overfull \hbox (13.03722pt too wide) in paragraph at lines 63--65
+[]\TU/lmr/m/n/12 Pri-or-iza las tar-eas más cor-tas, re-duciendo
+
+[11]
+[12]
+[13])
+[14] (./chapters/04-diseno-datos-simulacion.tex
+Chapter 4.
+)
+[15]
+Overfull \vbox (251.45233pt too high) has occurred while \output is active
+
+Overfull \hbox (26.5735pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 CHAP-TER 4.  ES-TRUC-TURA DE DATOS Y MOD-ELACIÓN DEL SIS-TEMA 
+\TU/lmr/m/n/12 16
+[16] (./chapters/05-solucion-desarrollo.tex
+Chapter 5.
+
+[17]
+[18]
+[19])
+[20] (./chapters/06-implementacion.tex
+Chapter 6.
+)
+[21] (./chapters/07-resultados.tex
+Chapter 7.
+)
+[22]
+Overfull \vbox (18.52475pt too high) has occurred while \output is active
+[23] (./chapters/08-conclusiones.tex
+Chapter 8.
+)
+[24] (./chapters/09-trabajo-futuro.tex
+Chapter 9.
+)
+[25] (./chapters/10-glosario.tex
+Chapter 10.
+)
+[26]
+[27]
+[28] (./anexos/A-datos.tex) (./anexos/B-codigo.tex) (./main.aux
+(./chapters/01-introduccion.aux) (./chapters/02-problema.aux)
+(./chapters/03-marco-teorico.aux) (./chapters/04-diseno-datos-simulacion.aux)
+(./chapters/05-solucion-desarrollo.aux) (./chapters/06-implementacion.aux)
+(./chapters/07-resultados.aux) (./chapters/08-conclusiones.aux)
+(./chapters/09-trabajo-futuro.aux) (./chapters/10-glosario.aux)
+(./anexos/A-datos.aux) (./anexos/B-codigo.aux)))
+(see the transcript file for additional information)
+ 666 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 1 local_par, 4 glue, 4 kern, 1 penalty, 3 glyph, 1
+8 attribute, 66 glue_spec, 18 attribute_list, 7 write nodes
+   avail lists: 1:2,2:752,3:298,4:59,5:420,6:91,7:5563,8:82,9:520,10:19,11:576
+</opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/public
+/lm/lmmono12-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-d
+ist/fonts/opentype/public/lm/lmromancaps10-regular.otf></opt/homebrew/Cellar/te
+xlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-italic.otf
+></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/publi
+c/lm/lmroman8-regular.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-
+dist/fonts/opentype/public/lm/lmromanslant12-regular.otf></opt/homebrew/Cellar/
+texlive/20250308_1/share/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.
+otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/opentype/pu
+blic/lm/lmroman12-bold.otf></opt/homebrew/Cellar/texlive/20250308_1/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/2
+0250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></opt/homeb
+rew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/
+20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (34 pages, 304744 bytes).
+Transcript written on main.log.
+Latexmk: Getting log file 'main.log'
+Latexmk: Examining 'main.fls'
+Latexmk: Examining 'main.log'
+Latexmk: Found input bbl file 'main.bbl'
+Latexmk: Log file says output to 'main.pdf'
+Latexmk: Bibliography file(s) from .bcf file:
+  referencias.bib
+Latexmk: All targets (main.pdf) are up-to-date
+

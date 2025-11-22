@@ -21,9 +21,95 @@ A diferencia de los métodos tradicionales de asignación de tareas, que pueden 
 
 \section{Técnicas de Automatización en Ingeniería Industrial}
 
-La automatización en la ingeniería industrial ha evolucionado con el desarrollo de metodologías como Lean Manufacturing, Six Sigma y la investigación de operaciones, las cuales buscan mejorar la eficiencia mediante la eliminación de desperdicios, la reducción de variabilidad en los procesos y la optimización de los flujos de trabajo \cite{ref4}. Estas estrategias han sido aplicadas con éxito en la manufactura y la gestión industrial, mejorando la toma de decisiones y la productividad.
+\begin{sloppypar}
+La auto\-matización en in\-geniería industrial comprende un conjunto de metodologías, técnicas y herramientas orientadas a optimizar el uso de recursos, reducir desperdicios y mejorar el rendimiento operativo en entornos productivos. Diversos estudios han señalado que la mejora de la eficiencia en talleres y plantas manu\-factureras depende directamente de la capacidad para programar tareas, asignar recursos y minimizar tiempos improductivos \cite{flowshop,flexjobshop}. En los talleres industriales modernos, donde existe alta variabilidad de tareas y hetero\-geneidad en los tiempos de ejecución, la auto\-matización se convierte en un elemento clave para garantizar un flujo de trabajo continuo y una gestión eficiente de las órdenes de trabajo \cite{industry4}.
+\end{sloppypar}
 
-En este proyecto, el enfoque se basa en la automatización de la asignación de tareas dentro de un ERP mediante inteligencia artificial, permitiendo gestionar dinámicamente la carga de trabajo de los operarios según la demanda y la disponibilidad de recursos. A diferencia de las metodologías tradicionales, que dependen de reglas fijas y modelos matemáticos estrictos, este enfoque permite una mayor flexibilidad y adaptación a entornos productivos cambiantes, mejorando la eficiencia operativa en los talleres industriales.
+Estas técnicas abarcan desde enfoques de mejora continua, como Lean Manufacturing y Six Sigma, hasta métodos formales de secuenciación basados en reglas de prioridad —tales como SPT, FCFS y EDD— que constituyen la base histórica de la programación industrial \cite{meisel2010,valletesis}. Asimismo, la literatura reciente destaca la importancia de combinar estas metodologías con algoritmos avanzados de optimización, dada la complejidad creciente de los sistemas productivos y la naturaleza NP-hard de muchos problemas de scheduling \cite{flowshop, industry4}.
+
+A continuación se presentan las principales técnicas de automatización utilizadas en la industria para la asignación y programación de tareas, todas ellas relevantes como puntos de comparación frente a métodos evolutivos como los algoritmos genéticos.
+
+\subsection{Lean Manufacturing y mejora continua}
+
+Lean Manufacturing es una filosofía de gestión orientada a la eliminación sistemática de desperdicios (muda) y a la optimización del flujo de trabajo mediante la mejora continua. Sus principios, derivados del Sistema de Producción Toyota, se aplican en talleres industriales para reducir tiempos improductivos, minimizar inventarios y mejorar la estabilidad del proceso productivo. La literatura en secuenciación de operaciones y en sistemas de manufactura destaca que los talleres que adoptan prácticas Lean presentan niveles más estables de procesamiento y menor variabilidad temporal en sus operaciones \cite{flexjobshop,flowshop}.
+
+En entornos de tecnomecánica y mantenimiento industrial, Lean permite estructurar procesos que tradicionalmente se ejecutan de forma manual o desorganizada, facilitando la estandarización y priorización de tareas. Herramientas como 5S, Value Stream Mapping y Kanban han demostrado ser efectivas para mejorar la trazabilidad de órdenes de trabajo, reducir cuellos de botella y aumentar la utilización de operarios y máquinas \cite{ref5}. Estas prácticas aportan la base conceptual necesaria para implementar métodos de automatización más avanzados dentro de un ERP, permitiendo que reglas de despacho y algoritmos de optimización operen sobre flujos de trabajo más consistentes.
+
+\subsection{Six Sigma y reducción de variabilidad}
+
+Six Sigma es una metodología orientada a reducir la variabilidad de los procesos mediante técnicas estadísticas avanzadas y un enfoque basado en datos. Su ciclo DMAIC permite analizar de manera estructurada las causas de ineficiencias y establecer mejoras que impactan directamente la estabilidad del sistema productivo. La investigación en sistemas de manufactura reporta que Six Sigma mejora la precisión en los tiempos de proceso y disminuye la ocurrencia de operaciones re-trabajadas o reprocesos \cite{flowshop}.
+
+En talleres de mantenimiento automotriz o metalmecánica, Six Sigma facilita la estandarización de tiempos de reparación, la identificación de cuellos de botella y la reducción de variaciones entre operarios, contribuyendo a un entorno más predecible para la programación de tareas. La reducción de variabilidad es fundamental para que los métodos de scheduling —tanto heurísticos como metaheurísticos— puedan operar bajo condiciones de mayor estabilidad y precisión \cite{industry4,meisel2010}.
+
+\subsection{Investigación de Operaciones aplicada al Scheduling}
+
+La Investigación de Operaciones (IO) ha desarrollado modelos matemáticos para resolver problemas de asignación, secuenciación y optimización de recursos. En el ámbito de la producción industrial, estos modelos incluyen:
+\begin{itemize}
+    \item Programación Lineal Entera Mixta (MILP)
+    \item Branch and Bound
+    \item Programación Dinámica
+    \item Modelos deterministas de Flow Shop, Job Shop y Flexible Job Shop
+\end{itemize}
+
+Estos problemas son ampliamente conocidos por su complejidad computacional, siendo Job Shop y Flexible Job Shop NP-hard \cite{flowshop,flexjobshop}. Si bien los modelos exactos permiten obtener soluciones óptimas, en la práctica su uso se limita a problemas de pequeña escala debido al crecimiento exponencial del espacio de búsqueda. Investigaciones recientes han demostrado que, incluso con técnicas avanzadas como Constraint Programming, resolver problemas de scheduling con múltiples restricciones sigue siendo un reto significativo para sistemas reales \cite{teppan2022}.
+
+Por esta razón, en escenarios industriales complejos se emplean heurísticas, reglas de despacho y metaheurísticas que permiten obtener soluciones de buena calidad en tiempos computacionales reducidos \cite{meisel2010,valletesis}.
+
+\subsection{Reglas de prioridad (Dispatching Rules)}
+
+Las reglas de prioridad constituyen uno de los métodos clásicos más utilizados para la programación de tareas en entornos industriales debido a su simplicidad, bajo coste computacional y fácil implementación. Estas reglas se basan en atributos específicos de las tareas, como tiempo de procesamiento, fecha de entrega o urgencia.
+
+Las reglas más representativas incluyen:
+\begin{description}
+    \item[SPT (Shortest Processing Time)] \begin{sloppypar}Prioriza las tareas más cortas, reduciendo el tiempo promedio de flujo y el tiempo total en el sistema. Es una técnica particular\-mente eficiente en sistemas sin res\-tric\-ciones complejas \cite{flowshop}. Esta regla se utiliza como base comparativa en esta investigación.\end{sloppypar}
+    \item[FCFS (First Come, First Served)] Procesa tareas en el orden en que llegan. Aunque sencilla, puede generar tiempos improductivos o cargas desbalanceadas \cite{flexjobshop}.
+    \item[EDD (Earliest Due Date)] Minimiza el retraso (tardiness) priorizando tareas con fechas de entrega más próximas. Es una regla ampliamente usada en la industria gráfica y manufactura ligera \cite{meisel2010}.
+    \item[LPT (Longest Processing Time)] Favorece las tareas más largas y es útil en escenarios donde se busca balancear carga entre máquinas paralelas.
+    \item[Reglas híbridas] Combinan múltiples criterios como tiempo, urgencia y vencimiento. Son más flexibles y representan la transición entre heurísticas clásicas y metaheurísticas \cite{valletesis}.
+\end{description}
+
+Estas reglas son consideradas baseline industrial y sirven como punto de referencia para evaluar técnicas más avanzadas como algoritmos genéticos o algoritmos híbridos \cite{meisel2010,valletesis}.
+
+\subsection{Métodos heurísticos clásicos}
+
+Las heurísticas permiten obtener soluciones aproximadas para problemas de scheduling de manera rápida. Aunque no garantizan optimalidad, son valiosas en entornos industriales por su eficiencia computacional.
+
+Entre las más destacadas se encuentran:
+\begin{itemize}
+    \item Heurísticas de cuello de botella
+    \item Algoritmos constructivos como NEH (Flow Shop) o G\&T (Job Shop)
+    \item List Scheduling
+    \item Heurísticas parametrizadas por prioridad
+\end{itemize}
+Estudios en Flow Shop y Flexible Job Shop señalan que estas heurísticas ofrecen buen desempeño cuando el entorno productivo es estable y presenta pocas restricciones \cite{flowshop,flexjobshop}. Sin embargo, su desempeño disminuye considerablemente cuando existen múltiples dependencias, precedencias o recursos limitados —como es el caso en talleres industriales reales—, por lo que requieren ser complementadas con metaheurísticas \cite{meisel2010}.
+
+\subsection{Metaheurísticas aplicadas al scheduling}
+
+Debido a la complejidad de los problemas industriales de programación de tareas, especialmente aquellos con múltiples máquinas, precedencias y restricciones, las metaheurísticas se han convertido en herramientas fundamentales para obtener soluciones de alta calidad.
+
+Las técnicas más utilizadas incluyen:
+\begin{itemize}
+    \item Recocido Simulado (SA)
+    \item Búsqueda Tabú (TS)
+    \item Algoritmos Genéticos (GA)
+    \item PSO (Particle Swarm Optimization)
+    \item Algoritmos híbridos (GA + SA, GA + TS)
+\end{itemize}
+
+La literatura presenta numerosos casos donde los GA y los métodos híbridos superan significativamente a las heurísticas tradicionales y reglas de prioridad \cite{meisel2010,flowshop}. Del mismo modo, revisiones recientes sobre programación en Industria 4.0 y 5.0 destacan el papel de las metaheurísticas en sistemas productivos dinámicos y altamente automatizados \cite{industry4}.
+
+\subsection{Métodos deterministas y exactos}
+Aunque su aplicabilidad es limitada en escenarios complejos, los métodos exactos cumplen un rol fundamental como referencia teórica para evaluar heurísticas y metaheurísticas.
+
+Estos métodos incluyen:
+\begin{itemize}
+    \item Branch \& Bound
+    \item Branch \& Cut
+    \item Constraint Programming (CP)
+    \item Programación Lineal y Entera
+\end{itemize}
+
+Investigaciones recientes en CP demuestran que si bien estas técnicas logran acotar soluciones y obtener resultados cercanos al óptimo en algunos casos, su escalabilidad aún es limitada en problemas como FJSSP y JSSP \cite{teppan2022}. Por ello, suelen emplearse solo para casos pequeños o como benchmark teórico.
 
 \section{Antecedentes}
 
