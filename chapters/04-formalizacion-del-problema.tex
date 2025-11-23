@@ -1,0 +1,275 @@
+\chapter{Formalización del problema}
+
+El presente capítulo describe la estructura formal del problema de programación diaria del taller industrial, incluyendo la caracterización del flujo operativo, la definición matemática de los elementos que componen el sistema y la modelación del comportamiento del taller bajo sus restricciones reales. Esta formalización constituye la base para el desarrollo posterior del algoritmo genético y el método SPT, presentados en los capítulos siguientes.
+
+\section{Estudio del flujo de trabajo del taller industrial}
+
+El taller de reparación de motores opera bajo un flujo secuencial condicionado por restricciones de precedencia, disponibilidad de repuestos, habilidades del personal e interacción entre tareas dentro de una misma orden de trabajo. Cada día se recibe un conjunto de órdenes de trabajo que agrupan tareas mecánicas con distintos requerimientos técnicos, y el objetivo operativo es completar la mayor cantidad posible de dichas tareas dentro de la jornada laboral.
+
+\subsection{Tipos de tareas}
+
+Sea \(T = \{1, \dots, q\}\) el conjunto de tipos de tareas que el taller está en capacidad de ejecutar.  
+Cada tipo de tarea representa una operación específica dentro del proceso de reparación, cuya duración base está dada por una función:
+
+\[
+p : T \rightarrow \mathbb{N}
+\]
+
+que asigna a cada tipo \(t \in T\) su duración en minutos.
+
+Las tareas concretas del día se representan mediante:
+
+\[
+T_d = \{1, \dots, n\},
+\]
+
+donde cada tarea \(i \in T_d\) posee los atributos:
+\begin{itemize}
+    \item \(ot(i)\): orden de trabajo a la que pertenece;
+    \item \(tipo(i)\): tipo de tarea según \(T\);
+    \item \(p(tipo(i))\): duración efectiva.
+\end{itemize}
+
+\subsection{Operarios y recursos disponibles}
+
+Sea \(O = \{1, \dots, r\}\) el conjunto de operarios disponibles en el taller.  
+Cada tarea requiere habilidades específicas, modeladas mediante:
+
+\[
+E(t) \subseteq O, \qquad \forall t \in T,
+\]
+
+donde \(E(t)\) es el conjunto de operarios aptos para ejecutar tareas del tipo \(t\).  
+La aptitud del operario es una restricción estricta: una tarea no puede ser programada por un operario fuera de \(E(tipo(i))\).
+
+\subsection{Reglas industriales de asignación}
+
+El taller opera bajo restricciones naturales del proceso mecánico:
+
+\begin{itemize}
+    \item \textbf{Precedencias intrínsecas}: ciertas tareas deben completarse antes de que otras puedan iniciar.  
+    Modelado mediante:
+    \[
+    P(t) \subseteq T,
+    \]
+    que representa los tipos de tarea que deben preceder al tipo \(t\).
+
+    \item \textbf{Precedencias por orden de trabajo}: sólo son relevantes aquellas precedencias que ocurren dentro de la misma orden de trabajo.
+    
+    \item \textbf{Disponibilidad de repuestos}: cada orden de trabajo \(ot\) tiene asociado un vector binario:
+    \[
+    R_{ot} = (r_1, r_2, \dots), \quad r_j \in \{0,1\},
+    \]
+    donde \(r_j = 1\) indica que el repuesto necesario para cierto tipo de tarea está disponible.
+
+    \item \textbf{Capacidad temporal}: cada operario posee un máximo de 8 horas de trabajo:
+    \[
+    H = 480 \text{ minutos}.
+    \]
+\end{itemize}
+
+\subsection{Análisis del proceso actual y puntos críticos}
+
+El proceso presenta dificultades estructurales:
+\begin{itemize}
+    \item Los operarios poseen habilidades heterogéneas.
+    \item Las órdenes contienen dependencias internas que condicionan el flujo.
+    \item Los repuestos no siempre están disponibles.
+    \item El tiempo límite de jornada restringe la cantidad de tareas ejecutables.
+    \item Tareas pertenecientes a una misma orden no pueden solaparse.
+\end{itemize}
+
+El resultado es un entorno altamente restrictivo donde la programación manual es compleja y propensa a tiempos improductivos.
+
+\subsection{Flujo general del proceso}
+
+Operativamente, el taller funciona bajo este flujo conceptual:
+
+\begin{enumerate}
+    \item Llegan varias órdenes de trabajo, cada una con un conjunto de tareas.  
+    \item Cada tarea requiere un operario apto y, en algunos casos, un repuesto.  
+    \item Algunas tareas dependen de otras dentro de la misma orden.  
+    \item Los operarios ejecutan las tareas secuencialmente en una jornada limitada.  
+    \item El objetivo es completar la mayor cantidad posible de tareas.
+\end{enumerate}
+
+Este flujo será simulado formalmente en la evaluación de soluciones.
+
+\section{Diseño del modelo de datos para la simulación}
+
+\subsection{Conjuntos y parámetros del sistema}
+
+El problema se formaliza mediante los siguientes conjuntos:
+
+\[
+\begin{aligned}
+OT &= \{1, \dots, m\} && \text{Órdenes de trabajo},\\
+T_d &= \{1, \dots, n\} && \text{Tareas del día},\\
+O &= \{1, \dots, r\} && \text{Operarios},\\
+T &= \{1, \dots, q\} && \text{Tipos de tarea}.
+\end{aligned}
+\]
+
+Parámetros principales:
+
+\[
+\begin{aligned}
+p(t) & && \text{Duración del tipo de tarea } t,\\
+E(t) &\subseteq O && \text{Operarios aptos},\\
+P(t) &\subseteq T && \text{Precedencias por tipo},\\
+R_{ot} & && \text{Vector de disponibilidad de repuestos para la OT},\\
+H &= 480 && \text{Horizonte máximo diario}.
+\end{aligned}
+\]
+
+\subsection{Variables del modelo}
+
+Durante la simulación se manejan variables que representan el estado del taller:
+
+\[
+\begin{aligned}
+tpo[o] &: \text{ tiempo utilizado por el operario } o,\\
+comp[ot] &: \text{ tipos de tareas ya completadas en la OT},\\
+occ[ot] &: \text{ intervalos ocupados por la OT}.
+\end{aligned}
+\]
+
+\subsection{Representación de operarios, tareas y repuestos}
+
+\begin{itemize}
+    \item Las tareas se representan por su índice \(i\) y atributos: tipo, orden y duración.
+    \item Un operario sólo puede ejecutar tareas cuyos tipos estén en \(E(t)\).
+    \item Los repuestos se representan mediante el vector binario \(R_{ot}\).
+\end{itemize}
+
+\subsection{Tiempos de operación y estructura temporal}
+
+El tiempo se representa en minutos dentro del intervalo \([0, H]\).  
+Una tarea \(i\) ejecutada por un operario \(o\) genera un intervalo:
+
+\[
+[s_i, f_i) = [tpo[o],\ tpo[o] + p(tipo(i))).
+\]
+
+\subsection{Restricciones formales del taller}
+
+Una tarea \(i\) puede ejecutarse si y sólo si:
+
+\[
+\begin{array}{rl}
+\text{(1)}\; o \in E(tipo(i)) 
+    & \text{Aptitud del operario,} \\[6pt]
+
+\text{(2)}\; R_{ot(i)} \text{ provee repuesto disponible} 
+    & \text{Repuesto disponible,} \\[6pt]
+
+\text{(3)}\; P(tipo(i)) \cap T_{ot(i)} \subseteq comp[ot(i)] 
+    & \text{Precedencias cumplidas,} \\[6pt]
+
+\text{(4)}\; f_i \le H 
+    & \text{No excede jornada,} \\[6pt]
+
+\text{(5)}\; [s_i, f_i) \cap occ[ot(i)] = \emptyset 
+    & \begin{array}{l}
+        \text{No solapa con} \\
+        \text{tareas de la misma OT.}
+      \end{array}
+\end{array}
+\]
+
+\section{Construcción del generador de instancias}
+
+\subsection{Parámetros de la simulación y alcance}
+
+Cada día se genera una instancia compuesta por:
+\begin{itemize}
+    \item Un conjunto de órdenes.
+    \item Un conjunto de tareas concretas.
+    \item Habilidades del personal.
+    \item Duraciones de tareas.
+    \item Precedencias.
+    \item Repuestos disponibles.
+\end{itemize}
+
+\subsection{Modelo de aleatoriedad y distribución de tiempos}
+
+El generador recibe:
+\begin{itemize}
+    \item El número de órdenes,
+    \item El número de tareas por orden,
+    \item Su distribución temporal (según \(p(t)\)),
+    \item Disponibilidad de repuestos,
+    \item Habilidades por tipo.
+\end{itemize}
+
+\subsection{Procedimiento de creación de escenarios}
+
+El proceso consiste en:
+
+\begin{enumerate}
+    \item Seleccionar órdenes y sus tareas.  
+    \item Asignar tipos y duraciones.  
+    \item Generar disponibilidad de repuestos.  
+    \item Asignar operarios aptos por tipo.  
+    \item Construir la instancia final \((OT, T_d, O)\).
+\end{enumerate}
+
+\subsection{Validación del modelo simulado con expertos}
+
+Los parámetros fueron validados con personal del taller, asegurando que:
+\begin{itemize}
+    \item Las duraciones son realistas.
+    \item Las precedencias corresponden al flujo mecánico real.
+    \item Las habilidades reflejan la estructura del personal.
+    \item El horizonte de 8 horas es consistente con el turno laboral.
+\end{itemize}
+
+\subsection{Pseudocódigo del simulador operativo}
+
+El corazón de la simulación consiste en determinar si una asignación propuesta es válida.  
+El pseudocódigo siguiente refleja el comportamiento operativo del taller:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Inicializar estructuras: $tpo[o] \leftarrow 0$, $comp[ot] \leftarrow \emptyset$, $occ[ot] \leftarrow \emptyset$\;
+\ForEach{operario $o \in O$}{
+    Obtener conjunto de tareas asignadas $T_o$\;
+    Ordenar $T_o$ según prioridad descendente\;
+    \ForEach{tarea $i \in T_o$}{
+        Verificar aptitud: $o \in E(tipo(i))$\;
+        Verificar repuesto disponible\;
+        Verificar precedencias cumplidas en $comp[ot(i)]$\;
+        Calcular intervalo $[s_i,f_i) = [tpo[o], tpo[o] + p(tipo(i))]$\;
+        \If{$f_i > H$}{rechazar tarea; continuar}
+        \If{$[s_i,f_i)$ solapa con algún intervalo en $occ[ot(i)]$}{rechazar tarea; continuar}
+        Aceptar tarea: actualizar $tpo[o]$, $comp$, $occ$\;
+    }
+}
+\caption{Simulación operativa de programación de tareas}
+\end{algorithm}
+
+\section{Conjunto final de escenarios utilizados en la comparación}
+
+\subsection{Número y estructura de las instancias}
+
+Para la fase experimental se consideraron múltiples instancias generadas bajo diferentes configuraciones de:
+\begin{itemize}
+    \item número de órdenes,
+    \item número de tareas,
+    \item complejidad de precedencias,
+    \item disponibilidad de recursos.
+\end{itemize}
+
+\subsection{Variabilidad incorporada}
+
+Las instancias presentan variabilidad en:
+\begin{itemize}
+    \item tamaño del conjunto de tareas,
+    \item carga operativa,
+    \item composición de órdenes,
+    \item mezcla de repuestos disponibles.
+\end{itemize}
+
+\subsection{Justificación de los casos de estudio}
+
+Estas instancias permiten evaluar el desempeño del método SPT y del algoritmo genético en condiciones diversas, representando escenarios realistas del taller.
