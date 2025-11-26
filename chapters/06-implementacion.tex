@@ -1,7 +1,175 @@
 \chapter{Implementación}
 
+Este capítulo describe la implementación del sistema desarrollado para la programación diaria de tareas en un taller industrial. Se detalla el entorno de desarrollo utilizado, la arquitectura del software, la implementación del algoritmo genético y del método SPT, así como el procedimiento empleado para ejecutar las simulaciones que permiten comparar ambos métodos. La descripción presentada no incluye fragmentos de código fuente, sino explicaciones conceptuales y pseudocódigo cuando es pertinente, siguiendo las recomendaciones establecidas por la dirección del trabajo.
+
 \section{Entorno de desarrollo}
+
+El sistema fue implementado en el lenguaje de programación Python, debido a su flexibilidad, amplia disponibilidad de librerías para optimización y manejo de datos, y su compatibilidad con métodos heurísticos y evolutivos. Para garantizar portabilidad y consistencia, se empleó un entorno virtual administrado mediante \texttt{venv}.
+
+Las principales dependencias utilizadas fueron:
+
+\begin{itemize}
+    \item \textbf{NumPy}: manejo eficiente de arreglos y operaciones matemáticas.
+    \item \textbf{Pandas}: construcción de estructuras tabulares para generar y almacenar instancias.
+    \item \textbf{PyGAD}: librería empleada para la implementación del algoritmo genético.
+    \item \textbf{Random}: generación de valores pseudoaleatorios para la creación de instancias.
+\end{itemize}
+
+El archivo \texttt{requirements.txt} incluye las versiones exactas utilizadas, permitiendo reproducir las condiciones de ejecución en cualquier sistema.
+
 \section{Diseño del software}
+
+El proyecto se estructuró siguiendo una arquitectura modular, organizada en tres componentes principales: generación de instancias, algoritmos de programación (AG y SPT) y simulación. Esto permite separar claramente la lógica del modelo del taller, los métodos de asignación y el procedimiento experimental.
+
+\subsection{Arquitectura general del sistema}
+
+A continuación se presentar la organización del software:
+
+\begin{itemize}
+    \item \textbf{config/}: contiene la configuración del taller y el generador de instancias.  
+    \item \textbf{ag/}: módulo que implementa el algoritmo genético.  
+    \item \textbf{spt/}: módulo con la implementación del método SPT.  
+    \item \textbf{simulador.py}: orquesta la ejecución de instancias, aplicar ambos algoritmos y almacenar los resultados.  
+\end{itemize}
+
+Cada componente se comunica únicamente mediante estructuras de datos bien definidas, lo que facilita la extensibilidad y la validación del sistema.
+
+\subsection{Flujo general del software}
+
+El funcionamiento completo del sistema puede resumirse como:
+
+\begin{enumerate}
+    \item \textbf{Generación de instancias}: se construyen escenarios según la configuración del taller.
+    \item \textbf{Ejecución de SPT y AG}: cada instancia se evalúa mediante ambos métodos.
+    \item \textbf{Simulación operativa}: se usa la simulación formalizada en el Capítulo 4 para determinar las tareas aceptadas, rechazadas y métricas de desempeño.
+    \item \textbf{Consolidación de resultados}: se almacenan métricas en archivos CSV para su análisis posterior.
+\end{enumerate}
+
+Este pipeline es consistente con el objetivo principal de la tesis: comparar el desempeño del algoritmo genético frente a un método clásico de ingeniería industrial.
+
 \section{Implementación del algoritmo genético}
+
+El módulo \texttt{ag/ag.py} implementa el algoritmo genético utilizando la librería PyGAD. El enfoque se basa en la representación dual del individuo, donde cada solución codifica simultáneamente la asignación de operarios y la prioridad de ejecución de cada tarea.
+
+\subsection{Representación del individuo}
+
+Dado un conjunto de tareas del día con tamaño $n$, se construye un cromosoma de longitud $2n$:
+
+\[
+\text{individuo} = [\, o_1,\dots,o_n,\; w_1,\dots,w_n \,]
+\]
+
+donde:
+
+\begin{itemize}
+    \item $o_i$ es el operario seleccionado para la tarea $i$.
+    \item $w_i$ es un valor que representa la prioridad relativa de la tarea.
+\end{itemize}
+
+Esta representación permite modular tanto la asignación como la secuencia interna de ejecución.
+
+\subsection{Generación del espacio de búsqueda}
+
+El archivo \texttt{taller\_config.py} define, para cada tipo de tarea, qué operarios son aptos para ejecutarla. Esta información se utiliza para construir dinámicamente el \textit{gene space} del AG, restringiendo valores inválidos y reduciendo el espacio de búsqueda.
+
+\subsection{Función de aptitud}
+
+La función de aptitud está implementada de manera que evalúa cada individuo llamando al simulador operativo descrito en el Capítulo 4. El resultado final se obtiene mediante una métrica compuesta que penaliza:
+
+\begin{itemize}
+    \item Tareas rechazadas.
+    \item Precedencias incumplidas.
+    \item Exceso de carga.
+\end{itemize}
+
+Y recompensa:
+
+\begin{itemize}
+    \item Cantidad de tareas ejecutadas.
+    \item Balance de carga entre operarios.
+\end{itemize}
+
+El pseudocódigo general de la evaluación es:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Obtener asignación de operarios y prioridades desde el individuo\;
+Construir ordenamiento de tareas según prioridades\;
+Aplicar simulación operativa\;
+Calcular métricas: ejecutadas, rechazadas, makespan, carga total, etc.\;
+Combinar métricas en una aptitud final\;
+\caption{Evaluación de un individuo mediante simulación operativa}
+\end{algorithm}
+
+\subsection{Integración con PyGAD}
+
+El AG se ejecuta definiendo:
+\begin{itemize}
+    \item tamaño de población,
+    \item número de generaciones,
+    \item probabilidad de cruce,
+    \item probabilidad de mutación.
+\end{itemize}
+
+PyGAD administra el proceso evolutivo, mientras que la evaluación real se realiza con el simulador del taller.
+
 \section{Implementación del método SPT}
+
+El módulo \texttt{spt/spt.py} implementa la heurística Shortest Processing Time (SPT), adaptada al contexto del taller. La versión utilizada en esta tesis mantiene el espíritu del método clásico, pero incorpora restricciones reales del taller, como habilidades de operarios, repuestos y precedencias.
+
+\subsection{Ordenamiento de tareas}
+
+El método ordena las tareas según la duración:
+
+\[
+\text{orden SPT}: \quad p(tipo(i_1)) \le p(tipo(i_2)) \le \dots
+\]
+
+Este orden se ajusta automáticamente según precedencias y recursos disponibles.
+
+\subsection{Asignación de operarios y validación}
+
+Para cada tarea ordenada, el método:
+
+\begin{enumerate}
+    \item identifica operarios aptos,
+    \item selecciona aquel con menor carga acumulada,
+    \item verifica disponibilidad de repuestos,
+    \item evalúa posibles solapamientos dentro de la misma OT.
+\end{enumerate}
+
+Si la tarea no puede ejecutarse bajo las restricciones del taller, se marca como rechazada.
+
 \section{Ejecución de simulaciones}
+
+El archivo \texttt{simulador.py} ejecuta el experimento completo. Para cada instancia generada, se aplican consecutivamente el método SPT y el algoritmo genético, almacenando métricas clave que permitirán una comparación justa.
+
+\subsection{Generación de conjuntos de instancias}
+
+Las instancias se generan con el módulo \texttt{generador\_instancias.py}, que permite configurar:
+
+\begin{itemize}
+    \item número mínimo y máximo de órdenes,
+    \item número total de tareas,
+    \item distribución de tipos,
+    \item disponibilidad de repuestos.
+\end{itemize}
+
+\subsection{Ejecución conjunta de SPT y AG}
+
+Para cada instancia:
+
+\begin{enumerate}
+    \item se ejecuta SPT y se registra su desempeño,
+    \item se ejecuta el AG y se obtiene el mejor individuo,
+    \item ambos resultados se evalúan con el simulador,
+    \item se registran métricas comparables.
+\end{enumerate}
+
+\subsection{Consolidación de resultados}
+
+Los datos generados por cada ejecución se almacenan en un archivo CSV, que posteriormente es utilizado en el Capítulo 7 para el análisis cuantitativo.
+
+\subsection{Reproducibilidad}
+
+Para garantizar repetibilidad, se fijan semillas aleatorias y se documentan los parámetros utilizados en cada corrida experimental.
