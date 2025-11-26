@@ -1,21 +1,53 @@
-% Paquetes generales
-\usepackage{graphicx}
-% Mejora el ajuste de texto y las micro-justificaciones (reduce Overfull/Underfull hbox)
-\usepackage[protrusion=true,expansion=true]{microtype}
-% Control adicional de justificación
-\usepackage{ragged2e}
-% Paquetes para entornos y comandos matemáticos avanzados
-\usepackage{amsmath,amssymb}
-\raggedbottom
-% Algoritmos en pseudocódigo
+% -------------------------------------------------------
+% Paquetes Matemáticos
+% -------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+% -------------------------------------------------------
+% Paquetes de Algoritmos
+% (Usar sólo algorithm2e que proporciona algoritmos y pseudocódigo)
+% -------------------------------------------------------
+% \usepackage{algorithm}      % Comentado: conflicto con algorithm2e
+% \usepackage{algorithmic}    % Comentado: conflicto con algorithm2e
+
+% Estilo adicional de pseudocódigo (ruled, vlined)
 \usepackage[ruled,vlined]{algorithm2e}
-% Ajuste de entornos tipo lista
+
+% -------------------------------------------------------
+% Control de figuras y posicionamiento
+% -------------------------------------------------------
+\usepackage{float}          % Permite la opción [H]
+\usepackage{graphicx}
+
+% -------------------------------------------------------
+% TikZ para diagramas (requerido para 5.1.3)
+% -------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+
+% -------------------------------------------------------
+% Estética y microtipografía
+% -------------------------------------------------------
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{ragged2e}       % Mejor control de justificación
+\raggedbottom               % Evita estiramientos verticales feos
+
+% -------------------------------------------------------
+% Ajuste de entornos tipo lista (para justificar texto)
+% -------------------------------------------------------
 \usepackage{etoolbox}
 \AtBeginEnvironment{itemize}{\justifying}
 \AtBeginEnvironment{enumerate}{\justifying}
 \AtBeginEnvironment{description}{\justifying}
 
-% Bibliografía (BibLaTeX + biber) — usar estilo numérico ([1])
+% -------------------------------------------------------
+% Bibliografía (BibLaTeX + Biber)
+% -------------------------------------------------------
 \usepackage[
   backend=biber,
   style=numeric,
