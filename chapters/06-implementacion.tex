@@ -208,7 +208,7 @@ En síntesis, el operador \textit{single\_point} presenta un comportamiento más
 
 Tras seleccionar el operador de cruce \textit{single\_point}, el siguiente paso en la calibración del algoritmo genético consistió en determinar un número adecuado de generaciones. Este parámetro controla la profundidad de la búsqueda evolutiva y afecta tanto la calidad de las soluciones como el costo computacional del proceso. 
 
-Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección~\ref{subsec:configuracion-ag}.
+Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección [FIGURA ACÁ].
 
 El experimento se llevó a cabo sobre veinte instancias independientes bajo un horizonte de 480 minutos, correspondiente a una jornada realista del taller. Los resultados promedio obtenidos se resumen en la Tabla~\ref{tab:generaciones-resultados-480}.
 
@@ -233,3 +233,74 @@ El experimento se llevó a cabo sobre veinte instancias independientes bajo un h
 Los resultados muestran que el mejor desempeño global se alcanza con 300 generaciones, obteniendo el mayor número promedio de tareas ejecutadas (26.60) y la mayor carga total (620.85). A medida que se incrementa el número de generaciones, el algoritmo no presenta mejoras sustanciales y, por el contrario, tiende a obtener cronogramas con menor número de tareas completadas. Este comportamiento sugiere que el AG converge rápidamente en este problema, y que extender el proceso evolutivo más allá de 300 generaciones no aporta beneficios significativos en términos de calidad de solución.
 
 Considerando tanto el desempeño observado como la eficiencia computacional, se seleccionó \textbf{300 generaciones} como valor óptimo para las siguientes etapas del proceso de calibración.
+
+\subsection{Evaluación de la Probabilidad de Mutación}
+\label{subsec:mutacion}
+
+El último parámetro evaluado en el proceso de calibración del algoritmo genético corresponde a la probabilidad de mutación. Este parámetro controla el grado de exploración del espacio de búsqueda mediante modificaciones aleatorias en los genes del individuo. En términos prácticos, una mutación demasiado baja puede llevar a una convergencia prematura, mientras que una mutación demasiado alta puede destruir estructuras útiles adquiridas durante el proceso evolutivo.
+
+Siguiendo prácticas habituales en la literatura, se evaluaron tres niveles representativos de intensidad de mutación: 5\%, 15\% y 25\%. Estos valores permiten analizar la sensibilidad del algoritmo a distintos grados de exploración aleatoria. Todas las ejecuciones se realizaron bajo la configuración base detallada en la Sección[FIGURA ACA], con el operador de cruce previamente seleccionado y un horizonte de 480 minutos.
+
+Los resultados promedio obtenidos a partir de veinte instancias independientes se presentan en la Tabla~\ref{tab:mutacion-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
+\label{tab:mutacion-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+5\%  & 19.85 & 14.85 & 172.05 & 454.50 \\
+15\% & \textbf{25.00} & 14.80 & 216.60 & \textbf{582.05} \\
+25\% & 24.20 & 15.00 & 201.85 & 554.50 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Los resultados muestran diferencias claras entre los distintos niveles de mutación evaluados. Una mutación baja (5\%) conduce a un desempeño significativamente inferior, evidenciando una fuerte convergencia prematura que limita la capacidad del algoritmo para explorar alternativas factibles dentro del horizonte disponible.
+
+El valor intermedio (15\%) proporciona el mejor rendimiento global, alcanzando tanto la mayor cantidad de tareas ejecutadas como la mayor carga total. Esto sugiere un buen equilibrio entre exploración y explotación del espacio de búsqueda: la mutación es lo suficientemente alta para evitar estancamiento, pero no tan elevada como para destruir las estructuras útiles generadas por el operador de cruce.
+
+Finalmente, un nivel más alto de mutación (25\%) muestra un rendimiento ligeramente inferior al valor intermedio. Aunque mejora el makespan en comparación con el caso de 15\%, su capacidad de programación se reduce, indicando que una mayor aleatoriedad comienza a afectar la estabilidad del proceso evolutivo.
+
+A partir de estos resultados, se selecciona una probabilidad de mutación del \textbf{15\%} como el valor óptimo para la configuración final del algoritmo genético.
+
+\section{Configuración Final del AG}
+
+A partir del proceso de calibración presentado en las subsecciones anteriores ---donde se evaluaron de forma independiente el operador de cruce, el número de generaciones y la probabilidad de mutación--- se obtuvo una configuración final del algoritmo genético que equilibra de manera adecuada la calidad de las soluciones y el costo computacional. Esta configuración fue utilizada en todas las comparaciones realizadas posteriormente contra el método SPT en el Capítulo~7.
+En síntesis, la calibración determinó que:
+
+\begin{itemize}
+    \item El operador de cruce \textit{single\_point} ofrece el mejor desempeño en un horizonte amplio de 480 minutos, superando consistentemente a \textit{two\_points}.
+    \item Un número de \textbf{300 generaciones} es suficiente para que el algoritmo converja hacia soluciones de alta calidad, mientras que valores mayores no aportan mejoras significativas y pueden incluso degradar el rendimiento.
+    \item Una probabilidad de mutación del \textbf{15\%} logra el mejor equilibrio entre exploración y explotación del espacio de búsqueda, evitando tanto la convergencia prematura (como sucede con 5\%) como la pérdida de estabilidad evolutiva (observada con 25\%).
+\end{itemize}
+
+Con base en estos resultados, la configuración final del algoritmo genético utilizada en las simulaciones comparativas es la siguiente:
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Configuración final seleccionada para el algoritmo genético.}
+\label{tab:config-final-ag}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor seleccionado} \\
+\midrule
+Operador de cruce & \textit{single\_point} \\
+Número de generaciones & 300 \\
+Tamaño de población & 100 \\
+Método de selección & \textit{rank} \\
+Padres por generación & 10 \\
+Padres preservados & 5 \\
+Probabilidad de mutación & 15\% \\
+Semilla aleatoria & 42 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad del proceso evolutivo. Además, se mantiene dentro de límites razonables de tiempo de ejecución, lo que facilita su aplicación práctica en un taller industrial. Los experimentos del capítulo siguiente emplean exclusivamente esta configuración, garantizando que la comparación frente al método SPT se realice bajo condiciones justas y reproducibles.
