@@ -113,6 +113,24 @@ El AG se ejecuta definiendo:
 
 PyGAD administra el proceso evolutivo, mientras que la evaluación real se realiza con el simulador del taller.
 
+\subsection{Configuración base del algoritmo genético}
+\label{subsec:configuracion-ag}
+
+Antes de iniciar el proceso de calibración, se definió una configuración base del algoritmo genético que sirvió como punto de partida para todos los experimentos. Esta configuración incluye parámetros estándar recomendados en la literatura y valores validados empíricamente para garantizar un comportamiento estable del algoritmo.
+
+\begin{itemize}
+    \item Tamaño de población: 100 individuos
+    \item Número de padres por generación: 10
+    \item Padres preservados: 5
+    \item Método de selección: \textit{rank}
+    \item Operador de cruce: \textit{single\_point}
+    \item Probabilidad de mutación: 15\%
+    \item Tipo de mutación: \textit{random}
+    \item Semilla aleatoria: 42
+\end{itemize}
+
+Esta configuración sirvió como referencia para evaluar de forma independiente cada parámetro crítico del algoritmo genético (operador de cruce, número de generaciones y probabilidad de mutación), tal como se detalla en las secciones siguientes.
+
 \section{Implementación del método SPT}
 
 El módulo \texttt{spt/spt.py} implementa la heurística Shortest Processing Time (SPT), adaptada al contexto del taller. La versión utilizada en esta tesis mantiene el espíritu del método clásico, pero incorpora restricciones reales del taller, como habilidades de operarios, repuestos y precedencias.
@@ -177,11 +195,11 @@ Para garantizar repetibilidad, se fijan semillas aleatorias y se documentan los 
 \subsection{Evaluación del Operador de Cruce}
 \label{subsec:cruce}
 
-Con el fin de determinar el operador de cruce más adecuado para el algoritmo genético, se realizó un experimento comparativo empleando los dos métodos soportados por la librería \texttt{PyGAD} que preservan parcialmente la estructura del individuo: \textit{single\_point} y \textit{two\_points}. Ambos operadores fueron evaluados bajo las mismas condiciones iniciales del algoritmo, utilizando la configuración base descrita en la Sección [acá va la ref]. Cada ejecución consistió en la generación de veinte instancias independientes.
+Con el fin de determinar el operador de cruce más adecuado para el algoritmo genético, se realizó un experimento comparativo empleando los dos métodos soportados por la librería \texttt{PyGAD} que preservan parcialmente la estructura del individuo: \textit{single\_point} y \textit{two\_points}. Ambos operadores fueron evaluados bajo las mismas condiciones iniciales del algoritmo, utilizando la configuración base descrita en la Sección~\ref{subsec:configuracion-ag}. Cada ejecución consistió en la generación de veinte instancias independientes.
 
 Dado que el objetivo del algoritmo genético es optimizar la programación en condiciones realistas del taller, el experimento se llevó a cabo exclusivamente sobre el horizonte operativo de 480 minutos. Este escenario corresponde a una jornada laboral completa y ofrece suficiente espacio temporal para que el AG explore secuencias complejas, revelando diferencias significativas entre operadores evolutivos. Los horizontes reducidos generan comportamientos artificialmente similares entre configuraciones, motivo por el cual no se consideran en esta etapa de calibración.
 
-Los resultados promedio de las métricas relevantes para el AG se presentan en la Tabla [ACÁ VA LA REF].
+Los resultados promedio de las métricas relevantes para el AG se presentan en la Tabla~\ref{tab:cruce-resultados-480}.
 
 \begin{table}[htbp]
 \centering
@@ -203,12 +221,13 @@ Los resultados promedio de las métricas relevantes para el AG se presentan en l
 Los resultados muestran diferencias claras entre los dos operadores. El operador \textit{single\_point} ejecuta, en promedio, 1.65 tareas adicionales respecto a \textit{two\_points}, lo cual es significativo dado el tamaño del horizonte y las restricciones del taller. Asimismo, alcanza una mayor carga total, indicando una mejor utilización del tiempo disponible de los operarios. Aunque \textit{two\_points} obtiene un makespan ligeramente menor, la diferencia no compensa la pérdida en tareas ejecutadas, métrica prioritaria en el contexto del taller de rectificado.
 
 En síntesis, el operador \textit{single\_point} presenta un comportamiento más robusto y consistente en escenarios amplios. Por este motivo, se seleccionó como operador de cruce para los siguientes experimentos del proceso de calibración del algoritmo genético.
+
 \subsection{Evaluación del Número de Generaciones}
 \label{subsec:generaciones}
 
 Tras seleccionar el operador de cruce \textit{single\_point}, el siguiente paso en la calibración del algoritmo genético consistió en determinar un número adecuado de generaciones. Este parámetro controla la profundidad de la búsqueda evolutiva y afecta tanto la calidad de las soluciones como el costo computacional del proceso. 
 
-Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección [FIGURA ACÁ].
+Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección~\ref{subsec:configuracion-ag}.
 
 El experimento se llevó a cabo sobre veinte instancias independientes bajo un horizonte de 480 minutos, correspondiente a una jornada realista del taller. Los resultados promedio obtenidos se resumen en la Tabla~\ref{tab:generaciones-resultados-480}.
 
@@ -239,7 +258,7 @@ Considerando tanto el desempeño observado como la eficiencia computacional, se 
 
 El último parámetro evaluado en el proceso de calibración del algoritmo genético corresponde a la probabilidad de mutación. Este parámetro controla el grado de exploración del espacio de búsqueda mediante modificaciones aleatorias en los genes del individuo. En términos prácticos, una mutación demasiado baja puede llevar a una convergencia prematura, mientras que una mutación demasiado alta puede destruir estructuras útiles adquiridas durante el proceso evolutivo.
 
-Siguiendo prácticas habituales en la literatura, se evaluaron tres niveles representativos de intensidad de mutación: 5\%, 15\% y 25\%. Estos valores permiten analizar la sensibilidad del algoritmo a distintos grados de exploración aleatoria. Todas las ejecuciones se realizaron bajo la configuración base detallada en la Sección[FIGURA ACA], con el operador de cruce previamente seleccionado y un horizonte de 480 minutos.
+Siguiendo prácticas habituales en la literatura, se evaluaron tres niveles representativos de intensidad de mutación: 5\%, 15\% y 25\%. Estos valores permiten analizar la sensibilidad del algoritmo a distintos grados de exploración aleatoria. Todas las ejecuciones se realizaron bajo la configuración base detallada en la Sección~\ref{subsec:configuracion-ag}, con el operador de cruce previamente seleccionado y un horizonte de 480 minutos.
 
 Los resultados promedio obtenidos a partir de veinte instancias independientes se presentan en la Tabla~\ref{tab:mutacion-resultados-480}.
 
@@ -272,6 +291,7 @@ A partir de estos resultados, se selecciona una probabilidad de mutación del \t
 \section{Configuración Final del AG}
 
 A partir del proceso de calibración presentado en las subsecciones anteriores ---donde se evaluaron de forma independiente el operador de cruce, el número de generaciones y la probabilidad de mutación--- se obtuvo una configuración final del algoritmo genético que equilibra de manera adecuada la calidad de las soluciones y el costo computacional. Esta configuración fue utilizada en todas las comparaciones realizadas posteriormente contra el método SPT en el Capítulo~7.
+
 En síntesis, la calibración determinó que:
 
 \begin{itemize}
