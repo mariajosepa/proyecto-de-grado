@@ -203,3 +203,33 @@ Los resultados promedio de las métricas relevantes para el AG se presentan en l
 Los resultados muestran diferencias claras entre los dos operadores. El operador \textit{single\_point} ejecuta, en promedio, 1.65 tareas adicionales respecto a \textit{two\_points}, lo cual es significativo dado el tamaño del horizonte y las restricciones del taller. Asimismo, alcanza una mayor carga total, indicando una mejor utilización del tiempo disponible de los operarios. Aunque \textit{two\_points} obtiene un makespan ligeramente menor, la diferencia no compensa la pérdida en tareas ejecutadas, métrica prioritaria en el contexto del taller de rectificado.
 
 En síntesis, el operador \textit{single\_point} presenta un comportamiento más robusto y consistente en escenarios amplios. Por este motivo, se seleccionó como operador de cruce para los siguientes experimentos del proceso de calibración del algoritmo genético.
+\subsection{Evaluación del Número de Generaciones}
+\label{subsec:generaciones}
+
+Tras seleccionar el operador de cruce \textit{single\_point}, el siguiente paso en la calibración del algoritmo genético consistió en determinar un número adecuado de generaciones. Este parámetro controla la profundidad de la búsqueda evolutiva y afecta tanto la calidad de las soluciones como el costo computacional del proceso. 
+
+Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección~\ref{subsec:configuracion-ag}.
+
+El experimento se llevó a cabo sobre veinte instancias independientes bajo un horizonte de 480 minutos, correspondiente a una jornada realista del taller. Los resultados promedio obtenidos se resumen en la Tabla~\ref{tab:generaciones-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
+\label{tab:generaciones-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+300  & 26.60 & 13.25 & 208.55 & 620.85 \\
+800  & 25.25 & 16.55 & 219.95 & 592.35 \\
+1300 & 24.35 & 12.80 & 204.70 & 563.65 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Los resultados muestran que el mejor desempeño global se alcanza con 300 generaciones, obteniendo el mayor número promedio de tareas ejecutadas (26.60) y la mayor carga total (620.85). A medida que se incrementa el número de generaciones, el algoritmo no presenta mejoras sustanciales y, por el contrario, tiende a obtener cronogramas con menor número de tareas completadas. Este comportamiento sugiere que el AG converge rápidamente en este problema, y que extender el proceso evolutivo más allá de 300 generaciones no aporta beneficios significativos en términos de calidad de solución.
+
+Considerando tanto el desempeño observado como la eficiencia computacional, se seleccionó \textbf{300 generaciones} como valor óptimo para las siguientes etapas del proceso de calibración.
