@@ -173,3 +173,38 @@ Los datos generados por cada ejecución se almacenan en un archivo CSV, que post
 \subsection{Reproducibilidad}
 
 Para garantizar repetibilidad, se fijan semillas aleatorias y se documentan los parámetros utilizados en cada corrida experimental.
+
+\subsection{Evaluación del Operador de Cruce}
+\label{subsec:cruce}
+
+Con el fin de determinar el operador de cruce más adecuado para el algoritmo genético, se realizó un experimento comparativo empleando los dos métodos soportados por la librería \texttt{PyGAD} que preservan parcialmente la estructura del individuo: \textit{single\_point} y \textit{two\_points}. 
+
+Ambos operadores fueron evaluados bajo las mismas condiciones iniciales del algoritmo, utilizando la configuración base descrita en la Sección [ACA VA LA REF]. Cada ejecución consistió en la generación de veinte instancias independientes, y el experimento se realizó sobre dos horizontes temporales representativos: una jornada reducida de 120 minutos y una jornada completa de 480 minutos.
+
+El objetivo de esta etapa no fue comparar el desempeño del AG contra el SPT, sino analizar exclusivamente cómo varía el rendimiento del algoritmo genético al modificar el operador de cruce. Todos los demás parámetros del AG se mantuvieron constantes.
+
+Los promedios de las métricas relevantes para el AG se presentan en la Tabla [ACA VA LA REF].
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para cada operador de cruce.}
+\label{tab:cruce-resultados}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm}cccc@{}}
+\toprule
+\textbf{Escenario} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+120 min – \textit{single\_point} & 20.50 & 19.30 & 114.40 & 454.00 \\
+120 min – \textit{two\_points}   & 20.75 & 19.80 & 115.25 & 464.15 \\
+\midrule
+480 min – \textit{single\_point} & 26.20 & 17.55 & 212.60 & 613.85 \\
+480 min – \textit{two\_points}   & 24.55 & 14.85 & 206.10 & 568.80 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En el horizonte reducido (120 minutos), ambos operadores muestran un comportamiento similar. El operador \textit{two\_points} ejecuta en promedio 0.25 tareas adicionales frente a \textit{single\_point}, aunque esta diferencia no representa una mejora sustancial. Las demás métricas presentan valores muy próximos, indicando que en escenarios cortos el operador de cruce no altera significativamente la calidad de las soluciones generadas por el AG.
+
+En contraste, en el horizonte extendido (480 minutos) se observan diferencias más marcadas. El operador \textit{single\_point} logra el mayor número de tareas ejecutadas (26.20 en promedio), superando a \textit{two\_points} en 1.65 tareas. Adicionalmente, alcanza una carga total mayor, lo que sugiere una asignación más eficiente del tiempo disponible de los operarios. Aunque \textit{two\_points} obtiene un makespan ligeramente menor, este factor no compensa la pérdida en tareas ejecutadas, métrica prioritaria en este contexto.
+
+Con base en estos resultados, se seleccionó \textit{single\_point} como el operador de cruce para los siguientes experimentos. Su desempeño más estable en el horizonte amplio y su capacidad para generar soluciones con mayor carga total justifican su elección como parte de la configuración recomendada del algoritmo genético.
