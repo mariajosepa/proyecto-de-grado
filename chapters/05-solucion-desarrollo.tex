@@ -1,51 +1,254 @@
 \chapter{Desarrollo de la Solución}
 
-\section{Modelado del Problema como Problema de Optimización}
+La asignación de tareas en talleres industriales suele realizarse mediante procesos 
+manuales que dependen de la experiencia del operario y de la disponibilidad momentánea 
+de recursos. Este enfoque puede generar sobrecarga de trabajo, tiempos inactivos, secuencias 
+operativas subóptimas y retrasos en la entrega de órdenes, especialmente cuando cada tarea 
+requiere habilidades técnicas específicas, disponibilidad de repuestos y una coordinación 
+adecuada con otras actividades del proceso de reparación. El problema resultante puede 
+entenderse como una variante del Job Shop Scheduling con restricciones adicionales, como 
+precedencias internas por orden de trabajo, diferencias en la aptitud de los operarios y 
+un horizonte diario limitado. Esta combinación de factores da lugar a un espacio de búsqueda 
+complejo y no lineal, típico de problemas NP-hard, lo que dificulta resolverlo mediante 
+métodos exactos en tiempos razonables.
 
-El problema se formula como un problema de asignación y secuenciación de tareas sujeto a múltiples restricciones operativas. El objetivo general consiste en maximizar el número de tareas programadas dentro de un horizonte diario de 8 horas por operario, garantizando la factibilidad respecto a precedencias, disponibilidad de repuestos y cualificación del personal.
+\section{Enfoque de Solución: Algoritmos Genéticos (AG)}
 
-\subsection{Variables}
+Frente a la complejidad operativa descrita, se implementa un enfoque de optimización basado en 
+Algoritmos Genéticos (AG) cuya configuración se adapta específicamente al flujo de trabajo del 
+taller. Este enfoque permite representar simultáneamente la asignación de operarios y la 
+secuenciación de las tareas de cada orden de trabajo, incorporando las restricciones reales del 
+sistema ---habilidades requeridas, disponibilidad de insumos, dependencias entre actividades y 
+límite diario de jornada--- dentro del proceso evolutivo. De esta manera, el AG actúa como un 
+mecanismo que genera y mejora iterativamente configuraciones de programación factibles y 
+alineadas con las condiciones operativas del entorno industrial.
 
-\textbf{Variables de decisión:}
+\subsection{Modelado del Problema para el Algoritmo Genético}
 
-\begin{itemize}
-    \item $y_i$: operario asignado a la tarea $i$, donde $y_i \in E(\mathrm{tipo}(i))$.
-    \item $\pi_i \in [0,1]$: prioridad asignada a la tarea $i$ para determinar su orden de intento de programación.
-\end{itemize}
+El algoritmo genético opera sobre la estructura formal del problema definida en el 
+capítulo anterior, utilizando como insumo el conjunto diario de órdenes de trabajo, 
+tareas concretas, operarios y parámetros operativos del taller. Sobre esta base, el AG 
+debe construir una solución que represente un cronograma factible, respetando las 
+restricciones del sistema y maximizando la cantidad de tareas ejecutadas dentro de la 
+jornada laboral.
 
-\textbf{Variables auxiliares utilizadas en la simulación:}
+En este modelo, cada solución candidata corresponde a una propuesta completa de 
+asignación y secuenciación de las tareas del día. Para ello, el AG toma dos decisiones 
+fundamentales: (1) determinar a qué operario asignar cada tarea y (2) definir el orden 
+en que cada tarea debe intentarse programar dentro del flujo operativo del día.
 
-\begin{itemize}
-    \item $tpo[o]$: tiempo total utilizado por el operario $o$.
-    \item $\mathrm{comp}[ot]$: conjunto de tareas completadas dentro de la orden de trabajo $ot$.
-    \item $\mathrm{occ}[ot]$: intervalos ocupados en la orden de trabajo $ot$.
-\end{itemize}
+Estas decisiones se construyen a partir de los elementos establecidos en la 
+formalización del taller: los conjuntos de tareas $T_d$, órdenes $OT$ y operarios $O$; 
+los conjuntos de aptitud $E(t)$ por tipo de tarea; las precedencias internas $P(t)$; la 
+disponibilidad de repuestos por orden; y el horizonte diario de $480$ minutos para cada 
+operario.
 
-\subsection{Restricciones}
+Durante el proceso de evaluación, la función de aptitud (fitness) utiliza esta información 
+para determinar la viabilidad de la solución propuesta. Para ello actualiza variables 
+como el tiempo acumulado por operario, las tareas completadas dentro de cada orden y 
+los intervalos programados, verificando que no existan solapamientos y que todas las 
+restricciones sean satisfechas o penalizadas adecuadamente.
 
-\begin{itemize}
-    \item \textbf{Aptitud del operario:}  
-    $y_i \in E(\mathrm{tipo}(i))$.
-    \item \textbf{Disponibilidad de repuesto:}  
-    Solo puede programarse una tarea si el repuesto asociado a su orden de trabajo está disponible.
-    \item \textbf{Precedencias internas de la misma OT:}  
-    \[
-        \forall t' \in (\mathcal{P}(\mathrm{tipo}(i)) \cap \text{OT}(i)): \; t' \in \mathrm{comp}[\mathrm{ot}(i)]
-    \]
-    \item \textbf{Horizon­te máximo diario:}  
-    $f_i \leq H$.
-    \item \textbf{No solapamiento dentro de la misma OT:}  
-    \[
-        \neg (s_i < f' \land f_i > s'), \quad \forall [s', f') \in \mathrm{occ}[\mathrm{ot}(i)]
-    \]
-\end{itemize}
+De esta manera, el modelado del problema proporciona el marco estructural que guía el 
+comportamiento del AG, permitiéndole explorar configuraciones viables dentro de un 
+espacio de búsqueda altamente restringido.
 
-\subsection{Función Objetivo}
 
-La función objetivo maximiza el número de tareas programadas y penaliza violaciones a las restricciones:
+
+\subsection{Representación del Individuo}
+
+La solución que manipula el algoritmo genético se estructura mediante un cromosoma 
+que integra explícitamente las dos decisiones fundamentales del problema: la asignación 
+de operarios y el orden de intento de programación de cada tarea. Para ello, cada 
+individuo se modela como un vector de dimensión $2n$, donde $n$ corresponde al número 
+de tareas del día.
 
 \[
-\operatorname{fitness} =
+\mathbf{x} \;=\;
+\big[\, y_1,\, y_2,\, \dots,\, y_n 
+\;\big|\; 
+\pi_1,\, \pi_2,\, \dots,\, \pi_n \big]
+\]
+
+donde:
+\[
+y_i \in E(\mathrm{tipo}(i)), 
+\qquad 
+\pi_i \in [0,1], 
+\qquad i = 1,\dots,n.
+\]
+
+La primera mitad del cromosoma contiene la asignación propuesta para cada tarea. 
+El gen $y_i$ especifica el operario responsable de ejecutar la tarea $i$, y su valor está 
+restringido al conjunto de operarios aptos $E(\mathrm{tipo}(i))$, tal como se definió en la 
+formalización del problema. Con esto, la representación inicial garantiza que cada 
+asignación respete las habilidades mínimas requeridas por el taller.
+
+La segunda mitad del cromosoma codifica la prioridad asociada a cada tarea mediante 
+un valor continuo $\pi_i \in [0,1]$. Estas prioridades determinan el orden en que las tareas 
+serán consideradas durante el proceso de evaluación, orientando la construcción del flujo 
+operativo. Este mecanismo permite explorar distintas secuencias de programación sin 
+necesidad de trabajar directamente con permutaciones, lo cual simplifica el espacio de 
+búsqueda y facilita la integración con las restricciones industriales del sistema.
+
+La combinación de ambas partes ---asignación y prioridad--- permite que cada individuo 
+represente un cronograma candidato completo, el cual será posteriormente evaluado 
+mediante la función de aptitud. Esta estructura dual ofrece flexibilidad para adaptarse a 
+las condiciones reales del taller, manteniendo al mismo tiempo una codificación compacta 
+y eficiente para la evolución genética.
+
+
+\subsection{Evaluación de la Solución}
+
+Una vez representado el individuo mediante la asignación de operarios y las prioridades 
+de programación, el siguiente paso consiste en evaluar su desempeño como cronograma 
+operativo. Este proceso corresponde a la simulación interna que ejecuta el algoritmo 
+genético para determinar qué tan viable y eficiente es la solución candidata.
+
+La evaluación parte de separar las tareas asignadas a cada operario a partir del vector 
+$\mathbf{y}$. Posteriormente, cada conjunto $T_o$ se ordena según las prioridades 
+$\pi_i$, definiendo así el orden en que las tareas serán consideradas. Para cada tarea, 
+el proceso verifica secuencialmente las restricciones operativas del taller: aptitud del 
+operario, disponibilidad de repuestos, cumplimiento de precedencias internas dentro de 
+la orden de trabajo y ausencia de solapamientos en los intervalos ya programados. Si la 
+tarea satisface dichas condiciones y su tiempo de finalización no excede el horizonte 
+diario del operario, se programa y se actualizan las estructuras internas de la evaluación. 
+En caso contrario, se registra la penalización correspondiente. 
+
+Al finalizar el recorrido, la evaluación produce un conjunto de métricas que describen 
+el comportamiento del cronograma: número de tareas ejecutadas, violaciones de 
+precedencia, faltas de repuestos, asignaciones no aptas, solapamientos internos, 
+excedentes del horizonte, balance de carga y tiempo máximo de finalización. Estas 
+métricas alimentan posteriormente la función de aptitud.
+
+\paragraph{Representación Formal del Proceso de Evaluación.}
+
+La evaluación del individuo sigue un procedimiento estructurado en seis pasos principales, 
+como se describe a continuación:
+
+\subparagraph{1. Separación por operario.}
+Dado un individuo $\mathbf{x} = (\mathbf{y}, \boldsymbol{\pi})$, se construye el conjunto de tareas 
+asignadas a cada operario:
+\[
+T_o = \{ i \in T_d : y_i = o \} \quad \forall o \in O
+\]
+
+Cada conjunto $T_o$ contiene las tareas asignadas al operario $o$ según el vector de asignación $\mathbf{y}$.
+
+\subparagraph{2. Ordenamiento por prioridad.}
+Para cada operario, se ordena el conjunto $T_o$ según los valores de prioridad $\pi_i$ 
+contenidos en la segunda mitad del cromosoma:
+\[
+\mathrm{Orden}_o = \mathrm{sort}(T_o, \text{clave} = \pi_i)
+\]
+
+donde el operador sort organiza las tareas en orden ascendente (o descendente, según la implementación) 
+de prioridad. Esto define el orden en que cada tarea será considerada para su programación.
+
+\subparagraph{3. Intento de programación.}
+Sea $s_i$ el inicio tentativo y $f_i$ el fin tentativo de la tarea $i$. Se asigna:
+\[
+s_i = tpo[o], \quad f_i = s_i + p(i)
+\]
+
+donde $tpo[o]$ es el tiempo acumulado (tiempo posterior ocupado) del operario $o$, 
+y $p(i)$ es la duración de la tarea $i$.
+
+\subparagraph{4. Validación de restricciones.}
+Antes de confirmar la programación, se verifica que se cumplan:
+
+\begin{enumerate}
+    \item \textbf{Aptitud:} $y_i \in E(\mathrm{tipo}(i))$ 
+    \item \textbf{Disponibilidad de repuesto:} $\mathrm{rep}(OT(i)) = \text{disponible}$
+    \item \textbf{Precedencias:} $\forall t' \in P(i) : t' \in \mathrm{comp}[OT(i)]$
+    \item \textbf{Posible ubicación en agenda:} $s_i = tpo[o], f_i = s_i + p(i)$
+    \item \textbf{No solapamiento dentro de la misma orden:}  
+    $\forall [s', f') \in \mathrm{occ}[OT(i)] : \neg(s_i < f' \land f_i > s')$
+    \item \textbf{Horizonte diario:} $f_i \leq H$
+\end{enumerate}
+
+Si todas las condiciones se satisfacen, la tarea se programa y se registra su intervalo $[s_i, f_i)$ 
+en $\mathrm{occ}[OT(i)]$. En caso contrario, se registra la penalización correspondiente.
+
+\subparagraph{Actualización de estado.}
+Si la programación es exitosa:
+\[
+\mathrm{programar}(i, o), \quad tpo[o] \gets f_i, \quad \mathrm{comp}[OT(i)] \gets \mathrm{comp}[OT(i)] \cup \{i\}
+\]
+
+Se actualiza el tiempo acumulado del operario y el conjunto de tareas completadas de la orden.
+
+\subparagraph{Registro de penalización.}
+En caso contrario, se registra:
+\[
+\text{registrar penalización correspondiente}
+\]
+
+Este proceso se repite para cada tarea en $\mathrm{Orden}_o$ de cada operario $o \in O$.
+
+
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=12mm, >=latex, thick]
+
+\tikzstyle{block} = [
+    rectangle, draw, rounded corners,
+    text width=45mm, align=center, minimum height=10mm
+]
+
+\node[block] (input) {Individuo \\ $\mathbf{x} = [\, \mathbf{y} \mid \boldsymbol{\pi} \,]$};
+
+\node[block, below=of input] (split) {Separación por operario \\ $T_o = \{ i : y_i = o \}$};
+
+\node[block, below=of split] (sort) {Ordenar tareas por prioridad \\ $\pi_i$};
+
+\node[block, below=of sort] (check) {Validación de restricciones:\\
+aptitud, repuestos, precedencias,\\
+no solapamiento, horizonte};
+
+\node[block, below=of check] (update) {Actualizar estado:\\
+$tpo[o]$, $\mathrm{comp}$, $\mathrm{occ}$};
+
+\node[block, below=of update] (metrics) {Generar métricas:\\
+$N_{\text{exec}}, P_{\text{prec}}, P_{\text{rep}},$\\
+$P_{\text{apt}}, P_{\text{ot}}, E_{\text{hor}}, \sigma, C_{\max}$};
+
+\draw[->] (input) -- (split);
+\draw[->] (split) -- (sort);
+\draw[->] (sort) -- (check);
+\draw[->] (check) -- (update);
+\draw[->] (update) -- (metrics);
+
+\end{tikzpicture}
+\caption{Flujo del proceso de evaluación de un individuo.}
+\end{figure}
+
+
+
+\subsection{Función de Aptitud}
+
+La función de aptitud asigna un valor cuantitativo al desempeño de cada individuo a partir 
+de las métricas generadas durante la evaluación. Su diseño busca orientar el proceso 
+evolutivo hacia soluciones que maximicen la cantidad de tareas programadas y minimicen 
+las violaciones operativas. Para ello se emplean ponderaciones que reflejan la importancia 
+relativa de cada componente dentro del contexto del taller.
+
+El término principal corresponde al número de tareas ejecutadas, ponderado con un valor 
+significativamente mayor, dado que la productividad diaria es el objetivo fundamental del 
+proceso de programación. Las penalizaciones restantes representan violaciones a restricciones 
+que afectan la factibilidad o la calidad de la programación. Estas penalizaciones se escalan 
+según su impacto operativo: las restricciones relacionadas con aptitud, precedencias y 
+repuestos reciben pesos más altos, ya que su incumplimiento impide la ejecución de la tarea. 
+Los solapamientos dentro de una orden se penalizan con magnitud similar, pues afectan la 
+coherencia del proceso de reparación. Por su parte, los excedentes del horizonte, el balance 
+de carga y el makespan tienen ponderaciones menores, dado que no invalidan la tarea pero sí 
+influyen en la eficiencia global del cronograma.
+
+La función utilizada es:
+\[
+\operatorname{fitness}(\mathbf{x}) =
 100 N_{\text{exec}}
 - 10 P_{\text{prec}}
 - 10 P_{\text{rep}}
@@ -53,91 +256,289 @@ La función objetivo maximiza el número de tareas programadas y penaliza violac
 - 12 P_{\text{ot}}
 - 0.1 E_{\text{hor}}
 - 0.5 \sigma
-- 0.1 C_{\max}
+- 0.1 C_{\max}.
 \]
 
-donde los términos representan:  
-$N_{\text{exec}}$ tareas ejecutadas,  
-$P_{\text{prec}}$ violaciones de precedencia,  
-$P_{\text{rep}}$ faltas de repuestos,  
-$P_{\text{apt}}$ asignaciones a operarios no aptos,  
-$P_{\text{ot}}$ solapamientos en la misma orden,  
-$E_{\text{hor}}$ excede del horizonte,  
-$\sigma$ desviación estándar (balance de carga),  
-$C_{\max}$ makespan.
+Los pesos responden a los siguientes criterios:
+\begin{itemize}
+    \item \textbf{100 en $N_{\text{exec}}$}: maximizar la ejecución de tareas es el objetivo operativo principal.
+    \item \textbf{15 en $P_{\text{apt}}$}: una asignación no apta hace imposible la ejecución de la tarea.
+    \item \textbf{12 en $P_{\text{ot}}$}: los solapamientos comprometen la coherencia interna de una orden de trabajo.
+    \item \textbf{10 en $P_{\text{prec}}$ y $P_{\text{rep}}$}: la falta de precedencias o repuestos impide ejecutar la tarea.
+    \item \textbf{0.1 en $E_{\text{hor}}$}: el excedente del horizonte indica ineficiencia temporal, pero no invalida la tarea.
+    \item \textbf{0.5 en $\sigma$}: promueve una distribución equilibrada de carga sin sobreponderarla.
+    \item \textbf{0.1 en $C_{\max}$}: favorece cronogramas más compactos con impacto secundario.
+\end{itemize}
+
+En conjunto, estas ponderaciones guían la búsqueda del algoritmo genético hacia soluciones 
+factibles, eficientes y alineadas con las necesidades reales del entorno industrial.
+
 
 % --------------------------------------------------------
 
-\section{Diseño del Algoritmo Genético}
 
-El algoritmo genético se diseñó para explorar combinaciones de asignación y secuenciación que respeten la estructura operativa del taller. Cada individuo representa un cronograma potencial que es evaluado mediante una simulación determinista.
 
-\subsection{Representación}
+\subsection{Operadores Genéticos y Parámetros del AG}
 
-Cada individuo se define como un vector de $2n$ dimensiones:
+El proceso evolutivo implementado en este proyecto se desarrolla mediante los operadores 
+genéticos estándar proporcionados por la librería PyGAD, configurados de manera que reflejen 
+las características del problema y favorezcan una búsqueda eficiente dentro del espacio de 
+soluciones. Cada operador contribuye a la exploración o explotación del espacio, mientras 
+que los parámetros controlan la estabilidad y la velocidad de convergencia del algoritmo.
+
+\paragraph{Selección.}
+Se emplea selección por \textit{ranking}, mecanismo en el cual los individuos se ordenan de 
+acuerdo con su aptitud y se asignan probabilidades de selección según su posición relativa. 
+Este método es adecuado en contextos donde las diferencias entre aptitudes pueden ser 
+grandes debido a penalizaciones por restricciones, evitando que unos pocos individuos 
+dominen prematuramente la población y manteniendo una presión selectiva estable.
+
+\paragraph{Cruce.}
+Para la recombinación se utilizó un cruce de un solo punto (\textit{single point crossover}). 
+Este método divide el cromosoma en dos segmentos y combina parcialmente la asignación de 
+operarios con el vector de prioridades proveniente de otro progenitor. Dado que el cromosoma 
+está estructurado en dos bloques homogéneos (asignación y prioridad), un punto de cruce 
+introduce variabilidad sin descomponer significativamente la estructura semántica del 
+individuo.
+
+\paragraph{Mutación.}
+La variación genética se incorpora mediante una tasa de mutación aplicada al 15\% de los 
+genes del cromosoma. En los genes de asignación, la mutación consiste en seleccionar 
+aleatoriamente un operario válido para el tipo de tarea; en los genes de prioridad, asigna 
+un valor continuo aleatorio en el intervalo $[0,1]$. Esta tasa moderada permite explorar 
+nuevas combinaciones manteniendo la estabilidad del proceso evolutivo y evitando 
+convergencias prematuras.
+
+\paragraph{Parámetros generales.}
+El algoritmo se ejecutó con los siguientes parámetros:
+\begin{itemize}
+    \item \textbf{Población:} 100 individuos.
+    \item \textbf{Generaciones:} 250.
+    \item \textbf{Padres seleccionados por generación:} 10.
+    \item \textbf{Padres preservados (elitismo):} 5.
+    \item \textbf{Semilla aleatoria:} 42, para garantizar reproducibilidad.
+\end{itemize}
+
+Los parámetros fueron configurados mediante las funciones nativas de PyGAD, lo que facilitó 
+la integración del evaluador personalizado dentro del proceso evolutivo. En conjunto, la 
+configuración seleccionada proporciona un equilibrio adecuado entre exploración del espacio 
+de búsqueda y refinamiento de soluciones prometedoras, permitiendo generar cronogramas 
+robustos y operativamente factibles.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=14mm,
+    >=latex,
+    thick,
+    block/.style={
+        rectangle,
+        draw,
+        rounded corners,
+        text width=45mm,
+        align=center,
+        minimum height=10mm
+    }
+]
+
+% Nodes
+\node[block] (pop) {Población actual \\ $P^{(g)}$};
+\node[block, below=of pop] (fitness) {Evaluación \\ Función de aptitud};
+\node[block, below=of fitness] (select) {Selección \\ (ranking)};
+\node[block, below=of select] (crossover) {Cruce \\ (single point)};
+\node[block, below=of crossover] (mutation) {Mutación \\ (15\% de genes)};
+\node[block, below=of mutation] (elitism) {Preservación de élite \\ (5 mejores individuos)};
+\node[block, below=of elitism] (newpop) {Nueva población \\ $P^{(g+1)}$};
+
+% Arrows
+\draw[->] (pop) -- (fitness);
+\draw[->] (fitness) -- (select);
+\draw[->] (select) -- (crossover);
+\draw[->] (crossover) -- (mutation);
+\draw[->] (mutation) -- (elitism);
+\draw[->] (elitism) -- (newpop);
+
+\end{tikzpicture}
+\caption{Flujo del ciclo evolutivo del algoritmo genético en PyGAD.}
+\end{figure}
+
+\section{Enfoque de Solución: Método SPT}
+
+Como alternativa al enfoque evolutivo basado en algoritmos genéticos, se consideró una 
+estrategia heurística clásica de secuenciación: la regla SPT (\textit{Shortest Processing 
+Time}). Este método es ampliamente utilizado en entornos industriales debido a su 
+simplicidad, su bajo costo computacional y su buen desempeño en escenarios donde las 
+restricciones operativas son mínimas. Por estas razones, SPT constituye un punto de 
+referencia habitual en estudios comparativos de métodos de programación.
+
+En su forma tradicional, SPT prioriza las tareas con menor tiempo de procesamiento. No 
+obstante, dado que el problema del taller incorpora múltiples restricciones —precedencias 
+internas, disponibilidad de repuestos, aptitud del operario y un horizonte diario limitado—, 
+la regla fue adaptada para integrarse al entorno de evaluación del sistema. 
+
+De este modo, tanto SPT como el algoritmo genético abordan el mismo problema de 
+programación y son plenamente capaces de generar un cronograma operativo completo. 
+La diferencia radica en la lógica que guía la construcción de la solución: mientras el 
+enfoque evolutivo explora múltiples configuraciones mediante un proceso de búsqueda global, 
+SPT define un orden determinista basado en la duración de las tareas.
+
+\subsection{Modelado del SPT para el Taller}
+
+La aplicación de la regla SPT en el taller requiere establecer con claridad la información 
+operativa que interviene en la selección y ordenamiento de las tareas. En este enfoque, SPT 
+actúa directamente sobre los datos de la instancia, priorizando las tareas en función de su 
+tiempo de procesamiento, pero integrado a las restricciones reales del sistema para asegurar 
+un orden viable.
+
+El método utiliza como entrada las tareas pendientes por orden de trabajo, los tiempos de 
+procesamiento por tipo de tarea, las relaciones de precedencia interna, la disponibilidad de 
+repuestos, el conjunto de operarios disponibles y las tareas para las cuales son aptos, así 
+como el horizonte diario máximo permitido.
+
+Con esta información, el algoritmo identifica en cada iteración las tareas listas para ser 
+consideradas. Una tarea se considera lista cuando: (i) todas las tareas precedentes dentro 
+de su orden han sido completadas, (ii) el repuesto correspondiente se encuentra disponible, 
+(iii) su duración está definida y (iv) permanece pendiente en la instancia.
+
+Entre todas las tareas que cumplen estas condiciones, la regla SPT selecciona aquellas con 
+menor tiempo de procesamiento, conformando un conjunto ordenado dinámicamente. Este 
+ordenamiento se actualiza a medida que nuevas tareas se completan, repuestos se consumen y 
+las relaciones de precedencia modifican el estado del sistema.
+
+El resultado de este proceso es una política determinista que, basada en la duración de las 
+tareas y en el cumplimiento de las restricciones operativas, establece un orden de ejecución 
+coherente con las características del taller. A partir de dicho orden, el entorno de 
+programación determina los horarios de inicio y finalización, respetando los tiempos 
+disponibles, la aptitud del operario asignado y las ventanas temporales de la orden de 
+trabajo.
+
+\subsection{Representación Formal del Orden SPT}
+
+El ordenamiento SPT aplicado al taller puede describirse formalmente como un proceso 
+iterativo que opera sobre el conjunto de tareas pendientes. En cada paso, el método 
+determina el subconjunto de tareas que cumplen las condiciones necesarias para ser 
+consideradas y luego aplica un criterio de priorización basado en el tiempo de 
+procesamiento.
+
+Sea $\mathcal{T}$ el conjunto de tareas pendientes, $p(i)$ la duración de la tarea $i$, 
+$\mathcal{P}(ot,i)$ el conjunto de prerequisitos internos para la tarea $i$ dentro de la 
+orden $ot$, $R(ot,i)$ un indicador de disponibilidad del repuesto correspondiente, y 
+$C(ot)$ el conjunto de tareas completadas en dicha orden. El conjunto de tareas listas en 
+la iteración $k$ se define como:
 
 \[
-[\, y_1, \dots, y_n \,] \;\Vert\; [\, \pi_1, \dots, \pi_n \,]
+\mathcal{L}^{(k)} = 
+\Big\{ (ot,i) \in \mathcal{T}^{(k)} \; : \;
+\mathcal{P}(ot,i) \subseteq C^{(k)}(ot), \;
+R(ot,i)=1, \;
+p(i)\ \text{definido} \Big\}.
 \]
 
-\begin{itemize}
-    \item Primeros $n$ genes: operario asignado, restringido al conjunto $E(\mathrm{tipo}(i))$.
-    \item Últimos $n$ genes: prioridades en $[0,1]$.
-\end{itemize}
+Sobre este conjunto, el criterio SPT establece un ordenamiento ascendente por duración:
 
-\subsection{Selección}
+\[
+\operatorname{SPT}(\mathcal{L}^{(k)}) 
+= \operatorname{sort}\Big(\mathcal{L}^{(k)},\; p(i)\Big).
+\]
 
-Se empleó selección por \textbf{ranking}, adecuada para entornos donde la distribución de aptitud puede ser muy desigual debido a penalizaciones fuertes.
+Dado que los elementos dentro de una misma orden pueden compartir la misma duración, se 
+emplean criterios secundarios de desempate consistentes con la implementación: primero por 
+identificador de orden y luego por identificador de tarea. Esto asegura un orden total 
+determinista:
 
-\subsection{Cruce}
+\[
+(ot_a,i_a) \prec (ot_b,i_b)
+\quad\Longleftrightarrow\quad
+\begin{cases}
+p(i_a) < p(i_b), \\
+\text{o bien } p(i_a)=p(i_b) \text{ y } ot_a < ot_b, \\
+\text{o bien } p(i_a)=p(i_b),\ ot_a=ot_b \text{ y } i_a < i_b. 
+\end{cases}
+\]
 
-Se utilizó cruce de tipo \textbf{single\_point}, apropiado debido a que el cromosoma posee dos mitades homogéneas: asignación y prioridad.
+El resultado final es una secuencia ordenada de tareas listas, actualizada dinámicamente en 
+cada iteración a medida que nuevas tareas son completadas y otras entran en condición de 
+ser consideradas.
 
-\subsection{Mutación}
+\subsection{Aplicación Operativa del SPT en el Taller}
 
-Mutación aleatoria sobre el \textbf{15\%} de los genes:
+Una vez definido el orden SPT de las tareas listas, el sistema procede a construir el 
+cronograma operativo respetando la disponibilidad de los operarios, las restricciones de 
+cada orden de trabajo y el horizonte diario. Este proceso se desarrolla de manera 
+iterativa sobre el conjunto de tareas pendientes, actualizando el estado del sistema a 
+medida que se programan nuevas actividades.
 
-\begin{itemize}
-    \item Para asignaciones: se elige aleatoriamente un nuevo operario dentro de $E(\mathrm{tipo}(i))$.
-    \item Para prioridades: se asigna un valor continuo uniforme en $[0,1]$.
-\end{itemize}
+En cada iteración, el método toma la lista ordenada de tareas generada por la regla SPT y 
+selecciona, para cada una de ellas, un operario apto para su ejecución. La asignación se 
+realiza siguiendo un criterio de carga acumulada: entre los operarios capaces de ejecutar 
+la tarea, se elige aquel que tenga el menor tiempo total programado hasta el momento, 
+buscando equilibrar progresivamente la utilización de la capacidad diaria.
 
-\subsection{Parámetros}
+Una vez identificado el operario, el sistema determina el primer intervalo disponible donde 
+la tarea puede ser ubicada. Para ello se utiliza una rutina de búsqueda del hueco más 
+temprano, que evalúa: (i) los intervalos ya ocupados por actividades de la misma orden de 
+trabajo, (ii) el tiempo más próximo en el que el operario puede iniciar nuevas tareas, 
+(iii) la duración de la actividad y (iv) el límite superior del horizonte diario.
 
-\begin{itemize}
-    \item Generaciones: 250
-    \item Población: 100 individuos
-    \item Padres por generación: 10
-    \item Padres preservados: 5
-    \item Semilla: 42 (reproducibilidad)
-\end{itemize}
+Si existe un intervalo $[s, f)$ dentro de estos límites donde la tarea puede ejecutarse sin 
+solaparse con otras actividades de la misma orden y sin exceder la jornada asignada, la 
+tarea es programada en dicho espacio. Con esto se actualizan simultáneamente la ocupación 
+temporal de la orden, el tiempo acumulado del operario y el conjunto de tareas 
+completadas.
 
-\subsection*{Evaluación del Individuo}
+En caso de que ninguna combinación válida de operario e intervalo esté disponible, la tarea 
+permanece pendiente y será reconsiderada más adelante, siempre que las condiciones del 
+sistema cambien a su favor. El ciclo continúa hasta que no sea posible programar nuevas 
+tareas o todas hayan sido ubicadas dentro del horizonte.
 
-La simulación determina:
+Al finalizar, el método genera el cronograma de tareas con tiempos de inicio y fin, la 
+lista de tareas que no pudieron ser programadas, la ocupación temporal por orden de 
+trabajo, el tiempo total utilizado por cada operario y métricas como el número de tareas 
+ejecutadas y el makespan.
 
-\begin{itemize}
-    \item tareas ejecutadas,
-    \item tareas rechazadas por precedencias, repuestos, aptitud o solapamiento,
-    \item balance de carga entre operarios,
-    \item makespan del sistema.
-\end{itemize}
+De esta manera, el enfoque SPT produce un cronograma completo y coherente con las 
+restricciones del taller, combinando un orden de secuenciación basado en los tiempos de 
+procesamiento con un proceso operativo de programación ajustado al estado real del sistema.
 
-% --------------------------------------------------------
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=12mm,
+    >=latex,
+    thick,
+    block/.style={
+        rectangle,
+        draw,
+        rounded corners,
+        text width=40mm,
+        align=center,
+        minimum height=10mm
+    }
+]
 
-\section{Implementación del Método SPT}
+% Nodes (vertical layout)
+\node[block] (pend) {Tareas pendientes};
+\node[block, below=of pend] (filtrar) {Filtrado de tareas listas \\ (prereqs + repuestos)};
+\node[block, below=of filtrar] (orden) {Orden SPT \\ (por duración)};
+\node[block, below=of orden] (operario) {Selección de operario apto \\ (mínima carga)};
+\node[block, below=of operario] (slot) {Búsqueda de hueco \\ más temprano};
+\node[block, below=of slot] (asignar) {Asignación \\ inicio–fin};
+\node[block, below=of asignar] (actualizar) {Actualización del estado \\ (pendientes, carga, OT)};
 
-Texto pendiente.
+% Arrows
+\draw[->] (pend) -- (filtrar);
+\draw[->] (filtrar) -- (orden);
+\draw[->] (orden) -- (operario);
+\draw[->] (operario) -- (slot);
+\draw[->] (slot) -- (asignar);
+\draw[->] (asignar) -- (actualizar);
 
-% --------------------------------------------------------
+\end{tikzpicture}
+\caption{Flujo operativo del método SPT en el taller.}
+\end{figure}
 
-\section{Integración con el Entorno Simulado}
 
-Texto pendiente.
 
-% --------------------------------------------------------
 
-\section{Arquitectura General del Sistema Desarrollado}
 
-Texto pendiente.
 
