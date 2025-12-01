@@ -1,12 +1,5 @@
-\chapter{Ejecución y obtención de resultados}
-
-Este capítulo describe la implementación del sistema desarrollado para la programación diaria de tareas en un taller industrial. Se detalla el entorno de desarrollo utilizado, la arquitectura del software, la implementación del algoritmo genético y del método SPT, así como el procedimiento empleado para ejecutar las simulaciones que permiten comparar ambos métodos. La descripción presentada no incluye fragmentos de código fuente, sino explicaciones conceptuales y pseudocódigo cuando es pertinente, siguiendo las recomendaciones establecidas por la dirección del trabajo.
 \chapter{Ejecución y Obtención de Resultados}
 
-\section{Entorno de Desarrollo y Herramientas Utilizadas}
-\section{Configuración para la Ejecución}
-\section{Procedimiento para la Ejecución de Escenarios}
-\section{Obtención y Recolección de Datos}
 \section{Entorno de desarrollo}
 
 El sistema fue implementado en el lenguaje de programación Python, debido a su flexibilidad, amplia disponibilidad de librerías para optimización y manejo de datos, y su compatibilidad con métodos heurísticos y evolutivos. Para garantizar portabilidad y consistencia, se empleó un entorno virtual administrado mediante \texttt{venv}.
@@ -124,7 +117,7 @@ PyGAD administra el proceso evolutivo, mientras que la evaluación real se reali
 Antes de iniciar el proceso de calibración, se definió una configuración base del algoritmo genético que sirvió como punto de partida para todos los experimentos. Esta configuración incluye parámetros estándar recomendados en la literatura y valores validados empíricamente para garantizar un comportamiento estable del algoritmo.
 
 \begin{itemize}
-    \item Tamaño de población: 300 individuos
+    \item Tamaño de población: 100 individuos
     \item Número de padres por generación: 10
     \item Padres preservados: 5
     \item Método de selección: \textit{rank}
