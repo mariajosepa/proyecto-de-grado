@@ -1,4 +1,9 @@
 % -------------------------------------------------------
+% Idioma y localización
+% -------------------------------------------------------
+\usepackage[spanish,es-tabla]{babel}
+
+% -------------------------------------------------------
 % Paquetes Matemáticos
 % -------------------------------------------------------
 \usepackage{amsmath}
@@ -13,7 +18,8 @@
 % \usepackage{algorithmic}    % Comentado: conflicto con algorithm2e
 
 % Estilo adicional de pseudocódigo (ruled, vlined)
-\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[ruled,vlined,onelanguage]{algorithm2e}
+\SetAlgorithmName{Algoritmo}{Algoritmo}{Índice de Algoritmos}
 
 % -------------------------------------------------------
 % Control de figuras y posicionamiento
@@ -54,3 +60,13 @@
   sorting=none
 ]{biblatex}
 \addbibresource{referencias.bib}
+
+% -------------------------------------------------------
+% Configuración adicional de localización al español
+% -------------------------------------------------------
+% Renombra elementos automáticos de LaTeX al español
+\AtBeginDocument{
+  % Babel ya proporciona las traducciones automáticas
+  \renewcommand\appendixname{Anexo}
+  \renewcommand\bibname{Bibliografía}
+}
