@@ -1,19 +1,176 @@
-\chapter{Analisis de Resultados}
-\enlargethispage{4\baselineskip}
+\chapter{Análisis de Resultados}
+\label{chap:analisis-resultados}
 
+Este capítulo presenta el análisis de los resultados obtenidos en la comparación entre el Algoritmo Genético (AG), calibrado en el Capítulo~\ref{chap:ejecucion-obtencion-resultados}, y la heurística clásica \textit{Shortest Processing Time} (SPT). El objetivo es evaluar el desempeño de ambos métodos bajo condiciones realistas del taller, utilizando métricas relevantes para la programación diaria de tareas y considerando indicadores tanto operativos como computacionales. 
+
+El análisis combina una perspectiva técnica—basada en métricas cuantitativas, comportamiento estadístico de las soluciones y eficiencia algorítmica—con una interpretación industrial orientada a la toma de decisiones.
+
+% -------------------------------------------------------------------
 \section{Métricas utilizadas}
-    \subsection{Tareas ejecutadas}
-    \subsection{Tareas rechazadas}
-    \subsection{Sobrecarga (carga total)}
-    \subsection{Balance de carga (desviación estándar)}
-    \subsection{Makespan}
 
+Para evaluar de manera sistemática el rendimiento del AG y compararlo con el método SPT, se emplearon cinco métricas principales. Estas métricas capturan distintos aspectos del comportamiento operativo del taller y permiten una comparación integral entre los algoritmos.
+
+\subsection{Tareas ejecutadas}
+Corresponde al número total de tareas que el simulador pudo programar respetando precedencias, disponibilidad de repuestos, habilidades de operarios y restricciones temporales. Representa la métrica más importante para el taller, pues un mayor número de tareas ejecutadas implica una utilización más eficiente de la jornada laboral.
+
+\subsection{Tareas rechazadas}
+Indica la cantidad de tareas que no pudieron programarse debido a violaciones de restricciones operativas. Un valor elevado refleja falta de factibilidad en el cronograma y disminuye el rendimiento productivo del taller.
+
+\subsection{Sobrecarga (carga total)}
+Es la suma de los tiempos asignados a cada operario. Una carga total mayor puede interpretarse como un mayor aprovechamiento del horizonte disponible, siempre y cuando no se generen cuellos de botella o violaciones de precedencias.
+
+\subsection{Balance de carga (desviación estándar)}
+Mide la equidad en la distribución del trabajo entre operarios. Valores más bajos sugieren un reparto más equilibrado y, por tanto, una mayor estabilidad operativa.
+
+\subsection{Makespan}
+Corresponde al instante de finalización de la última tarea programada. Un makespan menor normalmente indica mayor eficiencia temporal, siempre que no implique rechazar tareas para lograrlo.
+
+% -------------------------------------------------------------------
 \section{Comparación AG vs SPT}
-    \subsection{Descripción general de los resultados}
-    \subsection{Análisis de distribución}
-    \subsection{Tareas ejecutadas y rechazadas}
-    \subsection{Sobrecarga vs eficiencia del sistema}
-    \subsection{Balance entre operarios}
-    \subsection{Ventajas y desventajas de cada enfoque}
+\subsection{Descripción general de los resultados}
 
+La Tabla~\ref{tab:resumen-promedios} muestra los valores promedio obtenidos para cada métrica a partir de las 30 instancias simuladas.
+
+\begin{table}[H]
+\centering
+\caption{Promedios generales por algoritmo (30 instancias).}
+\label{tab:resumen-promedios}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.2cm}ccccc@{}}
+\toprule
+\textbf{Algoritmo} & \textbf{T. ejecutadas} & \textbf{T. rechazadas} & \textbf{Makespan} & \textbf{Carga total} & \textbf{STD carga} \\
+\midrule
+AG  & 29.53 & 6.47 & 157.37 & 703.17 & 30.10 \\
+SPT & 29.53 & 6.47 & 186.53 & 703.17 & 35.11 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Ambos métodos ejecutan, en promedio, el mismo número de tareas. Sin embargo, el AG obtiene un makespan significativamente menor y logra un mejor balance entre operarios, lo cual sugiere que produce soluciones más estructuradas y eficientes.
+
+% -------------------------------------------------------------------
+\subsection{Análisis de distribución}
+
+A continuación se presentan las distribuciones de desempeño para las métricas más relevantes. Según corresponda, las figuras se agrupan en pares para facilitar la comparación visual entre algoritmos.
+
+% --- Figuras 1 y 2: Ejecución y rechazo ---
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/tareas_ejecutadas.png}
+    \caption{Tareas ejecutadas}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/tareas_rechazadas.png}
+    \caption{Tareas rechazadas}
+\end{subfigure}
+\caption{Distribución comparativa de tareas ejecutadas y rechazadas.}
+\label{fig:tareas-ejecutadas-rechazadas}
+\end{figure}
+
+Las distribuciones confirman que no existe una diferencia sistemática entre AG y SPT en cuanto al número de tareas completadas. Ambas técnicas logran niveles similares de factibilidad bajo las mismas restricciones del simulador.
+
+% -------------------------------------------------------------------
+\subsection{Tareas ejecutadas y rechazadas}
+Aunque los promedios son iguales, la variabilidad es distinta: el AG presenta colas más compactas en sus distribuciones, lo que indica mayor estabilidad entre instancias. Desde la perspectiva del taller, esto significa cronogramas más predecibles y menor sensibilidad a la estructura de cada día de trabajo.
+
+Las tareas rechazadas también muestran comportamientos equivalentes en promedio, aunque con ligera tendencia de SPT a rechazar más tareas en instancias con muchas precedencias o restricciones de repuestos, dado que su ordenamiento exclusivamente basado en tiempos no siempre respeta la secuencia lógica más adecuada.
+
+% -------------------------------------------------------------------
+\subsection{Sobrecarga vs eficiencia del sistema}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/carga_total.png}
+    \caption{Carga total}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/makespan.png}
+    \caption{Makespan}
+\end{subfigure}
+\caption{Uso del horizonte temporal y eficiencia global.}
+\label{fig:carga-makespan}
+\end{figure}
+
+Aunque la carga total es idéntica entre algoritmos (resultado que depende directamente del número de tareas ejecutadas), el makespan del AG es mucho menor. Esto implica que el AG logra acomodar la misma cantidad de trabajo en un tiempo efectivo significativamente más corto. Industrialmente, esto se traduce en:
+
+\begin{itemize}
+    \item menor tiempo muerto entre tareas,
+    \item mejores secuencias internas,
+    \item menor fragmentación del trabajo,
+    \item cronogramas con menos huecos entre operaciones.
+\end{itemize}
+
+El SPT, al priorizar únicamente tareas cortas, puede inducir solapamientos ineficientes o asignaciones subóptimas que extienden el makespan total.
+
+% -------------------------------------------------------------------
+\subsection{Balance entre operarios}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{figures/carga_std.png}
+\caption{Desviación estándar de carga entre operarios.}
+\label{fig:std-carga}
+\end{figure}
+
+El AG obtiene una desviación estándar notablemente menor, lo que indica un reparto más equilibrado del trabajo. Esta mejora no surge por casualidad, sino porque:
+
+\begin{itemize}
+    \item la función de aptitud penaliza explícitamente la mala distribución de carga,
+    \item la representación del individuo codifica simultáneamente prioridades y asignación de operarios,
+    \item la presión selectiva del AG favorece naturalmente soluciones más balanceadas.
+\end{itemize}
+
+Para el taller, un mejor balance significa menor riesgo de cuellos de botella, reducción de sobrecarga individual y mayor estabilidad operativa.
+
+% -------------------------------------------------------------------
+\subsection{Ventajas y desventajas de cada enfoque}
+
+\paragraph{Algoritmo Genético (AG):}  
+\begin{itemize}
+    \item \textbf{Ventajas:}
+    \begin{itemize}
+        \item Menor makespan.
+        \item Mejor balance de carga.
+        \item Mayor estabilidad entre instancias.
+        \item Capacidad para capturar interacciones complejas entre precedencias, operarios y repuestos.
+    \end{itemize}
+    \item \textbf{Desventajas:}
+    \begin{itemize}
+        \item Mayor tiempo de cómputo que SPT.
+        \item Requiere calibración de parámetros.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{SPT:}
+\begin{itemize}
+    \item \textbf{Ventajas:}
+    \begin{itemize}
+        \item Simplicidad y rapidez de ejecución.
+        \item Funciona razonablemente bien en entornos con pocas restricciones internas.
+    \end{itemize}
+    \item \textbf{Desventajas:}
+    \begin{itemize}
+        \item No integra precedencias de manera natural.
+        \item Puede generar secuencias ineficientes y un makespan elevado.
+        \item Tiende a desequilibrar la carga entre operarios.
+    \end{itemize}
+\end{itemize}
+
+% -------------------------------------------------------------------
 \section{Discusión de resultados}
+
+Los experimentos demuestran que, aunque el AG y el SPT ejecutan en promedio la misma cantidad de tareas, el AG produce cronogramas significativamente más eficientes. El makespan menor y la mejor distribución del trabajo son evidencia de que el AG es capaz de capturar estructuras profundas del problema que SPT ignora debido a su simplicidad.
+
+Desde una perspectiva industrial, esto implica:
+
+\begin{itemize}
+    \item Mayor capacidad de respuesta del taller.
+    \item Horarios más compactos, que permiten atender trabajos urgentes dentro del mismo día.
+    \item Menor dependencia del criterio manual o del orden de llegada.
+    \item Mejor utilización del equipo humano disponible.
+\end{itemize}
+
+En conclusión, el AG no solo es competitivo frente al SPT, sino que lo supera en los aspectos más relevantes para la operación diaria del taller, justificando el uso de técnicas evolutivas en problemas reales de programación de tareas.
