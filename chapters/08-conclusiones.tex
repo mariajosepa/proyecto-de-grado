@@ -1,5 +1,277 @@
 \chapter{Conclusiones}
 
-\section{Cumplimiento de objetivos}
-\section{Conclusiones técnicas}
-\section{Impacto industrial}
+El presente capítulo sintetiza los hallazgos principales del proyecto, evalúa el cumplimiento de los objetivos propuestos, presenta las conclusiones técnicas derivadas del análisis de resultados y analiza el impacto potencial de los algoritmos genéticos en la industria de los talleres de reparación.
+
+\section{Cumplimiento de Objetivos}
+
+\subsection{Objetivo General}
+
+El objetivo general del proyecto fue \textit{``Desarrollar un modelo de automatización basado en algoritmos genéticos para apoyar en el módulo de asignación de tareas de un sistema ERP de talleres industriales, comparándolo con otro método de automatización utilizado en ingeniería industrial''}. Este objetivo ha sido alcanzado exitosamente.
+
+Se implementó un algoritmo genético configurado específicamente para resolver el problema de asignación de tareas en un taller automotriz, incorporando restricciones reales del sistema: aptitud de operarios, disponibilidad de repuestos, precedencias de tareas y límites de horizonte diario. El algoritmo fue comparado directamente con el método SPT (Shortest Processing Time), una heurística industrialmente aceptada, bajo condiciones reproducibles y equitativas.
+
+\subsection{Objetivos Específicos}
+
+\subsubsection{Identificar características clave de asignación de tareas}
+
+Se logró identificar y formalizar los elementos críticos que influyen en la asignación de tareas en un taller industrial:
+
+\begin{itemize}
+    \item \textbf{Capacidades técnicas}: cada operario posee habilidades específicas que determinan qué tareas puede ejecutar.
+    \item \textbf{Disponibilidad de insumos}: la presencia de repuestos es requisito indispensable para iniciar ciertas actividades.
+    \item \textbf{Precedencias internas}: algunas tareas dentro de una orden deben completarse en orden específico (ej: desmontaje antes de diagnóstico).
+    \item \textbf{Horizonte temporal}: cada operario dispone de una jornada laboral limitada (480 minutos en este estudio).
+    \item \textbf{Balance de carga}: la distribución equitativa de trabajo reduce estrés operativo y tiempos ociosos.
+\end{itemize}
+
+Estos elementos fueron formalizados matemáticamente en el Capítulo 4 y constituyen la base del modelo de optimización.
+
+\subsubsection{Diseñar e implementar el modelo con algoritmo genético}
+
+Se desarrolló un modelo completo de optimización basado en algoritmos genéticos que:
+
+\begin{itemize}
+    \item Utiliza una representación dual del cromosoma: asignación de operarios + prioridades de secuenciación.
+    \item Implementa una función de aptitud ponderada que maximiza tareas ejecutadas (coeficiente 100) mientras penaliza violaciones de restricciones (coeficientes 10-15).
+    \item Integra operadores genéticos (selección por ranking, cruce de un punto, mutación del 15\%) calibrados empíricamente.
+    \item Fue implementado en Python utilizando la librería PyGAD, permitiendo reproducibilidad y extensibilidad.
+\end{itemize}
+
+El modelo converge rápidamente: estudios de calibración muestran que 300 generaciones son suficientes para alcanzar soluciones de alta calidad, sin que aumentos posteriores aporten mejoras significativas.
+
+\subsubsection{Evaluar desempeño del AG versus SPT}
+
+Se realizó una evaluación exhaustiva comparando el desempeño del algoritmo genético contra el método SPT a través de cinco métricas clave:
+
+\begin{itemize}
+    \item \textbf{Tareas ejecutadas}: número de actividades completadas dentro del horizonte disponible.
+    \item \textbf{Tareas rechazadas}: cantidad de tareas que no pudieron programarse.
+    \item \textbf{Makespan}: tiempo total desde la primera tarea hasta la última.
+    \item \textbf{Balance de carga}: equidad en la distribución de trabajo entre operarios (desviación estándar).
+    \item \textbf{Sobrecarga total}: carga acumulada de todos los operarios.
+\end{itemize}
+
+Los resultados muestran un desempeño comparable entre ambos métodos, con el AG demostrando fortalezas en situaciones donde las restricciones operativas son complejas, mientras que SPT mantiene una eficiencia competitiva en escenarios con restricciones simples.
+
+\subsubsection{Analizar beneficios y limitaciones}
+
+Se identificaron claramente las ventajas y limitaciones de cada enfoque:
+
+\textbf{Ventajas del AG:}
+\begin{itemize}
+    \item Capacidad de exploración del espacio de búsqueda mediante procesos evolutivos.
+    \item Adaptabilidad a cambios en restricciones y configuraciones del taller.
+    \item Potencial para soluciones no obvias que heurísticas deterministas no alcanzan.
+    \item Flexibilidad para ajustar pesos en la función de aptitud según prioridades empresariales.
+\end{itemize}
+
+\textbf{Limitaciones del AG:}
+\begin{itemize}
+    \item Mayor costo computacional en comparación con SPT.
+    \item Requiere calibración de múltiples parámetros (generaciones, mutación, selección).
+    \item Naturaleza estocástica implica variabilidad en resultados entre ejecuciones.
+    \item Necesidad de expertise en ingeniería de software para implementación y mantenimiento.
+\end{itemize}
+
+\textbf{Ventajas de SPT:}
+\begin{itemize}
+    \item Rapidez de ejecución comparable a algoritmos de tiempo polinomial.
+    \item Determinismo: misma entrada siempre produce idéntico resultado.
+    \item Simplicidad de comprensión e implementación.
+    \item Bajo requerimiento de recursos computacionales.
+\end{itemize}
+
+\textbf{Limitaciones de SPT:}
+\begin{itemize}
+    \item Naturaleza greedy (miope): no anticipa impactos a mediano plazo.
+    \item Inflexibilidad: cambios en prioridades empresariales requieren recodificación.
+    \item Potencial suboptimalidad en escenarios con restricciones complejas.
+\end{itemize}
+
+\section{Conclusiones Técnicas}
+
+\subsection{Validez del modelo formalmente}
+
+El modelo formalizado en el Capítulo 4 proporciona un marco riguroso para representar el problema de asignación de tareas. La formalización incluye:
+
+\begin{itemize}
+    \item Definición clara de variables de decisión, parámetros y restricciones.
+    \item Función objetivo que pondera múltiples criterios operativos.
+    \item Formulación del problema como un problema de optimización NP-hard.
+\end{itemize}
+
+Esta base matemática permitió la implementación consistente de ambos métodos de optimización, garantizando comparabilidad.
+
+\subsection{Efectividad del algoritmo genético}
+
+El algoritmo genético implementado demuestra ser una solución viable para el problema de asignación de tareas en talleres industriales. Específicamente:
+
+\begin{itemize}
+    \item \textbf{Convergencia rápida}: la población converge hacia soluciones competitivas en 300 generaciones (típicamente en tiempos menores a 2 minutos por ejecución).
+    \item \textbf{Factibilidad de soluciones}: todas las soluciones generadas respetan las restricciones operativas del taller.
+    \item \textbf{Estabilidad}: la calibración empírica de parámetros proporciona resultados consistentes.
+\end{itemize}
+
+La configuración final seleccionada (100 individuos, 300 generaciones, 15\% mutación, selección por ranking) ofrece un equilibrio óptimo entre calidad de solución y costo computacional.
+
+\subsection{Desempeño comparativo}
+
+En comparación directa con SPT:
+
+\begin{itemize}
+    \item El AG ejecuta aproximadamente \textbf{31.4 tareas} en promedio, versus las 29.8 de SPT (5.4\% de mejora).
+    \item El AG obtiene una carga total de \textbf{758.8 minutos}, comparado con 735.4 de SPT (3.2\% de diferencia).
+    \item Ambos métodos alcanzan makespan comparable, indicando eficiencia similar en horizonte total.
+    \item El AG demuestra mejor balance de carga en escenarios complejos, mientras SPT es más competitivo en instancias simples.
+\end{itemize}
+
+Estos resultados sugieren que el AG es una alternativa válida a SPT, especialmente cuando la complejidad operativa aumenta.
+
+\subsection{Escalabilidad del enfoque}
+
+El modelo propuesto es escalable a diferentes tamaños de problema:
+
+\begin{itemize}
+    \item La representación cromosómica es lineal en función del número de tareas ($2n$ genes para $n$ tareas).
+    \item La complejidad computacional del AG crece polinomialmente con el tamaño del problema.
+    \item Los tiempos de ejecución obtenidos (menores a 2 minutos) son aceptables para aplicación en tiempo real.
+\end{itemize}
+
+\subsection{Reproducibilidad}
+
+El proyecto garantiza reproducibilidad completa mediante:
+
+\begin{itemize}
+    \item Semillas aleatorias fijas (seed=42) en generación de instancias y ejecución del AG.
+    \item Documentación detallada de parámetros y procedimientos.
+    \item Código Python modular y disponible.
+    \item Descripción formal de algoritmos y pseudocódigos.
+\end{itemize}
+
+\section{Impacto Industrial}
+
+\subsection{Aplicabilidad a Rectificadora Recti-Ram}
+
+El modelo desarrollado es directamente aplicable al entorno de Rectificadora Recti-Ram, la empresa colaboradora en este proyecto. Específicamente:
+
+\begin{itemize}
+    \item Las tareas modeladas (desmontaje, diagnóstico, rectificación, ensamblaje) corresponden exactamente a procesos reales del taller.
+    \item Las restricciones incorporadas (aptitud de operarios, disponibilidad de repuestos, precedencias) reflejan la realidad operativa.
+    \item El horizonte de 480 minutos es consistente con la jornada laboral estándar.
+\end{itemize}
+
+Implementar este sistema en el módulo de gestión de órdenes del ERP actual podría mejorar:
+
+\begin{itemize}
+    \item \textbf{Throughput}: ejecutar aproximadamente 5\% más tareas diarias.
+    \item \textbf{Utilización de recursos}: distribuir carga equitativamente entre operarios.
+    \item \textbf{Cumplimiento de plazos}: reducir tiempos ociosos y retrasos.
+    \item \textbf{Rentabilidad}: optimizar uso de capacidad disponible.
+\end{itemize}
+
+\subsection{Reducción de Costos y Mejora de Eficiencia}
+
+Una mejora del 5-10\% en tareas ejecutadas diarias implica:
+
+\begin{itemize}
+    \item \textbf{Incremento de ingresos}: más reparaciones completadas genera mayor facturación.
+    \item \textbf{Reducción de horas hombre ociosas}: menor tiempo muerto entre tareas.
+    \item \textbf{Mejora en entregas a tiempo}: aumentar predictibilidad de plazos.
+    \item \textbf{Satisfacción del cliente}: entregas más oportuna y mayor capacidad de aceptación de órdenes.
+\end{itemize}
+
+En términos financieros, asumir que el taller procesa aproximadamente 40 órdenes diarias y que el margen unitario es de \$50,000 COP, una mejora del 5\% representaría ingresos adicionales de aproximadamente \$100,000 COP diarios (\$2.4 millones COP mensuales).
+
+\subsection{Transferencia de Conocimiento}
+
+Este proyecto proporciona:
+
+\begin{itemize}
+    \item \textbf{Documentación técnica}: especificación completa del modelo, algoritmos y parámetros.
+    \item \textbf{Código fuente}: implementación en Python lista para integración con sistemas ERP.
+    \item \textbf{Protocolo de calibración}: metodología para ajustar parámetros a cambios operativos.
+    \item \textbf{Formación}: base de conocimiento para personal técnico responsable del mantenimiento.
+\end{itemize}
+
+\subsection{Oportunidades de Extensión}
+
+El enfoque desarrollado abre posibilidades para futuras mejoras:
+
+\begin{itemize}
+    \item Integración con sistemas de predicción de demanda para planificación a mediano plazo.
+    \item Optimización multi-objetivo simultánea (minimizar costos, maximizar calidad, reducir desperdicios).
+    \item Incorporación de aprendizaje automático para ajuste dinámico de función de aptitud.
+    \item Extensión a múltiples turnos y centros de trabajo.
+\end{itemize}
+
+\section{Contribuciones al Campo de la Ingeniería Industrial}
+
+\subsection{Aporte académico}
+
+Este proyecto contribuye a la literatura en varios aspectos:
+
+\begin{itemize}
+    \item Formalización rigurosa de un problema de asignación de tareas en contexto ERP real.
+    \item Comparación empírica entre algoritmos genéticos y heurísticas clásicas en dominio específico.
+    \item Validación de técnicas evolutivas en ambiente industrial colombiano.
+    \item Documentación de metodología de calibración para algoritmos genéticos.
+\end{itemize}
+
+\subsection{Relevancia para PYMES}
+
+Para pequeñas y medianas empresas de reparación y manufactura:
+
+\begin{itemize}
+    \item Demuestra que automatización avanzada es accesible mediante software de código abierto (Python, PyGAD).
+    \item Proporciona metodología reproducible para problemas similares de optimización.
+    \item Valida ROI de inversión en herramientas de optimización operativa.
+\end{itemize}
+
+\section{Limitaciones del Estudio}
+
+Es importante reconocer las limitaciones del presente trabajo:
+
+\begin{itemize}
+    \item \textbf{Alcance de instancias}: el estudio se realizó con instancias generadas sintéticamente; validación con datos históricos reales sería beneficiosa.
+    \item \textbf{Horizonte temporal}: análisis limitado a un horizonte de 480 minutos (un día); dinámicas de múltiples turnos no fueron exploradas.
+    \item \textbf{Número de operarios}: experimentos simularon típicamente 4-5 operarios; escalabilidad a talleres mayores requiere análisis adicional.
+    \item \textbf{Variabilidad de tareas}: tipos de tareas modeladas (7 tipos) representan un subconjunto de posibles actividades.
+    \item \textbf{Modelo de duración}: tiempos de tarea se asumieron determinísticos; variabilidad estocástica de duraciones no fue considerada.
+\end{itemize}
+
+\section{Recomendaciones para Implementación}
+
+\subsection{Fase 1: Validación en Ambiente Piloto}
+
+\begin{enumerate}
+    \item Integrar el AG en módulo separado del ERP actual como sistema de decisión de soporte.
+    \item Ejecutar en paralelo durante 2-4 semanas: comparar recomendaciones del AG versus asignaciones manuales.
+    \item Medir aceptación del usuario y ajustar interfaz según feedback.
+    \item Validar con datos reales del taller para recalibración de parámetros.
+\end{enumerate}
+
+\subsection{Fase 2: Integración Operacional}
+
+\begin{enumerate}
+    \item Integración completa del AG en flujo operativo del ERP.
+    \item Definir roles y responsabilidades de operadores.
+    \item Establecer protocolos de excepción (situaciones donde se rechaza recomendación del AG).
+    \item Capacitación del personal relevante.
+\end{enumerate}
+
+\subsection{Fase 3: Optimización Continua}
+
+\begin{enumerate}
+    \item Monitoreo de métricas de desempeño (tareas ejecutadas, makespan, balance).
+    \item Actualización periódica de parámetros según cambios operativos.
+    \item Análisis de instancias donde AG y SPT difieren significativamente.
+    \item Exploración de mejoras basadas en patrones observados.
+\end{enumerate}
+
+\section{Reflexión Final}
+
+El presente trabajo demuestra que los algoritmos genéticos constituyen una herramienta viable y promisoria para automatizar la asignación de tareas en talleres industriales. Su desempeño comparativo con métodos heurísticos clásicos, combinado con su adaptabilidad y flexibilidad, sugieren que pueden ser componente valiosa de sistemas de soporte de decisión operacional.
+
+Sin embargo, la implementación exitosa requiere más que software técnicamente correcto: demanda comprensión profunda del dominio industrial, diálogo continuo con usuarios finales, validación rigurosa en ambiente real, y compromiso con mejora iterativa.
+
+Esperamos que este proyecto inspire futuras investigaciones en optimización industrial, tanto en contexto académico como en aplicación empresarial, contribuyendo al avance tecnológico y competitividad de la industria manufacturera colombiana.
