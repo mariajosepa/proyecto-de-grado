@@ -246,28 +246,40 @@ coherencia del proceso de reparación. Por su parte, los excedentes del horizont
 de carga y el makespan tienen ponderaciones menores, dado que no invalidan la tarea pero sí 
 influyen en la eficiencia global del cronograma.
 
-La función utilizada es:
+La función de aptitud se define formalmente como:
 \[
 \operatorname{fitness}(\mathbf{x}) =
-100 N_{\text{exec}}
-- 10 P_{\text{prec}}
-- 10 P_{\text{rep}}
-- 15 P_{\text{apt}}
-- 12 P_{\text{ot}}
-- 0.1 E_{\text{hor}}
-- 0.5 \sigma
-- 0.1 C_{\max}.
+100 \cdot N_{\text{exec}}
+- 10 \cdot P_{\text{prec}}
+- 10 \cdot P_{\text{rep}}
+- 15 \cdot P_{\text{apt}}
+- 12 \cdot P_{\text{ot}}
+- 0.1 \cdot E_{\text{hor}}
+- 15 \cdot \sigma
+- 10 \cdot C_{\max}
 \]
 
-Los pesos responden a los siguientes criterios:
+donde:
 \begin{itemize}
-    \item \textbf{100 en $N_{\text{exec}}$}: maximizar la ejecución de tareas es el objetivo operativo principal.
-    \item \textbf{15 en $P_{\text{apt}}$}: una asignación no apta hace imposible la ejecución de la tarea.
-    \item \textbf{12 en $P_{\text{ot}}$}: los solapamientos comprometen la coherencia interna de una orden de trabajo.
-    \item \textbf{10 en $P_{\text{prec}}$ y $P_{\text{rep}}$}: la falta de precedencias o repuestos impide ejecutar la tarea.
-    \item \textbf{0.1 en $E_{\text{hor}}$}: el excedente del horizonte indica ineficiencia temporal, pero no invalida la tarea.
-    \item \textbf{0.5 en $\sigma$}: promueve una distribución equilibrada de carga sin sobreponderarla.
-    \item \textbf{0.1 en $C_{\max}$}: favorece cronogramas más compactos con impacto secundario.
+    \item $N_{\text{exec}}$: número de tareas ejecutadas satisfactoriamente.
+    \item $P_{\text{prec}}$: penalización acumulada por violaciones de precedencias.
+    \item $P_{\text{rep}}$: penalización acumulada por falta de repuestos disponibles.
+    \item $P_{\text{apt}}$: penalización acumulada por asignaciones a operarios no aptos.
+    \item $P_{\text{ot}}$: penalización acumulada por solapamientos dentro de órdenes de trabajo.
+    \item $E_{\text{hor}}$: excedente total del horizonte diario acumulado.
+    \item $\sigma$: desviación estándar de la carga de trabajo entre operarios (desbalance).
+    \item $C_{\max}$: makespan o tiempo máximo de finalización del cronograma.
+\end{itemize}
+
+Los coeficientes responden a los siguientes criterios operativos:
+\begin{itemize}
+    \item \textbf{100 en $N_{\text{exec}}$}: maximizar la ejecución de tareas es el objetivo operativo principal. Cada tarea adicional contribuye significativamente a la aptitud.
+    \item \textbf{15 en $P_{\text{apt}}$}: una asignación a un operario no apto hace imposible la ejecución de la tarea, por lo que recibe la penalización más alta entre restricciones.
+    \item \textbf{12 en $P_{\text{ot}}$}: los solapamientos dentro de una orden de trabajo comprometen la coherencia del proceso de reparación.
+    \item \textbf{10 en $P_{\text{prec}}$ y $P_{\text{rep}}$}: la falta de precedencias o repuestos impide ejecutar la tarea, recibiendo penalizaciones significativas.
+    \item \textbf{0.1 en $E_{\text{hor}}$}: el excedente del horizonte indica ineficiencia temporal pero no invalida la tarea, recibiendo baja penalización.
+    \item \textbf{15 en $\sigma$}: el desbalance de carga se penaliza fuertemente para promover una distribución equitativa de trabajo entre operarios.
+    \item \textbf{10 en $C_{\max}$}: favorece cronogramas más compactos, reduciendo el tiempo total de ejecución.
 \end{itemize}
 
 En conjunto, estas ponderaciones guían la búsqueda del algoritmo genético hacia soluciones 
@@ -312,18 +324,23 @@ convergencias prematuras.
 \paragraph{Parámetros generales.}
 El algoritmo se ejecutó con los siguientes parámetros:
 \begin{itemize}
-    \item \textbf{Población:} 100 individuos.
-    \item \textbf{Generaciones:} 250.
-    \item \textbf{Padres seleccionados por generación:} 10.
-    \item \textbf{Padres preservados (elitismo):} 5.
-    \item \textbf{Semilla aleatoria:} 42, para garantizar reproducibilidad.
+    \item \textbf{Población:} 100 individuos por generación.
+    \item \textbf{Generaciones:} 300 ciclos evolutivos.
+    \item \textbf{Padres seleccionados por generación:} 10 individuos.
+    \item \textbf{Padres preservados (elitismo):} 5 mejores individuos.
+    \item \textbf{Tipo de selección:} \textit{ranking}, adecuado para distribuciones de aptitud desiguales.
+    \item \textbf{Operador de cruce:} \textit{single point}, divide el cromosoma en dos segmentos.
+    \item \textbf{Tipo de mutación:} \textit{random}.
+    \item \textbf{Probabilidad de mutación:} 5\% de los genes mutados por generación.
+    \item \textbf{Semilla aleatoria:} 42, para garantizar reproducibilidad de resultados.
 \end{itemize}
 
-Los parámetros fueron configurados mediante las funciones nativas de PyGAD, lo que facilitó 
-la integración del evaluador personalizado dentro del proceso evolutivo. En conjunto, la 
-configuración seleccionada proporciona un equilibrio adecuado entre exploración del espacio 
-de búsqueda y refinamiento de soluciones prometedoras, permitiendo generar cronogramas 
-robustos y operativamente factibles.
+Estos parámetros fueron seleccionados mediante validación empírica previa y se alinean con estándares 
+de la literatura de algoritmos genéticos. La configuración proporciona un equilibrio adecuado entre 
+exploración del espacio de búsqueda (favorecida por la mutación y la selección por ranking) y 
+refinamiento de soluciones prometedoras (garantizado por el elitismo y la población moderada). 
+La semilla fija permite reproducir exactamente los mismos resultados en futuras ejecuciones del 
+algoritmo, facilitando la validación y comparación de resultados.
 
 \begin{figure}[H]
 \centering
