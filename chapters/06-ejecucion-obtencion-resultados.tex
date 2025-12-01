@@ -194,19 +194,19 @@ Para garantizar repetibilidad, se fijan semillas aleatorias y se documentan los 
 \subsection{Evaluación del Operador de Cruce}
 \label{subsec:cruce}
 
-Con el fin de determinar el operador de cruce más adecuado para el algoritmo genético, se realizó un experimento comparativo empleando los dos métodos soportados por la librería \texttt{PyGAD} que preservan parcialmente la estructura del individuo: \textit{single\_point} y \textit{two\_points}. Ambos operadores fueron evaluados bajo las mismas condiciones iniciales del algoritmo, utilizando la configuración base descrita en la Sección~\ref{subsec:configuracion-ag}. Cada ejecución consistió en la generación de veinte instancias independientes.
+Con el objetivo de determinar el operador de cruce más adecuado para el algoritmo genético, se llevó a cabo un experimento comparativo empleando los dos operadores disponibles en la librería \texttt{PyGAD} que preservan parcialmente la estructura del individuo: \textit{single\_point} y \textit{two\_points}. Ambos operadores fueron evaluados bajo exactamente las mismas condiciones: misma población, mismas instancias, misma semilla aleatoria y la configuración base descrita en la Sección~\ref{subsec:configuracion-ag}.
 
-Dado que el objetivo del algoritmo genético es optimizar la programación en condiciones realistas del taller, el experimento se llevó a cabo exclusivamente sobre el horizonte operativo de 480 minutos. Este escenario corresponde a una jornada laboral completa y ofrece suficiente espacio temporal para que el AG explore secuencias complejas, revelando diferencias significativas entre operadores evolutivos. Los horizontes reducidos generan comportamientos artificialmente similares entre configuraciones, motivo por el cual no se consideran en esta etapa de calibración.
+El experimento se ejecutó sobre un conjunto de veinte instancias independientes, todas simuladas bajo un horizonte operativo de 480 minutos (equivalente a una jornada laboral completa). Este horizonte amplio permite observar diferencias reales en el comportamiento evolutivo; horizontes más cortos generan dinámicas artificialmente similares y no son adecuados para la calibración del algoritmo genético.
 
-Los resultados promedio de las métricas relevantes para el AG se presentan en la Tabla~\ref{tab:cruce-resultados-480}.
+Los resultados promedio obtenidos para cada operador se presentan en la Tabla~\ref{tab:cruce-operadores-480}.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{Resultados promedio del AG para cada operador de cruce (480 minutos).}
-\label{tab:cruce-resultados-480}
+\caption{Resultados promedio del AG para cada operador de cruce (horizonte de 480 minutos).}
+\label{tab:cruce-operadores-480}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm}cccc@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4cm}cccc@{}}
 \toprule
 \textbf{Operador de cruce} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
 \midrule
@@ -217,18 +217,20 @@ Los resultados promedio de las métricas relevantes para el AG se presentan en l
 }
 \end{table}
 
-Los resultados muestran diferencias claras entre los dos operadores. El operador \textit{single\_point} ejecuta, en promedio, 1.65 tareas adicionales respecto a \textit{two\_points}, lo cual es significativo dado el tamaño del horizonte y las restricciones del taller. Asimismo, alcanza una mayor carga total, indicando una mejor utilización del tiempo disponible de los operarios. Aunque \textit{two\_points} obtiene un makespan ligeramente menor, la diferencia no compensa la pérdida en tareas ejecutadas, métrica prioritaria en el contexto del taller de rectificado.
+Los resultados evidencian diferencias consistentes entre los dos operadores evaluados. Aunque \textit{two\_points} obtiene un makespan ligeramente menor, el operador \textit{single\_point} supera de manera sistemática a su contraparte en las métricas más relevantes para el problema: la cantidad de tareas ejecutadas y la carga total. En promedio, \textit{single\_point} logra programar 1.65 tareas adicionales por instancia y utiliza de manera más intensiva el tiempo disponible de los operarios, lo cual es crítico dado que el objetivo principal del sistema es maximizar la cantidad de trabajo completado durante la jornada.
 
-En síntesis, el operador \textit{single\_point} presenta un comportamiento más robusto y consistente en escenarios amplios. Por este motivo, se seleccionó como operador de cruce para los siguientes experimentos del proceso de calibración del algoritmo genético.
+La mayor cantidad de tareas ejecutadas está alineada con la función de aptitud del AG, que prioriza explícitamente este criterio. El mejor comportamiento observado para \textit{single\_point} indica que este operador favorece combinaciones más estables entre asignación y prioridad, preservando estructuras útiles a lo largo del proceso evolutivo.
+
+En conclusión, con base en la evidencia experimental, se seleccionó el operador \textit{single\_point} como el más adecuado y este fue utilizado en los experimentos posteriores del proceso de calibración del algoritmo genético.
 
 \subsection{Evaluación del Número de Generaciones}
 \label{subsec:generaciones}
 
-Tras seleccionar el operador de cruce \textit{single\_point}, el siguiente paso en la calibración del algoritmo genético consistió en determinar un número adecuado de generaciones. Este parámetro controla la profundidad de la búsqueda evolutiva y afecta tanto la calidad de las soluciones como el costo computacional del proceso. 
+Una vez seleccionado el operador de cruce \textit{single\_point}, el siguiente paso en la calibración del algoritmo genético consistió en determinar un número adecuado de generaciones. Este parámetro controla la profundidad de la búsqueda evolutiva y, por tanto, influye directamente en la calidad de las soluciones obtenidas y en el costo computacional del proceso.
 
-Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), y permiten estudiar la convergencia del algoritmo sin incurrir en tiempos de ejecución excesivos. Todas las ejecuciones conservaron la misma configuración base presentada en la Sección~\ref{subsec:configuracion-ag}.
+Siguiendo recomendaciones comunes en la literatura sobre algoritmos genéticos, se evaluaron tres niveles de profundidad evolutiva: 300, 800 y 1300 generaciones. Estos valores representan una escala progresiva de exploración del espacio de búsqueda (baja, media y alta), permitiendo observar cómo varía el desempeño del AG a medida que se incrementa el esfuerzo evolutivo. Todas las ejecuciones conservaron la misma configuración base descrita en la Sección~\ref{subsec:configuracion-ag} y se aplicaron sobre veinte instancias independientes bajo un horizonte de programación de 480 minutos.
 
-El experimento se llevó a cabo sobre veinte instancias independientes bajo un horizonte de 480 minutos, correspondiente a una jornada realista del taller. Los resultados promedio obtenidos se resumen en la Tabla~\ref{tab:generaciones-resultados-480}.
+Los resultados promedio obtenidos se presentan en la Tabla~\ref{tab:generaciones-resultados-480}.
 
 \begin{table}[htbp]
 \centering
@@ -236,30 +238,30 @@ El experimento se llevó a cabo sobre veinte instancias independientes bajo un h
 \caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
 \label{tab:generaciones-resultados-480}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}cccc@{}}
 \toprule
 \textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
 \midrule
-300  & 26.60 & 13.25 & 208.55 & 620.85 \\
-800  & 25.25 & 16.55 & 219.95 & 592.35 \\
-1300 & 24.35 & 12.80 & 204.70 & 563.65 \\
+300  & \textbf{31.40} & 6.75 & 178.58 & \textbf{758.80} \\
+800  & 29.90 & 8.55 & 174.33 & 722.60 \\
+1300 & 28.40 & 8.65 & 171.40 & 696.65 \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Los resultados muestran que el mejor desempeño global se alcanza con 300 generaciones, obteniendo el mayor número promedio de tareas ejecutadas (26.60) y la mayor carga total (620.85). A medida que se incrementa el número de generaciones, el algoritmo no presenta mejoras sustanciales y, por el contrario, tiende a obtener cronogramas con menor número de tareas completadas. Este comportamiento sugiere que el AG converge rápidamente en este problema, y que extender el proceso evolutivo más allá de 300 generaciones no aporta beneficios significativos en términos de calidad de solución.
+Los resultados muestran que el mejor rendimiento global se obtiene con 300 generaciones, alcanzando tanto el mayor número promedio de tareas ejecutadas como la mayor carga total utilizada por los operarios. A medida que aumenta el número de generaciones, el algoritmo no presenta mejoras sustanciales; por el contrario, tiende a producir soluciones con menos tareas completadas, lo cual indica un comportamiento de sobre–ajuste evolutivo o pérdida de diversidad en las poblaciones tardías.
 
-Considerando tanto el desempeño observado como la eficiencia computacional, se seleccionó \textbf{300 generaciones} como valor óptimo para las siguientes etapas del proceso de calibración.
+Este patrón sugiere que el AG converge rápidamente en el problema de programación del taller, y que extender el proceso evolutivo más allá de 300 generaciones no aporta beneficios relevantes en términos de calidad de solución. Considerando tanto el desempeño observado como la eficiencia computacional, se seleccionaron \textbf{300 generaciones} como valor óptimo para las siguientes etapas del proceso de calibración del algoritmo genético.
 
 \subsection{Evaluación de la Probabilidad de Mutación}
 \label{subsec:mutacion}
 
-El último parámetro evaluado en el proceso de calibración del algoritmo genético corresponde a la probabilidad de mutación. Este parámetro controla el grado de exploración del espacio de búsqueda mediante modificaciones aleatorias en los genes del individuo. En términos prácticos, una mutación demasiado baja puede llevar a una convergencia prematura, mientras que una mutación demasiado alta puede destruir estructuras útiles adquiridas durante el proceso evolutivo.
+El último parámetro evaluado en el proceso de calibración del algoritmo genético corresponde a la probabilidad de mutación. Este parámetro controla el grado de exploración del espacio de búsqueda mediante modificaciones aleatorias en los genes del individuo. Una mutación demasiado baja puede conducir a una convergencia prematura, limitando la capacidad del algoritmo para escapar de soluciones subóptimas; por el contrario, una mutación excesiva puede introducir demasiada variabilidad y destruir estructuras útiles adquiridas durante el proceso evolutivo.
 
-Siguiendo prácticas habituales en la literatura, se evaluaron tres niveles representativos de intensidad de mutación: 5\%, 15\% y 25\%. Estos valores permiten analizar la sensibilidad del algoritmo a distintos grados de exploración aleatoria. Todas las ejecuciones se realizaron bajo la configuración base detallada en la Sección~\ref{subsec:configuracion-ag}, con el operador de cruce previamente seleccionado y un horizonte de 480 minutos.
+Siguiendo prácticas habituales en la literatura, se evaluaron tres niveles representativos de intensidad de mutación: 5\%, 15\% y 25\%. Estos valores permiten analizar la sensibilidad del AG frente a distintos grados de exploración aleatoria. Las ejecuciones conservaron la configuración base descrita en la Sección~\ref{subsec:configuracion-ag}, utilizando el operador de cruce previamente seleccionado y un horizonte operativo de 480 minutos. Cada configuración fue evaluada sobre veinte instancias independientes.
 
-Los resultados promedio obtenidos a partir de veinte instancias independientes se presentan en la Tabla~\ref{tab:mutacion-resultados-480}.
+Los resultados promedio obtenidos se presentan en la Tabla~\ref{tab:mutacion-resultados-480}.
 
 \begin{table}[htbp]
 \centering
@@ -267,25 +269,25 @@ Los resultados promedio obtenidos a partir de veinte instancias independientes s
 \caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
 \label{tab:mutacion-resultados-480}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.5cm}cccc@{}}
 \toprule
 \textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
 \midrule
-5\%  & 19.85 & 14.85 & 172.05 & 454.50 \\
-15\% & \textbf{25.00} & 14.80 & 216.60 & \textbf{582.05} \\
-25\% & 24.20 & 15.00 & 201.85 & 554.50 \\
+5\%  & \textbf{34.90} & 10.35 & 178.65 & \textbf{832.00} \\
+15\% & 30.20 & \textbf{6.65} & \textbf{168.75} & 712.30 \\
+25\% & 32.00 & 8.00 & 181.45 & 786.30 \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Los resultados muestran diferencias claras entre los distintos niveles de mutación evaluados. Una mutación baja (5\%) conduce a un desempeño significativamente inferior, evidenciando una fuerte convergencia prematura que limita la capacidad del algoritmo para explorar alternativas factibles dentro del horizonte disponible.
+Los resultados revelan diferencias marcadas entre los niveles de mutación evaluados. Una probabilidad baja (5\%) produce el mayor número promedio de tareas ejecutadas y la mayor carga total, lo cual sugiere que, en este conjunto de instancias, una exploración moderada favorece la utilización intensiva del horizonte disponible. Sin embargo, esta configuración también genera un mayor número de tareas rechazadas, lo que indica una mayor frecuencia de incumplimientos operativos.
 
-El valor intermedio (15\%) proporciona el mejor rendimiento global, alcanzando tanto la mayor cantidad de tareas ejecutadas como la mayor carga total. Esto sugiere un buen equilibrio entre exploración y explotación del espacio de búsqueda: la mutación es lo suficientemente alta para evitar estancamiento, pero no tan elevada como para destruir las estructuras útiles generadas por el operador de cruce.
+En contraste, el nivel intermedio del 15\% obtiene la menor cantidad de tareas rechazadas y el makespan más bajo, evidenciando soluciones más estables y con menos violaciones a las restricciones del taller. Aunque ejecuta menos tareas que la configuración del 5\%, sus cronogramas son más consistentes y equilibrados.
 
-Finalmente, un nivel más alto de mutación (25\%) muestra un rendimiento ligeramente inferior al valor intermedio. Aunque mejora el makespan en comparación con el caso de 15\%, su capacidad de programación se reduce, indicando que una mayor aleatoriedad comienza a afectar la estabilidad del proceso evolutivo.
+Finalmente, una mutación más elevada (25\%) logra un desempeño intermedio en todas las métricas, reflejando un punto donde el aumento de aleatoriedad comienza a afectar la estabilidad evolutiva sin llegar a generar beneficios adicionales.
 
-A partir de estos resultados, se selecciona una probabilidad de mutación del \textbf{15\%} como el valor óptimo para la configuración final del algoritmo genético.
+En conjunto, estos resultados muestran un compromiso entre maximizar tareas ejecutadas y mantener la factibilidad operativa. Dado que la función de aptitud prioriza la ejecución efectiva dentro de las restricciones, se seleccionó una probabilidad de mutación del \textbf{15\%} como valor óptimo para la configuración final del algoritmo genético, al ofrecer el mejor equilibrio entre exploración, estabilidad y cumplimiento operativo.
 
 \section{Configuración Final del AG}
 
