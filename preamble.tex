@@ -22,10 +22,22 @@
 \AtBeginEnvironment{enumerate}{\justifying}
 \AtBeginEnvironment{description}{\justifying}
 
-% Bibliografía (BibLaTeX + biber) — usar estilo numérico ([1])
+% -------------------------------------------------------
+% Bibliografía (BibLaTeX + Biber)
+% -------------------------------------------------------
 \usepackage[
   backend=biber,
   style=numeric,
   sorting=none
 ]{biblatex}
 \addbibresource{referencias.bib}
+
+% -------------------------------------------------------
+% Configuración adicional de localización al español
+% -------------------------------------------------------
+% Renombra elementos automáticos de LaTeX al español
+\AtBeginDocument{
+  % Babel ya proporciona las traducciones automáticas
+  \renewcommand\appendixname{Anexo}
+  \renewcommand\bibname{Bibliografía}
+}
