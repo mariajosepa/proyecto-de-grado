@@ -1,28 +1,55 @@
-% Idioma y tipografía
-\usepackage[spanish,es-tabla]{babel}    % Español como idioma principal (traduce "Chapter" → "Capítulo")
-\usepackage[utf8]{inputenc}             % Codificación UTF-8
+% -------------------------------------------------------
+% Paquetes de Figuras y Posicionamiento
+% -------------------------------------------------------
+\usepackage{graphicx}       % Inclusión de imágenes
+\usepackage{float}          % Permite la opción [H] para posicionamiento fijo
 
-% Paquetes generales
-\usepackage{graphicx}
-% Mejora el ajuste de texto y las micro-justificaciones (reduce Overfull/Underfull hbox)
-\usepackage[protrusion=true,expansion=true]{microtype}
-% Control adicional de justificación
-\usepackage{ragged2e}
-% Paquetes para entornos y comandos matemáticos avanzados
-\usepackage{amsmath,amssymb}
-\usepackage{array} % Columnas personalizadas en tablas
-\usepackage{float} % Permite usar la opción H en entornos flotantes
-\usepackage{booktabs} % Estilo de tablas profesionales (\toprule, \midrule, etc.)
-\raggedbottom
-% Algoritmos en pseudocódigo
+% -------------------------------------------------------
+% Paquetes Matemáticos
+% -------------------------------------------------------
+\usepackage{amsmath}        % Entornos matemáticos avanzados
+\usepackage{amssymb}        % Símbolos matemáticos adicionales
+\usepackage{amsfonts}       % Fuentes matemáticas
+
+% -------------------------------------------------------
+% Paquetes para Tablas
+% -------------------------------------------------------
+\usepackage{array}          % Columnas personalizadas en tablas
+\usepackage{booktabs}       % Estilo profesional (\toprule, \midrule, \bottomrule)
+
+% -------------------------------------------------------
+% Paquetes de Algoritmos
+% (Solo algorithm2e - evita conflictos con algorithm/algorithmic)
+% -------------------------------------------------------
 \usepackage[ruled,vlined]{algorithm2e}
-% Ajuste de entornos tipo lista
+
+% -------------------------------------------------------
+% TikZ para Diagramas
+% -------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+
+% -------------------------------------------------------
+% Microtipografía y Control de Justificación
+% -------------------------------------------------------
+\usepackage[protrusion=true,expansion=true]{microtype}  % Reduce Overfull/Underfull hbox
+\usepackage{ragged2e}       % Mejor control de justificación
+\raggedbottom               % Evita estiramientos verticales excesivos
+
+% -------------------------------------------------------
+% Ajuste de Entornos Tipo Lista
+% -------------------------------------------------------
 \usepackage{etoolbox}
 \AtBeginEnvironment{itemize}{\justifying}
 \AtBeginEnvironment{enumerate}{\justifying}
 \AtBeginEnvironment{description}{\justifying}
 
-% Bibliografía (BibLaTeX + biber) — usar estilo numérico ([1])
+% -------------------------------------------------------
+% Bibliografía (BibLaTeX + Biber)
+% -------------------------------------------------------
 \usepackage[
   backend=biber,
   style=numeric,
