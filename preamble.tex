@@ -1,4 +1,9 @@
 % -------------------------------------------------------
+% Idioma y localización
+% -------------------------------------------------------
+\usepackage[spanish,es-tabla]{babel}
+
+% -------------------------------------------------------
 % Paquetes de Figuras y Posicionamiento
 % -------------------------------------------------------
 \usepackage{graphicx}       % Inclusión de imágenes
@@ -21,7 +26,8 @@
 % Paquetes de Algoritmos
 % (Solo algorithm2e - evita conflictos con algorithm/algorithmic)
 % -------------------------------------------------------
-\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[ruled,vlined,onelanguage]{algorithm2e}
+\SetAlgorithmName{Algoritmo}{Algoritmo}{Índice de Algoritmos}
 
 % -------------------------------------------------------
 % TikZ para Diagramas
@@ -56,3 +62,13 @@
   sorting=none
 ]{biblatex}
 \addbibresource{referencias.bib}
+
+% -------------------------------------------------------
+% Configuración adicional de localización al español
+% -------------------------------------------------------
+% Renombra elementos automáticos de LaTeX al español
+\AtBeginDocument{
+  % Babel ya proporciona las traducciones automáticas
+  \renewcommand\appendixname{Anexo}
+  \renewcommand\bibname{Bibliografía}
+}
