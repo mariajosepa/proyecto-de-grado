@@ -250,15 +250,17 @@ influyen en la eficiencia global del cronograma.
 
 La función de aptitud se define formalmente como:
 \[
-\operatorname{fitness}(\mathbf{x}) =
-100 \cdot N_{\text{exec}}
-- 10 \cdot P_{\text{prec}}
-- 10 \cdot P_{\text{rep}}
-- 15 \cdot P_{\text{apt}}
-- 12 \cdot P_{\text{ot}}
-- 0.1 \cdot E_{\text{hor}}
-- 15 \cdot \sigma
-- 10 \cdot C_{\max}
+\begin{aligned}
+\operatorname{fitness}(\mathbf{x}) ={}&
+100 \cdot N_{\text{exec}} \\
+&- 10 \cdot P_{\text{prec}} \\
+&- 10 \cdot P_{\text{rep}} \\
+&- 15 \cdot P_{\text{apt}} \\
+&- 12 \cdot P_{\text{ot}} \\
+&- 0.1 \cdot E_{\text{hor}} \\
+&- 15 \cdot \sigma \\
+&- 10 \cdot C_{\max}
+\end{aligned}
 \]
 
 donde:
@@ -559,9 +561,6 @@ procesamiento con un proceso operativo de programación ajustado al estado real 
 \shorthandon{>}
 \caption{Flujo operativo del metodo SPT en el taller.}
 \end{figure}
-
-
-
 
 
 
