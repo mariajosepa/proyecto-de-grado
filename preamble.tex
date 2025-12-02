@@ -13,6 +13,8 @@
 \usepackage{array} % Columnas personalizadas en tablas
 \usepackage{float} % Permite usar la opción H en entornos flotantes
 \usepackage{booktabs} % Estilo de tablas profesionales (\toprule, \midrule, etc.)
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta} % añade las que uses (por ejemplo positioning para “below=of”)
 \raggedbottom
 % Algoritmos en pseudocódigo
 \usepackage[ruled,vlined]{algorithm2e}
@@ -21,7 +23,7 @@
 \AtBeginEnvironment{itemize}{\justifying}
 \AtBeginEnvironment{enumerate}{\justifying}
 \AtBeginEnvironment{description}{\justifying}
-
+\usepackage{csquotes}
 % -------------------------------------------------------
 % Bibliografía (BibLaTeX + Biber)
 % -------------------------------------------------------
