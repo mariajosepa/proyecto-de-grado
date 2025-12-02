@@ -1,1 +1,102 @@
 \chapter{Glosario}
+
+Este glosario presenta términos especializados y conceptos clave que requieren aclaración rápida, complementando las explicaciones detalladas proporcionadas en capítulos anteriores. Se omiten intencionalmente conceptos que ya han sido formalmente definidos o desarrollados extensamente.
+
+\section*{Conceptos Fundamentales de Optimización}
+
+\begin{description}
+    \item[Optimización:] Proceso de encontrar la mejor solución posible (o cercana a ella) entre un conjunto de alternativas, generalmente minimizando o maximizando una función objetivo sujeta a restricciones.
+    
+    \item[Heurística:] Técnica de resolución de problemas que utiliza reglas prácticas o intuición para encontrar soluciones buenas rápidamente, sin garantizar que sean óptimas pero con menor costo computacional que métodos exactos.
+    
+    \item[Metaheurística:] Estrategia general de búsqueda de alto nivel que guía el proceso de exploración del espacio de soluciones, permitiendo combinar diferentes técnicas de optimización para escapar de óptimos locales.
+    
+    \item[Óptimo local:] Solución mejor que todas sus alternativas inmediatas en el espacio de búsqueda, pero no necesariamente la mejor solución global.
+    
+    \item[Óptimo global:] Mejor solución posible en todo el espacio de búsqueda.
+    
+    \item[NP-hard:] Clase de problemas computacionales cuya dificultad es tal que no se conoce algoritmo polinomial para resolverlos, haciendo que heurísticas y metaheurísticas sean alternativas viables.
+\end{description}
+
+\section*{Problemas de Programación Clásicos}
+
+\begin{description}
+    \item[Flow Shop:] Problema de programación donde múltiples trabajos deben pasar por una secuencia fija de máquinas en el mismo orden.
+    
+    \item[Job Shop:] Problema de programación donde múltiples trabajos tienen rutas específicas pero potencialmente diferentes a través de un conjunto de máquinas.
+    
+    \item[Flexible Job Shop:] Variante del Job Shop donde cada operación puede ser realizada por una de varias máquinas alternativas.
+    
+    \item[Shortest Processing Time (SPT):] Regla de despacho que prioriza tareas con menor tiempo de procesamiento, comúnmente usada como punto de referencia en ingeniería industrial. Fue adoptada en este trabajo como método de comparación contra el algoritmo genético.
+    
+    \item[Task Assignment Problem (TAP):] Problema de optimización que consiste en asignar un conjunto de tareas a un conjunto de operarios o recursos disponibles. Este trabajo es una variante específica del TAP con restricciones industriales.
+    
+    \item[Greedy:] Estrategia algorítmica que toma decisiones localmente óptimas en cada paso sin considerar el impacto global, típica de métodos como SPT.
+\end{description}
+
+\section*{Conceptos de Ingeniería Industrial y Sistemas ERP}
+
+\begin{description}
+    \item[Automatización:] Uso de sistemas técnicos o computacionales para ejecutar procesos sin intervención manual directa, mejorando eficiencia y consistencia.
+    
+    \item[ERP (Enterprise Resource Planning):] Sistema integrado de gestión empresarial que centraliza información de procesos operativos, financieros y administrativos. En este contexto, nos enfocamos en el módulo de asignación de tareas.
+    
+    \item[Sistema de soporte de decisión:] Herramienta computacional diseñada para asistir a gerentes y operarios en la toma de decisiones complejas proporcionando análisis y recomendaciones.
+    
+    \item[Cuello de botella (Bottleneck):] Recurso o tarea que limita la capacidad de producción debido a su disponibilidad limitada o tiempo de procesamiento excesivo.
+    
+    \item[Eficiencia operativa:] Medida de qué tan bien se utilizan los recursos disponibles para lograr los objetivos de producción.
+    
+    \item[Productividad:] Cantidad de salida (tareas completadas, productos generados) por unidad de entrada (tiempo, recursos).
+    
+    \item[ROI (Return on Investment):] Indicador financiero que mide el retorno generado por una inversión en relación con su costo. En este estudio se estimó una recuperación entre 6-12 meses.
+\end{description}
+
+\section*{Términos Técnicos Complementarios}
+
+\begin{description}
+    \item[PyGAD:] Biblioteca de código abierto en Python que proporciona implementaciones de algoritmos genéticos. Utilizada en este trabajo para la implementación del AG.
+    
+    \item[Calibración empírica:] Ajuste de parámetros basado en experimentación práctica para encontrar valores que produzcan buen desempeño. En este proyecto se realizó en el Capítulo 6.
+    
+    \item[Instancia de problema:] Conjunto específico de datos (tareas, operarios, restricciones) que define una situación particular del problema a resolver. Se utilizaron 30 instancias independientes en las pruebas.
+    
+    \item[Reproducibilidad:] Capacidad de obtener exactamente los mismos resultados en nuevas ejecuciones con los mismos parámetros e información de control. Este proyecto garantiza reproducibilidad mediante semilla aleatoria fija (seed=42).
+    
+    \item[Escalabilidad:] Capacidad de una técnica o algoritmo para mantener su eficiencia al resolver instancias de mayor tamaño. El AG propuesto escala polinomialmente con el número de tareas.
+    
+    \item[Robustez:] Capacidad de un algoritmo para producir soluciones de calidad consistente bajo variaciones en parámetros o datos de entrada.
+    
+    \item[Estabilidad:] Propiedad de producir resultados similares en múltiples ejecuciones independientes con los mismos parámetros. El AG mostró desviación estándar del 14.3\% en los resultados.
+    
+    \item[Convergencia rápida:] Capacidad del algoritmo de alcanzar soluciones de alta calidad en pocas generaciones. El AG converge en 300 generaciones (aproximadamente 2 minutos por ejecución).
+\end{description}
+
+\section*{Conceptos Estadísticos y de Análisis}
+
+\begin{description}
+    
+    \item[Mejora relativa:] Porcentaje de cambio en una métrica al comparar dos métodos. El AG logró 15.6\% de mejora en makespan respecto a SPT.
+    
+    \item[Tiempo de ejecución:] Cantidad de tiempo de procesamiento requerida por un algoritmo para resolver una instancia del problema.
+    
+    \item[Complejidad computacional:] Estimación del uso de recursos (tiempo y memoria) que requiere un algoritmo en función del tamaño de la entrada.
+    
+    \item[Desviación estándar:] Medida estadística de variabilidad en un conjunto de datos. En este trabajo se utilizó para cuantificar el balance de carga entre operarios.
+\end{description}
+
+\section*{Abreviaciones Técnicas Frecuentes}
+
+\begin{description}
+    \item[AG:] Algoritmo Genético.
+    
+    \item[SPT:] Shortest Processing Time.
+    
+    \item[TAP:] Task Assignment Problem.
+    
+    \item[OT:] Orden de Trabajo.
+    
+    \item[ERP:] Enterprise Resource Planning (Sistema de Planificación de Recursos Empresariales).
+    
+    \item[PyGAD:] Python Genetic Algorithm for Database.
+\end{description}

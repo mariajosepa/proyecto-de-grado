@@ -1,6 +1,120 @@
 \chapter{Trabajo Futuro}
 
-\section{Optimización del algoritmo genético}
-\section{Sistemas híbridos}
-\section{Integración con el ERP}
-\section{Pruebas con datos reales históricos}
+Los resultados obtenidos en este proyecto demuestran que los algoritmos genéticos (AG) 
+constituyen una alternativa eficaz para la asignación automática de tareas en entornos 
+industriales. Sin embargo, la literatura revisada evidencia múltiples oportunidades de 
+mejora que permitirán avanzar hacia sistemas de planificación más robustos, inteligentes 
+y alineados con los principios de la Industria 4.0 y 5.0. Este capítulo presenta varias líneas 
+de trabajo futuro fundamentadas explícitamente en las limitaciones, tendencias y brechas 
+detectadas en los estudios científicos analizados.
+
+\section{Integración de técnicas híbridas y metaheurísticas avanzadas}
+
+Diversos trabajos comparan el rendimiento de algoritmos genéticos frente a otros enfoques 
+de optimización poblacional, como Particle Swarm Optimization (PSO), Ant Colony Optimization (ACO), 
+Simulated Annealing (SA) y Tabu Search (TS), concluyendo que no existe un método 
+universalmente superior y que las soluciones híbridas presentan mejoras significativas en 
+tiempos de búsqueda y calidad de soluciones \cite{file_galindo_enjambres, file_psovsga}. 
+Autores como Galindo y Durán destacan la necesidad de evaluar la complementariedad entre 
+AG y PSO para evitar la pérdida de diversidad y mejorar la convergencia global 
+\cite{file_galindo_enjambres}. Asimismo, estudios como el de Gharib et al. muestran que PSO 
+puede ofrecer mejoras en problemas combinatorios como TSP, lo que sugiere explorar su 
+hibridación con AG para problemas de scheduling industrial \cite{file_psovsga}.
+
+En consecuencia, se plantea como línea futura el desarrollo de modelos híbridos 
+AG–PSO, AG–ACO o AG–SA, evaluando su impacto en talleres industriales con cargas variables, 
+restricciones adicionales y escenarios con incertidumbre.
+
+\section{Extensión hacia Job Shop Scheduling y Flexible Job Shop Scheduling}
+
+La revisión sistemática de Momenikorbekandi y Kalganova evidencia un incremento sustancial 
+en el uso de metaheurísticas avanzadas, algoritmos evolutivos mejorados y enfoques basados 
+en aprendizaje para abordar el Job Shop Scheduling Problem (JSSP) y su variante flexible FJSP 
+\cite{file_momeni_review}. Estos problemas representan un nivel de complejidad mayor que los 
+modelos implementados en este proyecto, por lo que constituye una evolución natural del trabajo.
+
+El trabajo futuro deberá incorporar capacidades propias del FJSP, tales como:
+\begin{itemize}
+    \item Selección dinámica de máquinas.
+    \item Multiplicidad de rutas de procesamiento.
+    \item Minimización simultánea de makespan, consumo energético y tiempos ociosos.
+\end{itemize}
+
+Además, los avances recientes en FJSP —como algoritmos híbridos, técnicas de búsqueda 
+inteligente y refuerzo profundo— abren la puerta a sistemas de planificación más flexibles, 
+capaces de adaptarse a la variabilidad natural de los procesos industriales modernos.
+
+\section{Optimización multiobjetivo integrada con ERP}
+
+El modelo de Wang y Xiao-Bing propone una planificación multiobjetivo en entornos ERP 
+que considera simultáneamente inventarios, tiempos de entrega, capacidad disponible y 
+costos operativos \cite{file_wang_erp}. Estos elementos no fueron incluidos en la implementación actual, 
+por lo que se sugiere evolucionar el sistema hacia una optimización multiobjetivo que permita:
+
+\begin{itemize}
+    \item Evaluar compensaciones entre puntualidad, carga de trabajo y tiempos ociosos.
+    \item Minimizar simultáneamente inventarios y producción fuera de norma.
+    \item Integrar parámetros económicos (horas extra, setups, reprocesos).
+\end{itemize}
+
+La incorporación de estas funciones permitiría un sistema con mayor alineación empresarial 
+y una integración más profunda con módulos ERP reales.
+
+\section{Uso de aprendizaje automático y modelos autoadaptativos}
+
+El crecimiento del uso de métodos basados en aprendizaje automático, particularmente en 
+entornos dinámicos de manufactura, constituye una línea prometedora. La literatura revisada 
+\cite{file_momeni_review} destaca la eficacia del aprendizaje por refuerzo (RL) para generar políticas 
+de secuenciación adaptativas basadas en experiencia. Estos agentes podrían ajustarse en tiempo 
+real a cambios en demanda, fallos de máquina o tiempos de procesamiento estocásticos.
+
+El trabajo futuro puede incluir:
+\begin{itemize}
+    \item Agentes RL para seleccionar operadores del AG de forma dinámica.
+    \item Modelos de predicción basados en machine learning que alimenten el AG con estimaciones reales.
+    \item Sistemas de control cognitivo que ajusten parámetros del algoritmo (mutación, elitismo, tamaño poblacional).
+\end{itemize}
+
+\section{Incorporación de tecnologías IoT e Industria 4.0}
+
+El artículo de Vigo et al. subraya la importancia del IoT como pilar de la digitalización industrial, 
+especialmente para la captura de datos en tiempo real, mantenimiento predictivo y gemelos 
+digitales \cite{file_iot}. Estas tecnologías abren nuevas oportunidades para mejorar los algoritmos de 
+asignación mediante la retroalimentación continua de información operativa.
+
+Entre los posibles avances, destacan:
+\begin{itemize}
+    \item Integración de sensores IoT para alimentar el algoritmo con datos reales de disponibilidad.
+    \item Uso de gemelos digitales para simular múltiples escenarios de planificación antes de ejecutar.
+    \item Implementación de mantenimiento predictivo en la lógica del scheduling.
+\end{itemize}
+
+\section{Exploración de computación cuántica para problemas de scheduling}
+
+El estudio de Pérez-Armas et al. demuestra el potencial del quantum annealing para resolver 
+problemas NP-difíciles como RCPSP, con mejoras en ciertas instancias respecto a métodos 
+clásicos \cite{file_quantum}. Aunque la tecnología aún está en etapa NISQ, futuras iteraciones permitirán 
+explorar modelos cuánticos para scheduling en talleres industriales.
+
+El trabajo futuro podría incluir:
+\begin{itemize}
+    \item Reformulación del problema de asignación como un modelo QUBO.
+    \item Comparación entre AG clásico, AG híbrido y quantum annealing.
+    \item Evaluación de máquinas cuánticas D-Wave para instancias pequeñas o medianas.
+\end{itemize}
+
+\section{Conclusión}
+
+Las líneas expuestas reflejan una tendencia clara hacia sistemas de planificación más inteligentes, 
+híbridos, conectados y capaces de adaptarse en tiempo real. La evolución natural del proyecto 
+conduce hacia:
+\begin{itemize}
+    \item Técnicas híbridas para mejorar la convergencia.
+    \item Modelos flexibles orientados a FJSP.
+    \item Integración total con ERP e IoT.
+    \item Uso de aprendizaje automático y arquitecturas cuánticas.
+\end{itemize}
+
+Estas direcciones no solo fortalecen el aporte académico del presente trabajo, sino que lo sitúan 
+en la frontera de las tecnologías emergentes en optimización industrial.
+

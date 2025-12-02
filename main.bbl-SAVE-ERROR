@@ -16,5 +16,543 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{ref7}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=d895aca6d7ef592dd8ddba8573e542c1}{%
+           family={SHIVASANKARAN},
+           familyi={S\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=ca9b3fab25dc65f9641694f1c5393e58}{%
+           family={SENTHILKUMAR},
+           familyi={S\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{fullhash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{fullhashraw}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{bibnamehash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{authorbibnamehash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{authornamehash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{authorfullhash}{1273f81fb6b3148bf74661d999af3e9a}
+      \strng{authorfullhashraw}{1273f81fb6b3148bf74661d999af3e9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IJCSE}
+      \field{title}{SCHEDULING OF MECHANICS IN AUTOMOBILE REPAIR SHOPS USING ANN}
+      \field{year}{2014}
+      \field{pages}{55\bibrangedash 56}
+      \range{pages}{2}
+    \endentry
+    \entry{ref8}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=5a6e45927e84c3c0089eb780bfb157fc}{%
+           family={López},
+           familyi={L\bibinitperiod},
+           given={César\bibnamedelima Argüelles},
+           giveni={C\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=1d5d6ac3fb8e1b99601f488e147a62e3}{%
+           family={Franco},
+           familyi={F\bibinitperiod},
+           given={Ligia\bibnamedelima Herrera},
+           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=1ee86b34bbdc99c7f69fefcc4589c3ab}{%
+           family={Onofre},
+           familyi={O\bibinitperiod},
+           given={Pedro\bibnamedelima Jàcome},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{fullhash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{fullhashraw}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{bibnamehash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{authorbibnamehash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{authornamehash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{authorfullhash}{987ac50c5fb80b61cebc0007927c2aa9}
+      \strng{authorfullhashraw}{987ac50c5fb80b61cebc0007927c2aa9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Universo de la Tecnológica}
+      \field{title}{Estrategia de mejora al proceso productivo de Talleres Industriales de maquinados}
+      \field{year}{2018}
+      \field{pages}{5\bibrangedash 6}
+      \range{pages}{2}
+    \endentry
+    \entry{ref1}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=2a3d8893ad04ba3c98081349c47e2f6c}{%
+           family={Laudon},
+           familyi={L\bibinitperiod},
+           given={Kenneth\bibnamedelima C.},
+           giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=7104f050b378ef23f0bc36c2b73e5ea2}{%
+           family={Laudon},
+           familyi={L\bibinitperiod},
+           given={Jane\bibnamedelima P.},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{fullhash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{fullhashraw}{a99ce1573b42821945806f73f25db5a4}
+      \strng{bibnamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorbibnamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authornamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorfullhash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorfullhashraw}{a99ce1573b42821945806f73f25db5a4}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{13}
+      \field{title}{Management Information Systems: Managing the Digital Firm}
+      \field{year}{2014}
+    \endentry
+    \entry{ref2}{article}{}{}
+      \name{author}{9}{}{%
+        {{hash=a1cc9775b5010215a62c20ed495e49b2}{%
+           family={Coronado-Hernandez},
+           familyi={C\bibinithyphendelim H\bibinitperiod},
+           given={Jairo\bibnamedelima R.},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=b45b6a392caa7b6e87704cbff7384e64}{%
+           family={Ospina-Mateus},
+           familyi={O\bibinithyphendelim M\bibinitperiod},
+           given={Holman},
+           giveni={H\bibinitperiod}}}%
+        {{hash=3b220fed44a415c10bdde101eea7d412}{%
+           family={Canabal-Gónzalez},
+           familyi={C\bibinithyphendelim G\bibinitperiod},
+           given={Danneris},
+           giveni={D\bibinitperiod}}}%
+        {{hash=2f9398e12336c5472f633547fe4c075c}{%
+           family={Peña-Ballestas},
+           familyi={P\bibinithyphendelim B\bibinitperiod},
+           given={Diana},
+           giveni={D\bibinitperiod}}}%
+        {{hash=781133d3bbe811349d8a966c6e3a9ca8}{%
+           family={Baron-Villamizar},
+           familyi={B\bibinithyphendelim V\bibinitperiod},
+           given={Javier},
+           giveni={J\bibinitperiod}}}%
+        {{hash=bfa1813b698786bd675b721a1b2b1ed4}{%
+           family={Mercado-Carusso},
+           familyi={M\bibinithyphendelim C\bibinitperiod},
+           given={Nohora},
+           giveni={N\bibinitperiod}}}%
+        {{hash=ea277b1e68e066b10cb5521203d4bdc4}{%
+           family={Romero-Conrado},
+           familyi={R\bibinithyphendelim C\bibinitperiod},
+           given={Alfonso\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=30ee891598386f530b6acdf5c62c9a9c}{%
+           family={Paternina-Arboleda},
+           familyi={P\bibinithyphendelim A\bibinitperiod},
+           given={Carlos},
+           giveni={C\bibinitperiod}}}%
+        {{hash=51cdeff3337ff814be60c3e258171d02}{%
+           family={Silva},
+           familyi={S\bibinitperiod},
+           given={Jesús},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d3c42c9a53871e7b14181e43afdccc22}
+      \strng{fullhash}{cf9932467b59c9846275823453a586db}
+      \strng{fullhashraw}{cf9932467b59c9846275823453a586db}
+      \strng{bibnamehash}{d3c42c9a53871e7b14181e43afdccc22}
+      \strng{authorbibnamehash}{d3c42c9a53871e7b14181e43afdccc22}
+      \strng{authornamehash}{d3c42c9a53871e7b14181e43afdccc22}
+      \strng{authorfullhash}{cf9932467b59c9846275823453a586db}
+      \strng{authorfullhashraw}{cf9932467b59c9846275823453a586db}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sprinter}
+      \field{title}{Implementation of an E.R.P. Inventory Module in a Small Colombian Metalworking Company}
+      \field{year}{2019}
+    \endentry
+    \entry{ref3}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=63677439a659270193b6e0dbe3692b73}{%
+           family={Malhotra},
+           familyi={M\bibinitperiod},
+           given={Rahul},
+           giveni={R\bibinitperiod}}}%
+        {{hash=d0c5886c6c5db60c949829aa7c7f8e72}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={Narinder},
+           giveni={N\bibinitperiod}}}%
+        {{hash=ec8bb32b71891fb85dbd6aeb9ee8aa41}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={Yaduvir},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{2305254d59e6341900486ace2ca30e38}
+      \strng{fullhash}{2305254d59e6341900486ace2ca30e38}
+      \strng{fullhashraw}{2305254d59e6341900486ace2ca30e38}
+      \strng{bibnamehash}{2305254d59e6341900486ace2ca30e38}
+      \strng{authorbibnamehash}{2305254d59e6341900486ace2ca30e38}
+      \strng{authornamehash}{2305254d59e6341900486ace2ca30e38}
+      \strng{authorfullhash}{2305254d59e6341900486ace2ca30e38}
+      \strng{authorfullhashraw}{2305254d59e6341900486ace2ca30e38}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{CCSE}
+      \field{title}{Genetic Algorithms: Concepts, Design for Optimization of Process Controllers}
+      \field{year}{2011}
+      \field{pages}{39}
+      \range{pages}{1}
+    \endentry
+    \entry{flowshop}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=35876887dbeaee944eab8dad4cc123f4}{%
+           family={Fonseca\bibnamedelima Reyna},
+           familyi={F\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Yunior\bibnamedelima César},
+           giveni={Y\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=f1872d04f03818b19ba79ba46a57cf3f}{%
+           family={Márquez\bibnamedelima Delgado},
+           familyi={M\bibinitperiod\bibinitdelim D\bibinitperiod},
+           given={José\bibnamedelima Eduardo},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{fullhash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{fullhashraw}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{bibnamehash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{authorbibnamehash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{authornamehash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{authorfullhash}{cda93d025f1cdd3a84966508e04e33a3}
+      \strng{authorfullhashraw}{cda93d025f1cdd3a84966508e04e33a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Revista Cubana de Ciencias Informáticas}
+      \field{number}{4}
+      \field{title}{Comparación de un algoritmo genético y la técnica nube de partículas en la solución del Flow Shop Scheduling}
+      \field{volume}{6}
+      \field{year}{2012}
+      \field{pages}{17\bibrangedash 26}
+      \range{pages}{10}
+    \endentry
+    \entry{flexjobshop}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=94050d6fd9bd999ea86ea460085c0d0c}{%
+           family={Correa\bibnamedelima Espinal},
+           familyi={C\bibinitperiod\bibinitdelim E\bibinitperiod},
+           given={Alexander\bibnamedelima Alberto},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=aeaa90f141516f498278c40fe234917e}{%
+           family={Rodríguez\bibnamedelima Velásquez},
+           familyi={R\bibinitperiod\bibinitdelim V\bibinitperiod},
+           given={Elkin},
+           giveni={E\bibinitperiod}}}%
+        {{hash=25e6fae47c6c8156e64ef1e412ceb240}{%
+           family={Londoño\bibnamedelima Restrepo},
+           familyi={L\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={María\bibnamedelima Isabel},
+           giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+      }
+      \strng{namehash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{fullhash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{fullhashraw}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{bibnamehash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{authorbibnamehash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{authornamehash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{authorfullhash}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \strng{authorfullhashraw}{e0c2b1e3f1dfc5b98572265478ee114d}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Revista Avances en Sistemas e Informática}
+      \field{number}{3}
+      \field{title}{Secuenciación de operaciones para configuraciones de planta tipo Flexible Job Shop: Estado del arte}
+      \field{volume}{5}
+      \field{year}{2008}
+      \field{pages}{151\bibrangedash 161}
+      \range{pages}{11}
+    \endentry
+    \entry{industry4}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=5f2d67499a98929cedfb4f81c4d10f7d}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Wenqiang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=c1f2127b9d448711f80ae879a5c023fc}{%
+           family={Bao},
+           familyi={B\bibinitperiod},
+           given={Xuan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=d126b31ae34de1b451fdf44f77e2169f}{%
+           family={Hao},
+           familyi={H\bibinitperiod},
+           given={Xinchang},
+           giveni={X\bibinitperiod}}}%
+        {{hash=cda827ec7da921538663a82033c89621}{%
+           family={Gen},
+           familyi={G\bibinitperiod},
+           given={Mitsuo},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{863d0ff361e9fb48eb10339b819e61ff}
+      \strng{fullhash}{6d38f6180bdc839fe186719364fd7fbe}
+      \strng{fullhashraw}{6d38f6180bdc839fe186719364fd7fbe}
+      \strng{bibnamehash}{863d0ff361e9fb48eb10339b819e61ff}
+      \strng{authorbibnamehash}{863d0ff361e9fb48eb10339b819e61ff}
+      \strng{authornamehash}{863d0ff361e9fb48eb10339b819e61ff}
+      \strng{authorfullhash}{6d38f6180bdc839fe186719364fd7fbe}
+      \strng{authorfullhashraw}{6d38f6180bdc839fe186719364fd7fbe}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Frontiers in Industrial Engineering}
+      \field{title}{Metaheuristics for multi-objective scheduling problems in Industry 4.0 and 5.0: a state-of-the-arts survey}
+      \field{year}{2025}
+    \endentry
+    \entry{meisel2010}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5aa07ce5935c669c1c042b19f4682e9b}{%
+           family={Meisel},
+           familyi={M\bibinitperiod},
+           given={José\bibnamedelima David},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=fa42bb4326e5441d72254e08c1ee5be1}{%
+           family={Prado},
+           familyi={P\bibinitperiod},
+           given={Liliana\bibnamedelima Katherine},
+           giveni={L\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{fullhash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{fullhashraw}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{bibnamehash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{authorbibnamehash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{authornamehash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{authorfullhash}{b3c41bad14007c993ddeb80d088d31fd}
+      \strng{authorfullhashraw}{b3c41bad14007c993ddeb80d088d31fd}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Revista EIA}
+      \field{title}{Un algoritmo genético híbrido y un enfriamiento simulado para solucionar el problema de programación de pedidos Job Shop}
+      \field{year}{2010}
+      \field{pages}{39\bibrangedash 51}
+      \range{pages}{13}
+    \endentry
+    \entry{valletesis}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=c342dc2be30991fa36fe9972e2a4eb7f}{%
+           family={Valle},
+           familyi={V\bibinitperiod},
+           given={David\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Politécnica de Madrid}%
+      }
+      \strng{namehash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{fullhash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{fullhashraw}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{bibnamehash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{authorbibnamehash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{authornamehash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{authorfullhash}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \strng{authorfullhashraw}{c342dc2be30991fa36fe9972e2a4eb7f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Resolución del Job Shop Scheduling Problem mediante metaheurísticas}
+      \field{type}{mathesis}
+      \field{year}{2021}
+    \endentry
+    \entry{ref5}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=b9a8e70f36815a46e3d80d3322849ba9}{%
+           family={Das},
+           familyi={D\bibinitperiod},
+           given={Tomal},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{fullhash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{fullhashraw}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{bibnamehash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{authorbibnamehash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{authornamehash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{authorfullhash}{b9a8e70f36815a46e3d80d3322849ba9}
+      \strng{authorfullhashraw}{b9a8e70f36815a46e3d80d3322849ba9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ResearchGate}
+      \field{title}{Productivity optimization techniques using industrial engineering tools: A review}
+      \field{year}{2024}
+      \field{pages}{376\bibrangedash 280}
+      \range{pages}{-89}
+    \endentry
+    \entry{teppan2022}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=7cafc3f6e1e4e09122c68f176d502e9a}{%
+           family={Teppan},
+           familyi={T\bibinitperiod},
+           given={Erich\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{fullhash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{fullhashraw}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{bibnamehash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{authorbibnamehash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{authornamehash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{authorfullhash}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \strng{authorfullhashraw}{7cafc3f6e1e4e09122c68f176d502e9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 14th International Conference on Agents and Artificial Intelligence (ICAART)}
+      \field{title}{Types of Flexible Job Shop Scheduling: A Constraint Programming Experiment}
+      \field{year}{2022}
+      \field{pages}{516\bibrangedash 523}
+      \range{pages}{8}
+    \endentry
+    \entry{Delgado2005}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=c36d45debd06ff0127d26799599fbf74}{%
+           family={Delgado},
+           familyi={D\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=48fedd0ccb4e90c23db1890fdf342e55}{%
+           family={Cortés},
+           familyi={C\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=3cb0f79148009f35515017c2c9210dfa}{%
+           family={Cortés},
+           familyi={C\bibinitperiod},
+           given={C.\bibnamedelimi J.},
+           giveni={C\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=232865653912b898fcea8d4ca45affb9}{%
+           family={Duarte},
+           familyi={D\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{75a5a7290ddcadf22f4d77e8bcc9fac2}
+      \strng{fullhash}{cddc4b05b248a24ff37d8ed239395efd}
+      \strng{fullhashraw}{cddc4b05b248a24ff37d8ed239395efd}
+      \strng{bibnamehash}{75a5a7290ddcadf22f4d77e8bcc9fac2}
+      \strng{authorbibnamehash}{75a5a7290ddcadf22f4d77e8bcc9fac2}
+      \strng{authornamehash}{75a5a7290ddcadf22f4d77e8bcc9fac2}
+      \strng{authorfullhash}{cddc4b05b248a24ff37d8ed239395efd}
+      \strng{authorfullhashraw}{cddc4b05b248a24ff37d8ed239395efd}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Ingeniería e Investigación}
+      \field{number}{2}
+      \field{title}{Aplicación de algoritmos genéticos para la programación de tareas en una celda de manufactura}
+      \field{volume}{25}
+      \field{year}{2005}
+      \field{pages}{24\bibrangedash 31}
+      \range{pages}{8}
+      \verb{urlraw}
+      \verb http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S0120-56092005000200003
+      \endverb
+      \verb{url}
+      \verb http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S0120-56092005000200003
+      \endverb
+    \endentry
+    \entry{ref10}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=918cddcf66a134dfc27e39a1a1987a03}{%
+           family={Savić},
+           familyi={S\bibinitperiod},
+           given={Aleksandar},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c3178884c96e65882d599b41593ff209}{%
+           family={Tošić},
+           familyi={T\bibinitperiod},
+           given={Dušan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=dc2550cebce7e7069d13882aad48795c}{%
+           family={Marić},
+           familyi={M\bibinitperiod},
+           given={Miroslav},
+           giveni={M\bibinitperiod}}}%
+        {{hash=cee7a6fd599accf32d09e9cf371c8ed9}{%
+           family={Kratica},
+           familyi={K\bibinitperiod},
+           given={Jozef},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{ad26e548a39e214a7dd52a3304fa7960}
+      \strng{fullhash}{e063ddbe7767a3afe4eff1bbc4a1ffb1}
+      \strng{fullhashraw}{e063ddbe7767a3afe4eff1bbc4a1ffb1}
+      \strng{bibnamehash}{ad26e548a39e214a7dd52a3304fa7960}
+      \strng{authorbibnamehash}{ad26e548a39e214a7dd52a3304fa7960}
+      \strng{authornamehash}{ad26e548a39e214a7dd52a3304fa7960}
+      \strng{authorfullhash}{e063ddbe7767a3afe4eff1bbc4a1ffb1}
+      \strng{authorfullhashraw}{e063ddbe7767a3afe4eff1bbc4a1ffb1}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Serdica Journal of Computing}
+      \field{title}{Genetic Algorithm Approach for Solving the Task Assignment Problem}
+      \field{year}{2008}
+      \field{pages}{101\bibrangedash 110}
+      \range{pages}{10}
+    \endentry
+    \entry{ref9}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=3702f1c146e64a6c91fc47b81ea59fc7}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{fullhash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{fullhashraw}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{bibnamehash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{authorbibnamehash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{authornamehash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{authorfullhash}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \strng{authorfullhashraw}{3702f1c146e64a6c91fc47b81ea59fc7}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of Innovative Computing 2024, Vol. 4}
+      \field{title}{Application of Genetic Algorithms in Automated Mechanical Design}
+      \field{year}{2024}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 
