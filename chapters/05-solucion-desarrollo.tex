@@ -201,18 +201,18 @@ Este proceso se repite para cada tarea en $\mathrm{Orden}_o$ de cada operario $o
 
 \node[block] (input) {Individuo \\ $\mathbf{x} = [\, \mathbf{y} \mid \boldsymbol{\pi} \,]$};
 
-\node[block, below=of input] (split) {Separacion por operario \\ $T_o = \{ i : y_i = o \}$};
+\node[block, below=of input] (split) {Separación por operario \\ $T_o = \{ i : y_i = o \}$};
 
 \node[block, below=of split] (sort) {Ordenar tareas por prioridad \\ $\pi_i$};
 
-\node[block, below=of sort] (check) {Validacion de restricciones:\\
+\node[block, below=of sort] (check) {Validación de restricciones:\\
 aptitud, repuestos, precedencias,\\
 no solapamiento, horizonte};
 
 \node[block, below=of check] (update) {Actualizar estado:\\
 $tpo[o]$, $\mathrm{comp}$, $\mathrm{occ}$};
 
-\node[block, below=of update] (metrics) {Generar metricas:\\
+\node[block, below=of update] (metrics) {Generar métricas:\\
 $N_{\text{exec}}, P_{\text{prec}}, P_{\text{rep}},$\\
 $P_{\text{apt}}, P_{\text{ot}}, E_{\text{hor}}, \sigma, C_{\max}$};
 
@@ -224,7 +224,7 @@ $P_{\text{apt}}, P_{\text{ot}}, E_{\text{hor}}, \sigma, C_{\max}$};
 
 \end{tikzpicture}%
 \shorthandon{>}
-\caption{Flujo del proceso de evaluacion de un individuo.}
+\caption{Flujo del proceso de evaluación de un individuo.}
 \end{figure}
 
 
@@ -364,13 +364,13 @@ algoritmo, facilitando la validación y comparación de resultados.
 ]
 
 % Nodes
-\node[block] (pop) {Poblacion actual \\ $P^{(g)}$};
-\node[block, below=of pop] (fitness) {Evaluacion \\ Funcion de aptitud};
-\node[block, below=of fitness] (select) {Seleccion \\ (ranking)};
+\node[block] (pop) {Población actual \\ $P^{(g)}$};
+\node[block, below=of pop] (fitness) {Evaluación \\ Función de aptitud};
+\node[block, below=of fitness] (select) {Selección \\ (ranking)};
 \node[block, below=of select] (crossover) {Cruce \\ (single point)};
-\node[block, below=of crossover] (mutation) {Mutacion \\ (15\% de genes)};
-\node[block, below=of mutation] (elitism) {Preservacion de elite \\ (5 mejores individuos)};
-\node[block, below=of elitism] (newpop) {Nueva poblacion \\ $P^{(g+1)}$};
+\node[block, below=of crossover] (mutation) {Mutación \\ (15\% de genes)};
+\node[block, below=of mutation] (elitism) {Preservación de élite \\ (5 mejores individuos)};
+\node[block, below=of elitism] (newpop) {Nueva población \\ $P^{(g+1)}$};
 
 % Arrows
 \draw[->] (pop) -- (fitness);
@@ -382,7 +382,7 @@ algoritmo, facilitando la validación y comparación de resultados.
 
 \end{tikzpicture}%
 \shorthandon{>}
-\caption{Flujo del ciclo evolutivo del algoritmo genetico en PyGAD.}
+\caption{Flujo del ciclo evolutivo del algoritmo genético en PyGAD.}
 \end{figure}
 
 \section{Enfoque de Solución: Método SPT}
@@ -543,11 +543,11 @@ procesamiento con un proceso operativo de programación ajustado al estado real 
 % Nodes (vertical layout)
 \node[block] (pend) {Tareas pendientes};
 \node[block, below=of pend] (filtrar) {Filtrado de tareas listas \\ (prereqs + repuestos)};
-\node[block, below=of filtrar] (orden) {Orden SPT \\ (por duracion)};
-\node[block, below=of orden] (operario) {Seleccion de operario apto \\ (minima carga)};
-\node[block, below=of operario] (slot) {Busqueda de hueco \\ mas temprano};
-\node[block, below=of slot] (asignar) {Asignacion \\ inicio-fin};
-\node[block, below=of asignar] (actualizar) {Actualizacion del estado \\ (pendientes, carga, OT)};
+\node[block, below=of filtrar] (orden) {Orden SPT \\ (por duración)};
+\node[block, below=of orden] (operario) {Selección de operario apto \\ (mínima carga)};
+\node[block, below=of operario] (slot) {Búsqueda de hueco \\ más temprano};
+\node[block, below=of slot] (asignar) {Asignación \\ inicio-fin};
+\node[block, below=of asignar] (actualizar) {Actualización del estado \\ (pendientes, carga, OT)};
 
 % Arrows
 \draw[->] (pend) -- (filtrar);
@@ -559,7 +559,5 @@ procesamiento con un proceso operativo de programación ajustado al estado real 
 
 \end{tikzpicture}%
 \shorthandon{>}
-\caption{Flujo operativo del metodo SPT en el taller.}
+\caption{Flujo operativo del método SPT en el taller.}
 \end{figure}
-
-
