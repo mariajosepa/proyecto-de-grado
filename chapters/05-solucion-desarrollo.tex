@@ -12,7 +12,7 @@ un horizonte diario limitado. Esta combinación de factores da lugar a un espaci
 complejo y no lineal, típico de problemas NP-hard, lo que dificulta resolverlo mediante 
 métodos exactos en tiempos razonables.
 
-\section{Enfoque de Solucion: Algoritmos Geneticos (AG)}
+\section{Enfoque de Solución: Algoritmos Genéticos (AG)}
 
 Frente a la complejidad operativa descrita, se implementa un enfoque de optimización basado en 
 Algoritmos Genéticos (AG) cuya configuración se adapta específicamente al flujo de trabajo del 
@@ -23,7 +23,7 @@ límite diario de jornada--- dentro del proceso evolutivo. De esta manera, el AG
 mecanismo que genera y mejora iterativamente configuraciones de programación factibles y 
 alineadas con las condiciones operativas del entorno industrial.
 
-\subsection{Modelado del Problema para el Algoritmo Genetico}
+\subsection{Modelado del Problema para el Algoritmo Genético}
 
 El algoritmo genético opera sobre la estructura formal del problema definida en el 
 capítulo anterior, utilizando como insumo el conjunto diario de órdenes de trabajo, 
@@ -55,7 +55,7 @@ espacio de búsqueda altamente restringido.
 
 
 
-\subsection{Representacion del Individuo}
+\subsection{Representación del Individuo}
 
 La solución que manipula el algoritmo genético se estructura mediante un cromosoma 
 que integra explícitamente las dos decisiones fundamentales del problema: la asignación 
@@ -98,7 +98,7 @@ las condiciones reales del taller, manteniendo al mismo tiempo una codificación
 y eficiente para la evolución genética.
 
 
-\subsection{Evaluacion de la Solucion}
+\subsection{Evaluación de la Solución}
 
 Una vez representado el individuo mediante la asignación de operarios y las prioridades 
 de programación, el siguiente paso consiste en evaluar su desempeño como cronograma 
@@ -121,12 +121,12 @@ precedencia, faltas de repuestos, asignaciones no aptas, solapamientos internos,
 excedentes del horizonte, balance de carga y tiempo máximo de finalización. Estas 
 métricas alimentan posteriormente la función de aptitud.
 
-\paragraph{Representacion Formal del Proceso de Evaluacion.}
+\paragraph{Representación Formal del Proceso de Evaluación.}
 
 La evaluación del individuo sigue un procedimiento estructurado en seis pasos principales, 
 como se describe a continuación:
 
-\subparagraph{1. Separacion por operario.}
+\subparagraph{1. Separación por operario.}
 Dado un individuo $\mathbf{x} = (\mathbf{y}, \boldsymbol{\pi})$, se construye el conjunto de tareas 
 asignadas a cada operario:
 \[
@@ -145,7 +145,7 @@ contenidos en la segunda mitad del cromosoma:
 donde el operador sort organiza las tareas en orden ascendente (o descendente, según la implementación) 
 de prioridad. Esto define el orden en que cada tarea será considerada para su programación.
 
-\subparagraph{3. Intento de programacion.}
+\subparagraph{3. Intento de programación.}
 Sea $s_i$ el inicio tentativo y $f_i$ el fin tentativo de la tarea $i$. Se asigna:
 \[
 s_i = tpo[o], \quad f_i = s_i + p(i)
@@ -154,7 +154,7 @@ s_i = tpo[o], \quad f_i = s_i + p(i)
 donde $tpo[o]$ es el tiempo acumulado (tiempo posterior ocupado) del operario $o$, 
 y $p(i)$ es la duración de la tarea $i$.
 
-\subparagraph{4. Validacion de restricciones.}
+\subparagraph{4. Validación de restricciones.}
 Antes de confirmar la programación, se verifica que se cumplan:
 
 \begin{enumerate}
@@ -170,7 +170,7 @@ Antes de confirmar la programación, se verifica que se cumplan:
 Si todas las condiciones se satisfacen, la tarea se programa y se registra su intervalo $[s_i, f_i)$ 
 en $\mathrm{occ}[OT(i)]$. En caso contrario, se registra la penalización correspondiente.
 
-\subparagraph{Actualizacion de estado.}
+\subparagraph{Actualización de estado.}
 Si la programación es exitosa:
 \[
 \mathrm{programar}(i, o), \quad tpo[o] \gets f_i, \quad \mathrm{comp}[OT(i)] \gets \mathrm{comp}[OT(i)] \cup \{i\}
@@ -178,7 +178,7 @@ Si la programación es exitosa:
 
 Se actualiza el tiempo acumulado del operario y el conjunto de tareas completadas de la orden.
 
-\subparagraph{Registro de penalizacion.}
+\subparagraph{Registro de penalización.}
 En caso contrario, se registra:
 \[
 \text{registrar penalización correspondiente}
@@ -229,7 +229,7 @@ $P_{\text{apt}}, P_{\text{ot}}, E_{\text{hor}}, \sigma, C_{\max}$};
 
 
 
-\subsection{Funcion de Aptitud}
+\subsection{Función de Aptitud}
 
 La función de aptitud asigna un valor cuantitativo al desempeño de cada individuo a partir 
 de las métricas generadas durante la evaluación. Su diseño busca orientar el proceso 
@@ -294,7 +294,7 @@ factibles, eficientes y alineadas con las necesidades reales del entorno industr
 
 
 
-\subsection{Operadores Geneticos y Parametros del AG}
+\subsection{Operadores Genéticos y Parámetros del AG}
 
 El proceso evolutivo implementado en este proyecto se desarrolla mediante los operadores 
 genéticos estándar proporcionados por la librería PyGAD, configurados de manera que reflejen 
@@ -302,7 +302,7 @@ las características del problema y favorezcan una búsqueda eficiente dentro de
 soluciones. Cada operador contribuye a la exploración o explotación del espacio, mientras 
 que los parámetros controlan la estabilidad y la velocidad de convergencia del algoritmo.
 
-\paragraph{Seleccion.}
+\paragraph{Selección.}
 Se emplea selección por \textit{ranking}, mecanismo en el cual los individuos se ordenan de 
 acuerdo con su aptitud y se asignan probabilidades de selección según su posición relativa. 
 Este método es adecuado en contextos donde las diferencias entre aptitudes pueden ser 
@@ -317,7 +317,7 @@ está estructurado en dos bloques homogéneos (asignación y prioridad), un punt
 introduce variabilidad sin descomponer significativamente la estructura semántica del 
 individuo.
 
-\paragraph{Mutacion.}
+\paragraph{Mutación.}
 La variación genética se incorpora mediante una tasa de mutación aplicada al 15\% de los 
 genes del cromosoma. En los genes de asignación, la mutación consiste en seleccionar 
 aleatoriamente un operario válido para el tipo de tarea; en los genes de prioridad, asigna 
@@ -325,7 +325,7 @@ un valor continuo aleatorio en el intervalo $[0,1]$. Esta tasa moderada permite 
 nuevas combinaciones manteniendo la estabilidad del proceso evolutivo y evitando 
 convergencias prematuras.
 
-\paragraph{Parametros generales.}
+\paragraph{Parámetros generales.}
 El algoritmo se ejecutó con los siguientes parámetros:
 \begin{itemize}
     \item \textbf{Población:} 100 individuos por generación.
@@ -385,7 +385,7 @@ algoritmo, facilitando la validación y comparación de resultados.
 \caption{Flujo del ciclo evolutivo del algoritmo genetico en PyGAD.}
 \end{figure}
 
-\section{Enfoque de Solucion: Metodo SPT}
+\section{Enfoque de Solución: Método SPT}
 
 Como alternativa al enfoque evolutivo basado en algoritmos genéticos, se consideró una 
 estrategia heurística clásica de secuenciación: la regla SPT (\textit{Shortest Processing 
@@ -435,7 +435,7 @@ programación determina los horarios de inicio y finalización, respetando los t
 disponibles, la aptitud del operario asignado y las ventanas temporales de la orden de 
 trabajo.
 
-\subsection{Representacion Formal del Orden SPT}
+\subsection{Representación Formal del Orden SPT}
 
 El ordenamiento SPT aplicado al taller puede describirse formalmente como un proceso 
 iterativo que opera sobre el conjunto de tareas pendientes. En cada paso, el método 
@@ -483,7 +483,7 @@ El resultado final es una secuencia ordenada de tareas listas, actualizada diná
 cada iteración a medida que nuevas tareas son completadas y otras entran en condición de 
 ser consideradas.
 
-\subsection{Aplicacion Operativa del SPT en el Taller}
+\subsection{Aplicación Operativa del SPT en el Taller}
 
 Una vez definido el orden SPT de las tareas listas, el sistema procede a construir el 
 cronograma operativo respetando la disponibilidad de los operarios, las restricciones de 
@@ -561,6 +561,5 @@ procesamiento con un proceso operativo de programación ajustado al estado real 
 \shorthandon{>}
 \caption{Flujo operativo del metodo SPT en el taller.}
 \end{figure}
-
 
 
