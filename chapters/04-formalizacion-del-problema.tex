@@ -94,7 +94,88 @@ Operativamente, el taller funciona bajo este flujo conceptual:
 \end{enumerate}
 
 Este flujo será simulado formalmente en la evaluación de soluciones.
+\section{Modelación del Problema y Archivo de Configuración del Taller}
 
+El archivo \texttt{taller\_config.py} es un módulo de configuración que centraliza toda la información estructural del taller requerida para la simulación y 
+los algoritmos de asignación. Este archivo actúa como la representación formal del sistema productivo real y contiene los catálogos de tareas, las relaciones de precedencia, la clasificación de operarios, 
+sus habilidades, la duración base de cada operación y las reglas operativas fundamentales. Fue construido a partir del levantamiento de información realizado con la empresa Recti-Ram, y sirve como la “fuente de verdad” sobre la cual el generador de 
+instancias, el simulador, el algoritmo genético y el método SPT basan todas sus decisiones. De este modo, el archivo garantiza consistencia, reproducibilidad y correspondencia entre el modelo computacional y 
+las condiciones reales del taller.
+
+Para implementar y evaluar los algoritmos de asignación desarrollados en este trabajo, fue necesario construir una representación formal del funcionamiento real del taller. Esta modelación constituye un puente entre el dominio operativo del 
+taller y los métodos computacionales descritos en capítulos posteriores. Con este fin, se diseñó un archivo de configuración denominado \texttt{taller\_config}, el cual consolida la estructura de tareas, las relaciones de precedencia, las habilidades de los operarios, 
+la disponibilidad de repuestos, la duración base de las actividades y el horizonte de planificación diario. La construcción de este archivo se realizó en estrecha colaboración con la empresa aliada, Rectificadora Recti-Ram, garantizando que el modelo resultante reflejara de 
+forma fiel las condiciones reales del proceso productivo.
+
+\subsection{Clasificación de familias de tareas del taller}
+
+El proceso completo de reparación de motores en un taller de rectificación se compone de múltiples operaciones que pueden agruparse en cuatro grandes familias, según la naturaleza mecánica y el componente del motor intervenido:
+
+\begin{itemize}
+    \item \textbf{Tareas de Bloque}: incluyen inspección, pruebas hidrostáticas, rectificación de cilindros, encamisado, glaseado y reconstrucción de bancadas. Estas actividades constituyen etapas intensivas en maquinaria pesada.
+    \item \textbf{Tareas de Culata}: comprenden instalación y fabricación de guías, rectificación de válvulas, cepillado de culata, adaptación y reconstrucción de alojamientos. Son tareas que exigen precisión y una alta especialización del operario.
+    \item \textbf{Tareas de Cigüeñal}: incluyen operaciones como metalizado, pulido, rectificación de muñones y balanceo del cigüeñal. Son procesos mecánicos especializados que requieren maquinaria específica.
+    \item \textbf{Tareas de Bielas}: abarcan asentado, instalación de pistón y armado del conjunto biela--pistón.
+\end{itemize}
+
+El conjunto completo está compuesto por 35 tipos de tareas identificadas y validadas directamente con el taller, cada una asignada a una de estas cuatro familias.
+
+\subsection{Distribución de frecuencia de tareas y estimación empírica}
+
+Durante la fase de levantamiento de información, se revisaron las órdenes de trabajo típicas manejadas por Recti-Ram. Con base en esta revisión y en entrevistas con el personal técnico, se estimó la proporción mensual en que aparecen cada una de las familias de tareas. El resultado permitió establecer una distribución operativa que se utiliza posteriormente para la generación de instancias de prueba:
+
+\begin{itemize}
+    \item \textbf{60\% Culatas} -- debido a que la rectificación de culatas constituye la mayor demanda mensual.
+    \item \textbf{20\% Bloque} -- tareas costosas en maquinaria pero menos frecuentes.
+    \item \textbf{10\% Cigüeñal}.
+    \item \textbf{10\% Bielas}.
+\end{itemize}
+
+Esta distribución no solo refleja el comportamiento real del taller, sino que también permite que las instancias generadas para entrenamiento y validación de los algoritmos sigan patrones realistas de demanda.
+
+\subsection{Clasificación de operarios y habilidades técnicas}
+
+La empresa cuenta con dos grupos principales de operarios:
+
+\begin{itemize}
+    \item \textbf{Operarios especializados en Bloque}: un grupo de 6 operarios entrenados para tareas de rectificación y mecanizado pesado.
+    \item \textbf{Operarios especializados en Culata}: un grupo de 12 operarios capacitados en procesos de precisión asociados a la culata.
+\end{itemize}
+
+Ambos grupos poseen, además, habilidades parciales o complementarias para tareas de Cigüeñal y Bielas, lo que se refleja directamente en la matriz de aptitudes utilizada en el modelo (\texttt{OPERARIOS\_APTOS}). Cada operario cuenta con un subconjunto específico de tareas que puede ejecutar, lo cual introduce restricciones reales en la asignación y limita el espacio de búsqueda del algoritmo genético, obligándolo a considerar soluciones factibles desde el punto de vista operativo.
+
+\subsection{Estructura del archivo de configuración}
+
+El archivo \texttt{taller\_config} consolida todos los elementos requeridos para modelar el problema de programación de tareas. Sus componentes principales son:
+
+\begin{itemize}
+    \item \textbf{Catálogo de tareas} (\texttt{TAREAS}): relación de los 35 tipos de tareas clasificadas por familia.
+    \item \textbf{Relaciones de precedencia} (\texttt{PRECEDENCIAS}): definidas con base en la secuencia técnica real del proceso de rectificación. Por ejemplo, en la familia Bloque, las operaciones siguen un orden altamente estructurado, desde inspección hasta pruebas finales.
+    \item \textbf{Duraciones base} (\texttt{DURACIONES\_BASE}): representan tiempos promedio estimados por operarios expertos. Posteriormente, durante la generación de instancias, estas duraciones se someten a una variabilidad controlada del 10\% para simular condiciones reales.
+    \item \textbf{Operarios y aptitudes} (\texttt{OPERARIOS} y \texttt{OPERARIOS\_APTOS}): definen las habilidades individuales de cada operario y las tareas que puede ejecutar.
+    \item \textbf{Horizonte diario} (\texttt{HORIZONTE}): fijado en 480 minutos, correspondiente a la jornada laboral de 8 horas.
+    \item \textbf{Disponibilidad de repuestos} (\texttt{repuestos\_por\_ot}): representa la existencia o ausencia de insumos para tareas de una misma orden de trabajo.
+\end{itemize}
+
+La combinación de estos elementos permite que tanto el algoritmo genético como el método SPT operen sobre un entorno controlado, reproducible y altamente representativo del funcionamiento real del taller.
+
+\subsection{Uso de la modelación en la generación de instancias}
+
+A partir de esta configuración se diseñó un generador de instancias capaz de simular días completos de operación. El generador:
+
+\begin{enumerate}
+    \item Selecciona aleatoriamente un número de órdenes de trabajo.
+    \item Asigna tareas a cada orden siguiendo la estructura de precedencias.
+    \item Respeta la distribución empírica (60--20--10--10) para seleccionar familias de tareas.
+    \item Aplica variabilidad a las duraciones para simular condiciones reales.
+    \item Genera aleatoriamente la disponibilidad de repuestos con una probabilidad configurable de escasez.
+\end{enumerate}
+
+Este procedimiento permite evaluar el rendimiento de los algoritmos desarrollados en escenarios variados y realistas, asegurando que los resultados obtenidos sean representativos de las condiciones de producción del taller.
+
+\bigskip
+
+En conjunto, la modelación descrita constituye la base metodológica sobre la cual se implementan y comparan los algoritmos de asignación de tareas en capítulos posteriores. Esta base se materializa en el archivo \texttt{taller\_config}, insumo directo para la experimentación presentada en los capítulos siguientes.
 \section{Diseño del modelo de datos para la simulación}
 
 \subsection{Conjuntos y parámetros del sistema}
