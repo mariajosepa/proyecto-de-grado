@@ -23,6 +23,22 @@ límite diario de jornada--- dentro del proceso evolutivo. De esta manera, el AG
 mecanismo que genera y mejora iterativamente configuraciones de programación factibles y 
 alineadas con las condiciones operativas del entorno industrial.
 
+\subsection{Representación Computacional del Taller}
+
+La implementación del AG y del método SPT comparte una misma configuración digital del taller que centraliza la información estructural del proceso productivo. Esta representación contiene los catálogos de tareas identificados con la empresa aliada, las relaciones de precedencia observadas en campo, las habilidades disponibles por operario, las duraciones base de cada intervención y las reglas operativas fundamentales. Al mantener un único repositorio conceptual, ambos métodos trabajan sobre un entorno consistente y directamente vinculado con el comportamiento real del taller.
+
+Los componentes principales de esta configuración son:
+\begin{itemize}
+    \item \textbf{Catálogo de tareas}: relación de los 35 tipos de operaciones clasificados por familia.
+    \item \textbf{Relaciones de precedencia}: secuencias técnicas validadas que describen el orden correcto de ejecución en cada familia.
+    \item \textbf{Duraciones base}: estimaciones obtenidas con operarios expertos, sujetas posteriormente a variaciones controladas durante la generación de instancias.
+    \item \textbf{Operarios y aptitudes}: descripción del personal disponible y de las tareas que puede ejecutar según su especialización.
+    \item \textbf{Horizonte diario}: jornada de 480 minutos que acota el tiempo de programación de cada operario.
+    \item \textbf{Disponibilidad de repuestos}: representación simplificada de la existencia o ausencia de insumos clave por orden de trabajo.
+\end{itemize}
+
+Gracias a esta representación computacional, el algoritmo genético y la heurística SPT pueden evaluar soluciones dentro de un entorno controlado, reproducible y alineado con las condiciones operativas del taller real.
+
 \subsection{Modelado del Problema para el Algoritmo Genético}
 
 El algoritmo genético opera sobre la estructura formal del problema definida en el 
@@ -569,4 +585,3 @@ La implementación completa del algoritmo genético, el método SPT y el simulad
 \begin{center}
 \url{https://github.com/mariajosepa/algoritmo-tesis-jave.git}
 \end{center}
-

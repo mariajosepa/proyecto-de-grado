@@ -126,3 +126,72 @@ En cuanto a la asignación de tareas en problemas de tipo Task Assignment Proble
 Por otra parte, investigaciones sobre heurísticas industriales, como las reglas de despacho SPT, EDD y FCFS, han demostrado ser métodos simples y eficientes para problemas básicos de secuenciación, pero con limitaciones marcadas en problemas con múltiples restricciones o estructuras complejas de precedencia \cite{valletesis,flowshop}. Esta brecha entre simplicidad y capacidad de adaptación es precisamente lo que motiva la comparación entre SPT y algoritmos evolutivos en el presente estudio.
 
 En conjunto, estos antecedentes evidencian que los algoritmos genéticos han sido utilizados con éxito en diversos dominios de la optimización industrial, mientras que las heurísticas tradicionales siguen siendo herramientas fundamentales como métodos comparativos o de referencia. En el caso particular de un taller industrial basado en un sistema ERP, la literatura existente es limitada. Por ello, el presente proyecto aporta un enfoque novedoso al integrar un algoritmo genético dentro de un entorno simulado que replica el flujo real de un taller automotriz, comparándolo directamente con una heurística industrialmente aceptada como SPT. Esta comparación permite evaluar el potencial de los AG para mejorar la asignación de tareas y la eficiencia operativa en un contexto aplicado.
+
+\section{Contexto Operativo del Taller Recti-Ram}
+
+Se utiliza un módulo de configuración que centraliza toda la información estructural del taller requerida para la simulación y los algoritmos de asignación. Este artefacto actúa como la representación formal del sistema productivo real y contiene los catálogos de tareas, las relaciones de precedencia, la clasificación de operarios, sus habilidades, la duración base de cada operación y las reglas operativas fundamentales. Fue construido a partir del levantamiento de información realizado con la empresa Recti-Ram y sirve como la “fuente de verdad” sobre la cual el generador de instancias, el simulador, el algoritmo genético y el método SPT basan todas sus decisiones.
+
+Para implementar y evaluar los algoritmos de asignación desarrollados en este trabajo fue necesario construir una representación formal del funcionamiento real del taller. Esta modelación constituye un puente entre el dominio operativo del taller y los métodos computacionales descritos en capítulos posteriores. Con este fin, se diseñó un archivo de configuración denominado \texttt{taller\_config}, el cual consolida la estructura de tareas, las relaciones de precedencia, las habilidades de los operarios, la disponibilidad de repuestos, la duración base de las actividades y el horizonte de planificación diario.
+
+\subsection{Flujo operativo y restricciones reales}
+
+El taller de reparación de motores opera bajo un flujo secuencial condicionado por restricciones de precedencia, disponibilidad de repuestos, habilidades del personal e interacción entre tareas dentro de una misma orden de trabajo. Cada día se recibe un conjunto de órdenes de trabajo que agrupan tareas mecánicas con distintos requerimientos técnicos, y el objetivo operativo es completar la mayor cantidad posible de dichas tareas dentro de la jornada laboral. El proceso presenta dificultades estructurales:
+\begin{itemize}
+    \item Los operarios poseen habilidades heterogéneas.
+    \item Las órdenes contienen dependencias internas que condicionan el flujo.
+    \item Los repuestos no siempre están disponibles.
+    \item El tiempo límite de jornada restringe la cantidad de tareas ejecutables.
+    \item Tareas pertenecientes a una misma orden no pueden solaparse.
+\end{itemize}
+
+Operativamente, el taller funciona bajo este flujo conceptual:
+\begin{enumerate}
+    \item Llegan varias órdenes de trabajo, cada una con un conjunto de tareas.
+    \item Cada tarea requiere un operario apto y, en algunos casos, un repuesto.
+    \item Algunas tareas dependen de otras dentro de la misma orden.
+    \item Los operarios ejecutan las tareas secuencialmente en una jornada limitada.
+    \item El objetivo es completar la mayor cantidad posible de tareas.
+\end{enumerate}
+
+Este flujo sirve como referencia para validar la simulación planteada en la formalización del problema.
+
+\subsection{Familias y distribución empírica de tareas}
+
+El proceso completo de reparación de motores en un taller de rectificación se compone de múltiples operaciones que pueden agruparse en cuatro grandes familias, según la naturaleza mecánica y el componente del motor intervenido:
+\begin{itemize}
+    \item \textbf{Tareas de Bloque}: incluyen inspección, pruebas hidrostáticas, rectificación de cilindros, encamisado, glaseado y reconstrucción de bancadas.
+    \item \textbf{Tareas de Culata}: comprenden instalación y fabricación de guías, rectificación de válvulas, cepillado de culata, adaptación y reconstrucción de alojamientos.
+    \item \textbf{Tareas de Cigüeñal}: incluyen operaciones como metalizado, pulido, rectificación de muñones y balanceo del cigüeñal.
+    \item \textbf{Tareas de Bielas}: abarcan asentado, instalación de pistón y armado del conjunto biela--pistón.
+\end{itemize}
+
+El conjunto completo está compuesto por 35 tipos de tareas identificadas como las más asignadas y validadas directamente con el taller, cada una asignada a una de estas cuatro familias. Durante la fase de levantamiento de información se revisaron las órdenes de trabajo típicas manejadas por Recti-Ram. Con base en esta revisión y en entrevistas con el personal técnico se estimó la proporción mensual en que aparecen cada una de las familias de tareas. El resultado permitió establecer la siguiente distribución operativa, que se utiliza posteriormente para la generación de instancias de prueba:
+\begin{itemize}
+    \item \textbf{60\% Culatas}: la rectificación de culatas constituye la mayor demanda mensual.
+    \item \textbf{20\% Bloque}: tareas costosas en maquinaria pero menos frecuentes.
+    \item \textbf{10\% Cigüeñal}.
+    \item \textbf{10\% Bielas}.
+\end{itemize}
+
+\subsection{Operarios y habilidades técnicas}
+
+La empresa cuenta con dos grupos principales de operarios:
+\begin{itemize}
+    \item \textbf{Operarios especializados en Bloque}: un grupo de 6 operarios entrenados para tareas de rectificación y mecanizado pesado.
+    \item \textbf{Operarios especializados en Culata}: un grupo de 12 operarios capacitados en procesos de precisión asociados a la culata.
+\end{itemize}
+
+Ambos grupos poseen, además, habilidades parciales o complementarias para tareas de Cigüeñal y Bielas, lo que se refleja directamente en la matriz de aptitudes utilizada en el modelo (\texttt{OPERARIOS\_APTOS}). Cada operario cuenta con un subconjunto específico de tareas que puede ejecutar, lo cual introduce restricciones reales en la asignación y limita el espacio de búsqueda del algoritmo genético, obligándolo a considerar soluciones factibles desde el punto de vista operativo.
+
+\subsection{Uso de la modelación en la generación de instancias}
+
+A partir de esta configuración se diseñó un generador de instancias capaz de simular días completos de operación. El generador:
+\begin{enumerate}
+    \item Selecciona aleatoriamente un número de órdenes de trabajo.
+    \item Asigna tareas a cada orden siguiendo la estructura de precedencias.
+    \item Respeta la distribución empírica (60--20--10--10) para seleccionar familias de tareas.
+    \item Aplica variabilidad a las duraciones para simular condiciones reales.
+    \item Genera aleatoriamente la disponibilidad de repuestos con una probabilidad configurable de escasez.
+\end{enumerate}
+
+Este procedimiento permite evaluar el rendimiento de los algoritmos desarrollados en escenarios variados y realistas, asegurando que los resultados obtenidos sean representativos de las condiciones de producción del taller.
