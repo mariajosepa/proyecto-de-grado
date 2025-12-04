@@ -94,9 +94,9 @@ Operativamente, el taller funciona bajo este flujo conceptual:
 \end{enumerate}
 
 Este flujo será simulado formalmente en la evaluación de soluciones.
-\section{Modelación del Problema y Archivo de Configuración del Taller}
+\section{Descripción Operativa del Taller}
 
-El archivo \texttt{taller\_config.py} es un módulo de configuración que centraliza toda la información estructural del taller requerida para la simulación y 
+Se utiliza un módulo de configuración que centraliza toda la información estructural del taller requerida para la simulación y 
 los algoritmos de asignación. Este archivo actúa como la representación formal del sistema productivo real y contiene los catálogos de tareas, las relaciones de precedencia, la clasificación de operarios, 
 sus habilidades, la duración base de cada operación y las reglas operativas fundamentales. Fue construido a partir del levantamiento de información realizado con la empresa Recti-Ram, y sirve como la “fuente de verdad” sobre la cual el generador de 
 instancias, el simulador, el algoritmo genético y el método SPT basan todas sus decisiones. De este modo, el archivo garantiza consistencia, reproducibilidad y correspondencia entre el modelo computacional y 
