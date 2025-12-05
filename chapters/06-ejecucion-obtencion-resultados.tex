@@ -195,7 +195,8 @@ Gracias a este ensamblaje, el generador produce instancias realistas, reproducib
     \item habilidades factibles para cada tipo de tarea.
 \end{itemize}
 
-\paragraph{Secuencia de construcción.} A partir de estos parámetros se ejecuta el siguiente procedimiento:
+\subsubsection{Procedimiento de creación de escenarios}
+A partir de estos parámetros se ejecuta el siguiente procedimiento:
 \begin{enumerate}
     \item Seleccionar aleatoriamente las órdenes del día y las tareas asociadas.
     \item Asignar tipos, duraciones y familias respetando la estructura de precedencias.
@@ -204,7 +205,8 @@ Gracias a este ensamblaje, el generador produce instancias realistas, reproducib
     \item Consolidar la instancia final \((OT, T_d, O)\) para su evaluación en la simulación.
 \end{enumerate}
 
-\paragraph{Validación con expertos.} Los parámetros del generador se calibraron con el personal de Recti-Ram, confirmando que:
+\subsubsection{Validación del modelo simulado con expertos}
+Los parámetros del generador se calibraron con el personal de Recti-Ram, confirmando que:
 \begin{itemize}
     \item las duraciones reflejan tiempos reales de procesamiento,
     \item las precedencias respetan la secuencia técnica del taller,
@@ -224,9 +226,9 @@ Este procedimiento permite evaluar los algoritmos en escenarios variados y reali
 
 Las instancias incorporan variabilidad en carga operativa, composición de órdenes y mezcla de repuestos disponibles, lo que permite comparar el desempeño de SPT y del algoritmo genético en contextos heterogéneos.
 
-\subsection{Simulación operativa del taller}
+\subsection{Algoritmo de Evaluación Operativa (Función de Aptitud)}
 
-El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller. El pseudocódigo resumido se presenta a continuación:
+El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller; en la práctica, corresponde al algoritmo que implementa la función de aptitud del sistema. El pseudocódigo resumido se presenta a continuación:
 
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -248,6 +250,29 @@ Inicializar estructuras: $tpo[o] \leftarrow 0$, $comp[ot] \leftarrow \emptyset$,
 \end{algorithm}
 
 Este simulador es el núcleo de la evaluación: recibe las soluciones propuestas por cada algoritmo, aplica las restricciones industriales y produce las métricas utilizadas en el análisis comparativo.
+
+\subsection{Conjunto final de escenarios utilizados en la comparación}
+
+\subsubsection{Número y estructura de las instancias}
+Para la fase experimental se consideraron múltiples instancias generadas bajo diferentes configuraciones de:
+\begin{itemize}
+    \item número de órdenes,
+    \item número de tareas,
+    \item complejidad de precedencias,
+    \item disponibilidad de recursos.
+\end{itemize}
+
+\subsubsection{Variabilidad incorporada}
+Las instancias presentan variabilidad en:
+\begin{itemize}
+    \item tamaño del conjunto de tareas,
+    \item carga operativa,
+    \item composición de órdenes,
+    \item mezcla de repuestos disponibles.
+\end{itemize}
+
+\subsubsection{Justificación de los casos de estudio}
+Estas instancias permiten evaluar el desempeño del método SPT y del algoritmo genético en condiciones diversas, representando escenarios realistas del taller.
 
 \subsection{Ejecución conjunta de SPT y AG}
 
