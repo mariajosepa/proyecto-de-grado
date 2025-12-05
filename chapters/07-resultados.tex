@@ -6,26 +6,6 @@ Este capítulo presenta el análisis de los resultados obtenidos en la comparaci
 El análisis combina una perspectiva técnica—basada en métricas cuantitativas, comportamiento estadístico de las soluciones y eficiencia algorítmica—con una interpretación industrial orientada a la toma de decisiones.
 
 % -------------------------------------------------------------------
-\section{Métricas utilizadas}
-
-Para evaluar de manera sistemática el rendimiento del AG y compararlo con el método SPT, se emplearon cinco métricas principales. Estas métricas capturan distintos aspectos del comportamiento operativo del taller y permiten una comparación integral entre los algoritmos.
-
-\subsection{Tareas ejecutadas}
-Corresponde al número total de tareas que el simulador pudo programar respetando precedencias, disponibilidad de repuestos, habilidades de operarios y restricciones temporales. Representa la métrica más importante para el taller, pues un mayor número de tareas ejecutadas implica una utilización más eficiente de la jornada laboral.
-
-\subsection{Tareas rechazadas}
-Indica la cantidad de tareas que no pudieron programarse debido a violaciones de restricciones operativas. Un valor elevado refleja falta de factibilidad en el cronograma y disminuye el rendimiento productivo del taller.
-
-\subsection{Sobrecarga (carga total)}
-Es la suma de los tiempos asignados a cada operario. Una carga total mayor puede interpretarse como un mayor aprovechamiento del horizonte disponible, siempre y cuando no se generen cuellos de botella o violaciones de precedencias.
-
-\subsection{Balance de carga (desviación estándar)}
-Mide la equidad en la distribución del trabajo entre operarios. Valores más bajos sugieren un reparto más equilibrado y, por tanto, una mayor estabilidad operativa.
-
-\subsection{Makespan}
-Corresponde al instante de finalización de la última tarea programada. Un makespan menor normalmente indica mayor eficiencia temporal, siempre que no implique rechazar tareas para lograrlo.
-
-% -------------------------------------------------------------------
 \section{Comparación AG vs SPT}
 \subsection{Descripción general de los resultados}
 

@@ -44,6 +44,18 @@ El algoritmo genético genera:
 
 Los resultados se presentan para las 30 instancias evaluadas en el simulador. La Tabla~\ref{tab:comparacion-metricas} resume las métricas promedio por algoritmo, incorporando la suma de tareas ejecutadas y rechazadas como referencia del tamaño típico de las instancias.
 
+\subsection{Métricas utilizadas}
+
+Para interpretar las tablas se emplean cinco métricas básicas:
+\begin{itemize}
+    \item \textbf{Tareas ejecutadas}: cantidad de operaciones programadas respetando precedencias, habilidades, repuestos y horizonte diario.
+    \item \textbf{Tareas rechazadas}: número de operaciones que el simulador descarta por violar alguna restricción operativa.
+    \item \textbf{Carga total}: tiempo acumulado asignado a todos los operarios durante la jornada.
+    \item \textbf{Desviación estándar de carga}: dispersión de la carga entre operarios, usada para cuantificar balance.
+    \item \textbf{Makespan}: instante en el que finaliza la última tarea programada dentro del día.
+\end{itemize}
+Estas definiciones permiten comparar directamente las salidas de SPT y del AG sin añadir interpretación adicional.
+
 \begin{table}[H]
 \centering
 \small
