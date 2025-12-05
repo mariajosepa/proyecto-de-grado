@@ -1,20 +1,5 @@
-\chapter{Ejecución y Obtención de Resultados}
+\chapter{Resultados Experimentales}
 \label{chap:ejecucion-obtencion-resultados}
-
-\section{Entorno de desarrollo}
-
-El sistema fue implementado en el lenguaje de programación Python, debido a su flexibilidad, amplia disponibilidad de librerías para optimización y manejo de datos, y su compatibilidad con métodos heurísticos y evolutivos. Para garantizar portabilidad y consistencia, se empleó un entorno virtual administrado mediante \texttt{venv}.
-
-Las principales dependencias utilizadas fueron:
-
-\begin{itemize}
-    \item \textbf{NumPy}: manejo eficiente de arreglos y operaciones matemáticas.
-    \item \textbf{Pandas}: construcción de estructuras tabulares para generar y almacenar instancias.
-    \item \textbf{PyGAD}: librería empleada para la implementación del algoritmo genético.
-    \item \textbf{Random}: generación de valores pseudoaleatorios para la creación de instancias.
-\end{itemize}
-
-El archivo \texttt{requirements.txt} incluye las versiones exactas utilizadas, permitiendo reproducir las condiciones de ejecución en cualquier sistema.
 
 \section{Diseño del software}
 
@@ -226,7 +211,7 @@ Este procedimiento permite evaluar los algoritmos en escenarios variados y reali
 
 Las instancias incorporan variabilidad en carga operativa, composición de órdenes y mezcla de repuestos disponibles, lo que permite comparar el desempeño de SPT y del algoritmo genético en contextos heterogéneos.
 
-\subsection{Algoritmo de Evaluación Operativa (Función de Aptitud)}
+\subsection{Algoritmo de Evaluación Operativa}
 
 El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller; en la práctica, corresponde al algoritmo que implementa la función de aptitud del sistema. El pseudocódigo resumido se presenta a continuación:
 
