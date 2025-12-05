@@ -161,16 +161,83 @@ Si la tarea no puede ejecutarse bajo las restricciones del taller, se marca como
 
 El archivo \texttt{simulador.py} ejecuta el experimento completo. Para cada instancia generada, se aplican consecutivamente el método SPT y el algoritmo genético, almacenando métricas clave que permitirán una comparación justa.
 
-\subsection{Generación de conjuntos de instancias}
+\subsection{Procedimiento de Generación de Instancias}
+\label{subsec:procedimiento-instancias}
 
-Las instancias se generan con el módulo \texttt{generador\_instancias.py}, que permite configurar:
+Las instancias se generan con el módulo \texttt{generador\_instancias.py}, que consume la configuración formal del taller y construye escenarios completos para la evaluación de SPT y del algoritmo genético.
 
+\paragraph{Parámetros considerados.} Cada instancia especifica los elementos estructurales necesarios para recrear un día de operación:
+\begin{itemize}
+    \item conjunto de órdenes a atender;
+    \item listado de tareas concretas por orden;
+    \item habilidades y disponibilidad del personal;
+    \item duraciones base de cada tipo de tarea;
+    \item precedencias aplicables;
+    \item indicadores de repuestos disponibles.
+\end{itemize}
+
+\paragraph{Aleatoriedad y distribución de tiempos.} El generador recibe como entrada:
 \begin{itemize}
     \item número mínimo y máximo de órdenes,
-    \item número total de tareas,
-    \item distribución de tipos,
-    \item disponibilidad de repuestos.
+    \item número de tareas por orden,
+    \item distribución temporal inducida por \(p(t)\),
+    \item disponibilidad probabilística de repuestos,
+    \item habilidades factibles para cada tipo de tarea.
 \end{itemize}
+
+\paragraph{Secuencia de construcción.} A partir de estos parámetros se ejecuta el siguiente procedimiento:
+\begin{enumerate}
+    \item Seleccionar aleatoriamente las órdenes del día y las tareas asociadas.
+    \item Asignar tipos, duraciones y familias respetando la estructura de precedencias.
+    \item Generar la disponibilidad de repuestos para cada orden.
+    \item Determinar los operarios aptos para cada tipo de tarea.
+    \item Consolidar la instancia final \((OT, T_d, O)\) para su evaluación en la simulación.
+\end{enumerate}
+
+\paragraph{Validación con expertos.} Los parámetros del generador se calibraron con el personal de Recti-Ram, confirmando que:
+\begin{itemize}
+    \item las duraciones reflejan tiempos reales de procesamiento,
+    \item las precedencias respetan la secuencia técnica del taller,
+    \item las matrices de habilidades representan la estructura del personal,
+    \item el horizonte de 480 minutos coincide con la jornada laboral.
+\end{itemize}
+
+Este procedimiento permite evaluar los algoritmos en escenarios variados y realistas, asegurando que los resultados sean representativos de las condiciones de producción del taller.
+
+\paragraph{Construcción de escenarios de prueba.} Para la fase experimental se emplearon combinaciones que exploran:
+\begin{itemize}
+    \item distintos números de órdenes,
+    \item tamaños del conjunto de tareas,
+    \item niveles de complejidad en las precedencias,
+    \item disponibilidades de recursos y repuestos.
+\end{itemize}
+
+Las instancias incorporan variabilidad en carga operativa, composición de órdenes y mezcla de repuestos disponibles, lo que permite comparar el desempeño de SPT y del algoritmo genético en contextos heterogéneos.
+
+\subsection{Simulación operativa del taller}
+
+El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller. El pseudocódigo resumido se presenta a continuación:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Inicializar estructuras: $tpo[o] \leftarrow 0$, $comp[ot] \leftarrow \emptyset$, $occ[ot] \leftarrow \emptyset$\;
+\ForEach{operario $o \in O$}{
+    Obtener conjunto de tareas asignadas $T_o$\;
+    Ordenar $T_o$ según prioridad descendente\;
+    \ForEach{tarea $i \in T_o$}{
+        Verificar aptitud: $o \in E(tipo(i))$\;
+        Verificar repuesto disponible\;
+        Verificar precedencias cumplidas en $comp[ot(i)]$\;
+        Calcular intervalo $[s_i,f_i) = [tpo[o], tpo[o] + p(tipo(i))]$\;
+        \If{$f_i > H$}{rechazar tarea; continuar}
+        \If{$[s_i,f_i)$ solapa con algún intervalo en $occ[ot(i)]$}{rechazar tarea; continuar}
+        Aceptar tarea: actualizar $tpo[o]$, $comp$, $occ$\;
+    }
+}
+\caption{Simulación operativa de programación de tareas}
+\end{algorithm}
+
+Este simulador es el núcleo de la evaluación: recibe las soluciones propuestas por cada algoritmo, aplica las restricciones industriales y produce las métricas utilizadas en el análisis comparativo.
 
 \subsection{Ejecución conjunta de SPT y AG}
 
@@ -335,4 +402,3 @@ El código fuente del simulador operativo, la implementación del algoritmo gen�
 \end{center}
 
 Todos los resultados presentados en este capítulo pueden reproducirse utilizando los scripts proporcionados con la semilla aleatoria fija (seed=42) y la configuración de parámetros documentada en la Tabla~\ref{tab:config-final-ag}.
-
