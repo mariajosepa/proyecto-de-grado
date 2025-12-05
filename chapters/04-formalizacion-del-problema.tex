@@ -1,156 +1,149 @@
 \chapter{Formalización del problema}
 
-El presente capítulo describe la estructura formal del problema de programación diaria del taller industrial, 
-incluyendo la caracterización del flujo operativo, la definición matemática de los elementos que componen el 
-sistema y la modelación del comportamiento del taller bajo sus restricciones reales. Los elementos 
-descriptivos del funcionamiento real del taller se documentan en el capítulo de Marco de Referencia; 
-aquí se retoman como insumo para la formulación matemática. Esta formalización constituye la base para 
+El presente capítulo describe la estructura formal del problema de programación diaria del taller industrial,
+incluyendo la caracterización del flujo operativo, la definición matemática de los elementos que componen el
+sistema y la modelación del comportamiento del taller bajo sus restricciones reales. Los elementos
+descriptivos del funcionamiento real del taller se documentan en el capítulo de Marco de Referencia;
+aquí se retoman como insumo para la formulación matemática. Esta formalización constituye la base para
 el desarrollo posterior del algoritmo genético y el método SPT, presentados en los capítulos siguientes.
 
 \section{Estudio del flujo de trabajo del taller industrial}
 
-El taller de reparación de motores opera bajo un flujo secuencial condicionado por restricciones de precedencia, disponibilidad de repuestos, habilidades del personal e interacción entre tareas dentro de una misma orden de trabajo. Cada día se recibe un conjunto de órdenes de trabajo que agrupan tareas mecánicas con distintos requerimientos técnicos, y el objetivo operativo es completar la mayor cantidad posible de dichas tareas dentro de la jornada laboral.
+El taller de reparación de motores opera bajo un flujo secuencial condicionado por restricciones de precedencia,
+disponibilidad de repuestos, habilidades del personal e interacción entre tareas dentro de una misma orden
+de trabajo. Cada día se recibe un conjunto de órdenes de trabajo que agrupan tareas mecánicas con distintos
+requerimientos técnicos, y el objetivo operativo es completar la mayor cantidad posible de dichas tareas dentro
+de la jornada laboral.
 
-\subsection{Tipos de tareas}
+Operativamente, la jornada sigue el siguiente comportamiento conceptual:
+\begin{enumerate}
+    \item Llegan varias órdenes de trabajo, cada una con un conjunto de operaciones asociadas.
+    \item Se identifican los recursos requeridos para cada operación: operarios aptos y repuestos específicos.
+    \item Algunas tareas deben esperar a que otras concluyan dentro de una misma orden.
+    \item Los operarios ejecutan las tareas secuencialmente dentro del horizonte diario disponible.
+    \item Se prioriza maximizar el número de tareas completadas sin violar las restricciones operativas.
+\end{enumerate}
 
-Sea \(T = \{1, \dots, q\}\) el conjunto de tipos de tareas que el taller está en capacidad de ejecutar.  
-Cada tipo de tarea representa una operación específica dentro del proceso de reparación, cuya duración base está dada por una función:
+Este flujo describe el contexto real que posteriormente se formaliza para alimentar la simulación y los algoritmos
+ de optimización.
 
-\[
-p : T \rightarrow \mathbb{N}
-\]
+\section{Supuestos operativos y alcance}
 
-que asigna a cada tipo \(t \in T\) su duración en minutos.
-
-Las tareas concretas del día se representan mediante:
-
-\[
-T_d = \{1, \dots, n\},
-\]
-
-donde cada tarea \(i \in T_d\) posee los atributos:
+Los supuestos del modelo parten de la caracterización levantada con el taller Recti-Ram. Se considera que:
 \begin{itemize}
-    \item \(ot(i)\): orden de trabajo a la que pertenece;
-    \item \(tipo(i)\): tipo de tarea según \(T\);
-    \item \(p(tipo(i))\): duración efectiva.
+    \item La duración base de cada tipo de tarea es conocida y corresponde a tiempos promedio validados con expertos.
+    \item Las habilidades de cada operario son estáticas durante la jornada y definen qué tareas puede ejecutar.
+    \item Las precedencias sólo aplican dentro de una misma orden de trabajo.
+    \item La disponibilidad de repuestos se conoce al inicio del día y se representa mediante parámetros binarios.
+    \item Cada operario cuenta con un horizonte máximo de 480 minutos, equivalente a una jornada de 8 horas.
 \end{itemize}
 
-\subsection{Operarios y recursos disponibles}
+Estos supuestos delimitan el alcance del problema y sirven como base para la formalización matemática descrita a
+continuación.
 
-Sea \(O = \{1, \dots, r\}\) el conjunto de operarios disponibles en el taller.  
-Cada tarea requiere habilidades específicas, modeladas mediante:
+\section{Formalización Matemática del Problema}
 
-\[
-E(t) \subseteq O, \qquad \forall t \in T,
-\]
+\subsection{Conjuntos y parámetros fundamentales}
 
-donde \(E(t)\) es el conjunto de operarios aptos para ejecutar tareas del tipo \(t\).  
-La aptitud del operario es una restricción estricta: una tarea no puede ser programada por un operario fuera de \(E(tipo(i))\).
-
-\subsection{Reglas industriales de asignación}
-
-El taller opera bajo restricciones naturales del proceso mecánico:
-
-\begin{itemize}
-    \item \textbf{Precedencias intrínsecas}: ciertas tareas deben completarse antes de que otras puedan iniciar.  
-    Modelado mediante:
-    \[
-    P(t) \subseteq T,
-    \]
-    que representa los tipos de tarea que deben preceder al tipo \(t\).
-
-    \item \textbf{Precedencias por orden de trabajo}: sólo son relevantes aquellas precedencias que ocurren dentro de la misma orden de trabajo.
-    
-    \item \textbf{Disponibilidad de repuestos}: cada orden de trabajo \(ot\) tiene asociado un vector binario:
-    \[
-    R_{ot} = (r_1, r_2, \dots), \quad r_j \in \{0,1\},
-    \]
-    donde \(r_j = 1\) indica que el repuesto necesario para cierto tipo de tarea está disponible.
-
-    \item \textbf{Capacidad temporal}: cada operario posee un máximo de 8 horas de trabajo:
-    \[
-    H = 480 \text{ minutos}.
-    \]
-\end{itemize}
-
-\section{Diseño del modelo de datos para la simulación}
-
-\subsection{Conjuntos y parámetros del sistema}
-
-El problema se formaliza mediante los siguientes conjuntos:
-
+La estructura formal se define sobre los conjuntos:
 \[
 \begin{aligned}
 OT &= \{1, \dots, m\} && \text{Órdenes de trabajo},\\
-T_d &= \{1, \dots, n\} && \text{Tareas del día},\\
-O &= \{1, \dots, r\} && \text{Operarios},\\
-T &= \{1, \dots, q\} && \text{Tipos de tarea}.
+T_d &= \{1, \dots, n\} && \text{Tareas concretas del día},\\
+O &= \{1, \dots, r\} && \text{Operarios disponibles},\\
+T &= \{1, \dots, q\} && \text{Tipos de tarea identificados}.
 \end{aligned}
 \]
 
-Parámetros principales:
-
+Los parámetros que caracterizan el sistema son:
 \[
 \begin{aligned}
-p(t) & && \text{Duración del tipo de tarea } t,\\
-E(t) &\subseteq O && \text{Operarios aptos},\\
-P(t) &\subseteq T && \text{Precedencias por tipo},\\
-R_{ot} & && \text{Vector de disponibilidad de repuestos para la OT},\\
-H &= 480 && \text{Horizonte máximo diario}.
+p(t) &: T \rightarrow \mathbb{N} && \text{Duración base del tipo } t,\\
+E(t) &\subseteq O && \text{Operarios aptos para el tipo } t,\\
+P(t) &\subseteq T && \text{Tipos que deben preceder a } t,\\
+R_{ot} &\in \{0,1\}^{|T|} && \text{Disponibilidad de repuestos por orden},\\
+H &= 480 && \text{Horizonte diario en minutos}.
 \end{aligned}
 \]
 
-\subsection{Variables del modelo}
+Para cada tarea \(i \in T_d\) se conocen los parámetros \(ot(i) \in OT\) y \(tipo(i) \in T\).
 
-Durante la simulación se manejan variables que representan el estado del taller:
+\subsection{Variables de decisión y auxiliares}
 
-\[
-\begin{aligned}
-tpo[o] &: \text{ tiempo utilizado por el operario } o,\\
-comp[ot] &: \text{ tipos de tareas ya completadas en la OT},\\
-occ[ot] &: \text{ intervalos ocupados por la OT}.
-\end{aligned}
-\]
-
-\subsection{Representación de operarios, tareas y repuestos}
-
+La formalización utiliza el siguiente conjunto de variables:
 \begin{itemize}
-    \item Las tareas se representan por su índice \(i\) y atributos: tipo, orden y duración.
-    \item Un operario sólo puede ejecutar tareas cuyos tipos estén en \(E(t)\).
-    \item Los repuestos se representan mediante el vector binario \(R_{ot}\).
+    \item \(x_i \in \{0,1\}\): indica si la tarea \(i\) se ejecuta dentro del horizonte.
+    \item \(a_i \in O\): operario asignado a la tarea \(i\).
+    \item \(s_i \geq 0\) y \(f_i = s_i + p(tipo(i))\): inicio y fin de la tarea \(i\).
+    \item \(tpo_o \geq 0\): tiempo acumulado utilizado por el operario \(o\).
+    \item \(comp_{ot}\): conjunto de tipos ya completados en la orden \(ot\).
+    \item \(occ_{ot}\): conjunto de intervalos ocupados por tareas aceptadas dentro de la orden \(ot\).
 \end{itemize}
 
-\subsection{Tiempos de operación y estructura temporal}
+Las tres últimas variables operan como estados auxiliares dentro de la simulación y permiten verificar factibilidad
+al evaluar cada cronograma candidato.
 
-El tiempo se representa en minutos dentro del intervalo \([0, H]\).  
-Una tarea \(i\) ejecutada por un operario \(o\) genera un intervalo:
+\subsection{Estructura temporal}
 
+El tiempo se modela como un intervalo continuo \([0, H]\). Cada tarea \(i\) programada por el operario \(a_i\) ocupa el
+intervalo \([s_i, f_i)\), donde \(f_i = s_i + p(tipo(i))\). El tiempo acumulado por operario se actualiza mediante
+\(tpo_{a_i} \gets f_i\) cuando se acepta la tarea, garantizando que la jornada individual no exceda \(H\).
+
+\subsection{Restricciones operativas formales}
+
+La factibilidad de una solución requiere cumplir simultáneamente las siguientes restricciones:
+\begin{align}
+a_i &\in E(tipo(i)) && \forall i \in T_d \label{cons:aptitud} \\
+R_{ot(i)}(tipo(i)) &\geq x_i && \forall i \in T_d \label{cons:repuestos} \\
+P(tipo(i)) &\subseteq comp_{ot(i)} && \forall i \in T_d \text{ con } x_i = 1 \label{cons:precedencia} \\
+f_i &\leq H && \forall i \in T_d \label{cons:horizonte} \\
+[s_i, f_i) &\cap occ_{ot(i)} = \emptyset && \forall i \in T_d \text{ con } x_i = 1 \label{cons:solape}
+\end{align}
+
+La restricción \eqref{cons:aptitud} garantiza que cada tarea se asigne a un operario competente, mientras que
+\eqref{cons:repuestos} asegura la existencia de repuestos antes de iniciar la operación. La relación de precedencia
+\eqref{cons:precedencia} obliga a que los tipos requeridos se encuentren en el conjunto de tareas completadas de la
+misma orden. La cota temporal \eqref{cons:horizonte} impide exceder la jornada y \eqref{cons:solape} evita traslapos entre
+tareas pertenecientes a la misma orden de trabajo.
+
+Adicionalmente, la coherencia entre la variable binaria \(x_i\) y el cronograma se mantiene mediante las implicaciones:
 \[
-[s_i, f_i) = [tpo[o],\ tpo[o] + p(tipo(i))).
+\begin{aligned}
+x_i = 0 &\Rightarrow a_i \text{ y } s_i \text{ quedan sin asignar},\\
+x_i = 1 &\Rightarrow s_i = tpo_{a_i}, \quad f_i = s_i + p(tipo(i)).
+\end{aligned}
 \]
 
-\subsection{Restricciones formales del taller}
+\subsection{Definición formal del problema de optimización}
 
-Una tarea \(i\) puede ejecutarse si y sólo si:
-
+El objetivo operativo consiste en maximizar el número de tareas completadas durante la jornada, lo cual se expresa como:
 \[
-\begin{array}{rl}
-\text{(1)}\; o \in E(tipo(i)) 
-    & \text{Aptitud del operario,} \\[6pt]
-
-\text{(2)}\; R_{ot(i)} \text{ provee repuesto disponible} 
-    & \text{Repuesto disponible,} \\[6pt]
-
-\text{(3)}\; P(tipo(i)) \cap T_{ot(i)} \subseteq comp[ot(i)] 
-    & \text{Precedencias cumplidas,} \\[6pt]
-
-\text{(4)}\; f_i \le H 
-    & \text{No excede jornada,} \\[6pt]
-
-\text{(5)}\; [s_i, f_i) \cap occ[ot(i)] = \emptyset 
-    & \begin{array}{l}
-        \text{No solapa con} \\
-        \text{tareas de la misma OT.}
-      \end{array}
-\end{array}
+\begin{aligned}
+\max_{x,a,s} \quad & \sum_{i \in T_d} x_i \\
+\text{s.a.} \quad & \text{Restricciones \eqref{cons:aptitud}--\eqref{cons:solape}}, \\
+& x_i \in \{0,1\}, \; a_i \in O, \; s_i \geq 0, \quad \forall i \in T_d.
+\end{aligned}
 \]
+
+La solución del problema proporciona un cronograma factible que respeta las reglas industriales y utiliza de forma
+ eficiente la capacidad diaria disponible.
+
+\section{Representación computacional del sistema}
+
+Para ejecutar la simulación y alimentar los algoritmos, la formalización anterior se implementa mediante una
+configuración digital que integra todos los elementos estructurales del taller:
+\begin{itemize}
+    \item \textbf{Catálogo de tareas}: lista de los tipos contenidos en \(T\), cada uno con su duración base \(p(t)\) y la
+    familia operativa correspondiente.
+    \item \textbf{Matriz de habilidades}: representación explícita de \(E(t)\), indicando qué operarios están calificados para
+    cada tipo de tarea.
+    \item \textbf{Relaciones de precedencia}: estructuras de datos que codifican \(P(t)\) y permiten validar dependencias dentro
+    de una misma orden.
+    \item \textbf{Parámetros diarios}: conjunto de tareas \(T_d\), asociación con órdenes \(ot(i)\) y disponibilidad de repuestos
+    \(R_{ot}\) derivada del levantamiento de información real.
+    \item \textbf{Horizonte y estados auxiliares}: valores iniciales de \(tpo_o\), \(comp_{ot}\) y \(occ_{ot}\) que se actualizan
+    durante la evaluación de cada solución.
+\end{itemize}
+
+Esta representación computacional garantiza consistencia entre la formalización matemática y el comportamiento del
+simulador que se utiliza en los capítulos posteriores para evaluar SPT y el algoritmo genético.
