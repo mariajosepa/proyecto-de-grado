@@ -45,33 +45,6 @@ Los componentes principales de esta configuración son:
 
 Gracias a esta representación computacional, el algoritmo genético y la heurística SPT pueden evaluar soluciones dentro de un entorno controlado, reproducible y alineado con las condiciones operativas del taller real.
 
-\subsection{Modelado del Problema para el Algoritmo Genético}
-
-El algoritmo genético opera directamente sobre la formalización presentada en el Capítulo~4: sólo recibe 
-instancias que ya contienen las órdenes de trabajo, las tareas diarias, las relaciones de precedencia, la 
-disponibilidad de repuestos, las habilidades de los operarios y el horizonte máximo. Gracias a esta base 
-común, cualquier solución evolutiva respeta las mismas restricciones que definen el problema original.
-
-Cada individuo del AG concentra las dos decisiones principales del cronograma: asignar a cada tarea un 
-operario apto y establecer la prioridad con la que se intentará programar. El cromosoma se construye 
-como un vector dual que, por un lado, almacena la propuesta de asignación de recursos y, por otro, las 
-prioridades numéricas que inducen el orden de evaluación. Esta representación permite que una sola 
-solución candidata describa todo el flujo del día y sirve como punto de partida para los detalles 
-desarrollados en la Sub-sección~5.1.2.
-
-La función de aptitud toma ese individuo y, para cada operario, recorre las tareas asignadas en el 
-orden indicado por las prioridades. En cada intento verifica la aptitud del operario, la disponibilidad 
-de repuestos, el cumplimiento de precedencias, la ausencia de solapamientos dentro de la orden y el respeto 
-del horizonte diario. Las tareas que superan estas verificaciones actualizan los estados internos del 
-simulador; las que fallan generan penalizaciones específicas. Al finalizar, se consolidan métricas como 
-tareas ejecutadas, violaciones de precedencia, faltas de repuestos, asignaciones no aptas, solapamientos, 
-excedentes de horizonte, balance de carga y makespan, que posteriormente son combinadas en la función de 
-aptitud descrita en las subsecciones siguientes. El flujo completo del procedimiento se ilustra en la 
-Figura~\ref{fig:evaluacion-ag}.
-
-El proceso evolutivo utiliza la configuración base detallada en la Sub-sección~\ref{subsec:configuracion-ag}, que fija el tamaño de la población, el número de generaciones, la estrategia de selección por ranking, el operador \textit{single point}, la tasa de mutación y la semilla de ejecución. Esta parametrización se mantiene constante durante el modelado y garantiza que la calibración posterior (Sub-secciones~\ref{subsec:cruce}--\ref{subsec:mutacion}) parta siempre del mismo marco operativo.
-
-
 
 \subsection{Representación del Individuo}
 
