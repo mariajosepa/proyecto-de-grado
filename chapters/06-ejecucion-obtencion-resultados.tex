@@ -166,6 +166,16 @@ El archivo \texttt{simulador.py} ejecuta el experimento completo. Para cada inst
 
 Las instancias se generan con el módulo \texttt{generador\_instancias.py}, que consume la configuración formal del taller y construye escenarios completos para la evaluación de SPT y del algoritmo genético.
 
+El generador de instancias reside en el módulo interno \texttt{proyecto/config/generador\_instancias.py}, desarrollado ad hoc por los autores para articular los datos base alojados en \texttt{taller\_config}. Se ejecuta sobre la versión de Python disponible en el entorno (Python 3.14.0 en esta instalación, plenamente compatible con el requerimiento original de Python 3.11) y se apoya exclusivamente en librerías estándar: \texttt{random} aporta la aleatoriedad controlada y \texttt{typing} ofrece las anotaciones estáticas empleadas durante el desarrollo.
+
+Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo (OT) y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales que enriquecen el espacio de planificación sin violar las reglas esenciales del proceso.
+
+Las duraciones operativas se derivan de tiempos base catalogados en \texttt{taller\_config} y se modifican aplicando factores de variación acotados; así se obtienen duraciones diferenciadas pero coherentes con la realidad del taller. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por OT, replicando los cuellos de suministro que inciden en la programación diaria.
+
+Cada instancia resultante incorpora todos los elementos necesarios para la simulación: lista de OT consideradas, tareas elegidas para cada OT, mapeo entre OT y tareas, duraciones ajustadas, prerequisitos vigentes, estado de repuestos, plantillas de operarios disponibles y aptos, y el horizonte temporal sobre el cual se evalúan los algoritmos.
+
+Gracias a este ensamblaje, el generador produce instancias realistas, reproducibles y con suficiente variabilidad para comparar enfoques como el algoritmo genético y la regla SPT en condiciones homogéneas. Cuando se requiere analizar múltiples escenarios, el mismo módulo crea lotes completos utilizando una semilla aleatoria, lo que garantiza que cada batch pueda reproducirse o variarse de forma controlada según las necesidades experimentales.
+
 \paragraph{Parámetros considerados.} Cada instancia especifica los elementos estructurales necesarios para recrear un día de operación:
 \begin{itemize}
     \item conjunto de órdenes a atender;
