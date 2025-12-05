@@ -538,6 +538,32 @@ Finalmente se estudiaron probabilidades de mutación de 5\%, 15\% y 25\% emplean
 
 Una probabilidad de mutación del 15\% ofrece el mejor equilibrio entre exploración y estabilidad: reduce tareas rechazadas y logra el makespan más bajo sin sacrificar significativamente la productividad, por lo que se adoptó como valor final.
 
+\subsection{Configuración Final del AG}
+\label{tab:config-final-ag}
+
+La calibración descrita anteriormente permitió definir una configuración que equilibra calidad de soluciones y costo computacional. Se utiliza el operador de cruce \textit{single\_point} sobre un horizonte de 480 minutos, con \textbf{300 generaciones}, población de 100 individuos, selección por \textit{ranking}, diez padres por generación, cinco preservados mediante elitismo, mutación \textit{random} aplicada al 15\% de los genes y semilla fija 42. Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad evolutiva, además de tiempos de ejecución compatibles con la operación diaria del taller.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Configuración final del algoritmo genético empleada en las simulaciones.}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor seleccionado} \\
+\midrule
+Operador de cruce & \textit{single\_point} \\
+Número de generaciones & 300 \\
+Tamaño de población & 100 \\
+Método de selección & \textit{rank} \\
+Padres por generación & 10 \\
+Padres preservados & 5 \\
+Probabilidad de mutación & 15\% \\
+Semilla aleatoria & 42 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
 \subsection{Implementación del Método SPT}
 
 El módulo \texttt{spt/spt.py} implementa la heurística Shortest Processing Time adaptada al taller. El método ordena las tareas según su duración, identifica operarios aptos, verifica repuestos y solapamientos dentro de cada orden y construye un cronograma priorizando las operaciones más cortas, respetando todas las restricciones del problema.

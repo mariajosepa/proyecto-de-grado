@@ -2,39 +2,115 @@
 \label{chap:ejecucion-obtencion-resultados}
 
 
-\section{Configuración Final del AG}
+\section{Entradas y Salidas del Sistema}
 
-A partir del proceso de calibración presentado en las subsecciones anteriores ---donde se evaluaron de forma independiente el operador de cruce, el número de generaciones y la probabilidad de mutación--- se obtuvo una configuración final del algoritmo genético que equilibra de manera adecuada la calidad de las soluciones y el costo computacional. Esta configuración fue utilizada en todas las comparaciones realizadas posteriormente contra el método SPT en el Capítulo~7.
-
-En síntesis, la calibración determinó que:
-
+El sistema recibe una instancia diaria compuesta por:
 \begin{itemize}
-    \item El operador de cruce \textit{single\_point} ofrece el mejor desempeño en un horizonte amplio de 480 minutos, superando consistentemente a \textit{two\_points}.
-    \item Un número de \textbf{300 generaciones} es suficiente para que el algoritmo converja hacia soluciones de alta calidad, mientras que valores mayores no aportan mejoras significativas y pueden incluso degradar el rendimiento.
-    \item Una probabilidad de mutación del \textbf{15\%} logra el mejor equilibrio entre exploración y explotación del espacio de búsqueda, evitando tanto la convergencia prematura (como sucede con 5\%) como la pérdida de estabilidad evolutiva (observada con 25\%).
+    \item \textbf{tareas\_a\_programar}: lista de pares (OT, tarea) correspondientes a las tareas del día;
+    \item \textbf{tiempos\_procesamiento}: duración base por tipo de tarea;
+    \item \textbf{operarios\_aptos}: conjunto de operarios que pueden ejecutar cada tarea;
+    \item \textbf{operarios disponibles};
+    \item \textbf{repuestos\_por\_ot}: disponibilidad de insumos para cada OT;
+    \item \textbf{prerequisitos}: precedencias internas dentro de la misma OT;
+    \item \textbf{mapeo\_ot}: tareas asociadas a cada orden de trabajo;
+    \item \textbf{horizonte}: tiempo máximo de trabajo diario por operario.
 \end{itemize}
 
-Con base en estos resultados, la configuración final del algoritmo genético utilizada en las simulaciones comparativas es la siguiente:
+\noindent
+La salida del método SPT incluye:
+\begin{itemize}
+    \item cronograma por operario con intervalos de inicio y fin;
+    \item lista de tareas ejecutadas y tareas rechazadas;
+    \item tiempo total trabajado por cada operario;
+    \item makespan;
+    \item carga total;
+    \item desviación estándar de carga (balance).
+\end{itemize}
 
-\begin{table}[htbp]
+\noindent
+El algoritmo genético genera:
+\begin{itemize}
+    \item el cronograma resultante del mejor individuo;
+    \item el valor de \textit{fitness};
+    \item penalizaciones por prerequisitos incumplidos, falta de repuestos, operario no apto, solapamientos y excedentes del horizonte;
+    \item tareas ejecutadas y rechazadas;
+    \item tiempo acumulado por operario;
+    \item makespan;
+    \item carga total;
+    \item desviación estándar de carga.
+\end{itemize}
+
+\section{Resultados Comparativos de las Simulaciones}
+
+Los resultados se presentan para las 30 instancias evaluadas en el simulador. La Tabla~\ref{tab:comparacion-metricas} resume las métricas promedio por algoritmo, incorporando la suma de tareas ejecutadas y rechazadas como referencia del tamaño típico de las instancias.
+
+\begin{table}[H]
 \centering
 \small
-\caption{Configuración final seleccionada para el algoritmo genético.}
-\label{tab:config-final-ag}
-\begin{tabular}{@{}lc@{}}
+\caption{Resumen comparativo de métricas (promedio en 30 instancias).}
+\label{tab:comparacion-metricas}
+\resizebox{0.95\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Parámetro} & \textbf{Valor seleccionado} \\
+\textbf{Algoritmo} & \textbf{No. de tareas} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} & \textbf{STD carga} \\
 \midrule
-Operador de cruce & \textit{single\_point} \\
-Número de generaciones & 300 \\
-Tamaño de población & 100 \\
-Método de selección & \textit{rank} \\
-Padres por generación & 10 \\
-Padres preservados & 5 \\
-Probabilidad de mutación & 15\% \\
-Semilla aleatoria & 42 \\
+AG  & 36.00 & 29.53 & 6.47 & 157.37 & 703.17 & 30.10 \\
+SPT & 36.00 & 29.53 & 6.47 & 186.53 & 703.17 & 35.11 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
-Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad del proceso evolutivo. Además, se mantiene dentro de límites razonables de tiempo de ejecución, lo que facilita su aplicación práctica en un taller industrial. Los experimentos del capítulo siguiente emplean exclusivamente esta configuración, garantizando que la comparación frente al método SPT se realice bajo condiciones justas y reproducibles.
+El número de tareas corresponde a la suma promedio de tareas ejecutadas y rechazadas en cada instancia. Ambos algoritmos procesan en promedio la misma cantidad de trabajo, pero el AG logra cronogramas más compactos y mejor balanceados. El makespan se reduce en 15.6\%, mientras que la desviación estándar de carga cae 14.3\%, lo cual se traduce en jornadas más cortas y con menor riesgo de sobrecargar a un operario específico.
+
+\subsection{Tareas ejecutadas y rechazadas}
+
+Aunque los promedios coinciden, el AG muestra distribuciones más compactas, lo que indica mayor estabilidad entre instancias y menor sensibilidad a la estructura específica de cada día de trabajo. En contraste, SPT puede rechazar más tareas cuando existen muchas precedencias o restricciones de repuestos, al basarse exclusivamente en la duración para priorizar. Estas conclusiones se ilustran en la Figura~\ref{fig:tareas-ejecutadas-rechazadas}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/tareas_ejecutadas.png}
+    \caption{Tareas ejecutadas}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/tareas_rechazadas.png}
+    \caption{Tareas rechazadas}
+\end{subfigure}
+\caption{Distribución comparativa de tareas ejecutadas y rechazadas.}
+\label{fig:tareas-ejecutadas-rechazadas}
+\end{figure}
+
+\subsection{Sobrecarga y eficiencia temporal}
+
+La carga total promedio es idéntica en ambos algoritmos porque depende directamente del número de tareas efectuadas. Sin embargo, el AG acomoda la misma carga en menos tiempo, reduciendo los huecos entre operaciones y mejorando la utilización del horizonte diario. La Figura~\ref{fig:carga-makespan} muestra la distribución de carga y makespan.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/carga_total.png}
+    \caption{Carga total}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{figures/makespan.png}
+    \caption{Makespan}
+\end{subfigure}
+\caption{Uso del horizonte temporal y eficiencia global.}
+\label{fig:carga-makespan}
+\end{figure}
+
+\subsection{Balance entre operarios}
+
+El AG obtiene la desviación estándar más baja, lo cual evidencia un reparto de carga más equitativo y reduce el riesgo de cuellos de botella. Este comportamiento se debe a que la función de aptitud penaliza explícitamente el desbalance y a que la representación del individuo controla simultáneamente prioridades y asignaciones. La Figura~\ref{fig:std-carga} ilustra esta diferencia.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{figures/carga_std.png}
+\caption{Desviación estándar de carga entre operarios.}
+\label{fig:std-carga}
+\end{figure}
+
+\subsection{Comparación cualitativa}
+
+\paragraph{Algoritmo genético.} Ofrece makespan menor, mejor balance de carga y mayor estabilidad entre instancias gracias a su capacidad para incorporar precedencias, disponibilidad de repuestos y aptitudes en la función de aptitud. Su desventaja principal es el mayor tiempo de cómputo requerido y la necesidad de calibrar parámetros.
+
+\paragraph{Heurística SPT.} Destaca por su simplicidad y rapidez de ejecución, siendo útil en entornos con pocas restricciones internas. No obstante, puede generar secuencias ineficientes y desequilibrar la carga al priorizar únicamente tareas cortas, lo cual incrementa el makespan y la variabilidad operativa.
