@@ -41,33 +41,29 @@ Gracias a esta representación computacional, el algoritmo genético y la heurí
 
 \subsection{Modelado del Problema para el Algoritmo Genético}
 
-El algoritmo genético opera sobre la estructura formal del problema definida en el 
-capítulo anterior, utilizando como insumo el conjunto diario de órdenes de trabajo, 
-tareas concretas, operarios y parámetros operativos del taller. Sobre esta base, el AG 
-debe construir una solución que represente un cronograma factible, respetando las 
-restricciones del sistema y maximizando la cantidad de tareas ejecutadas dentro de la 
-jornada laboral.
+El algoritmo genético opera directamente sobre la formalización presentada en el Capítulo~4: sólo recibe 
+instancias que ya contienen las órdenes de trabajo, las tareas diarias, las relaciones de precedencia, la 
+disponibilidad de repuestos, las habilidades de los operarios y el horizonte máximo. Gracias a esta base 
+común, cualquier solución evolutiva respeta las mismas restricciones que definen el problema original.
 
-En este modelo, cada solución candidata corresponde a una propuesta completa de 
-asignación y secuenciación de las tareas del día. Para ello, el AG toma dos decisiones 
-fundamentales: (1) determinar a qué operario asignar cada tarea y (2) definir el orden 
-en que cada tarea debe intentarse programar dentro del flujo operativo del día.
+Cada individuo del AG concentra las dos decisiones principales del cronograma: asignar a cada tarea un 
+operario apto y establecer la prioridad con la que se intentará programar. El cromosoma se construye 
+como un vector dual que, por un lado, almacena la propuesta de asignación de recursos y, por otro, las 
+prioridades numéricas que inducen el orden de evaluación. Esta representación permite que una sola 
+solución candidata describa todo el flujo del día y sirve como punto de partida para los detalles 
+desarrollados en la Sub-sección~5.1.2.
 
-Estas decisiones se construyen a partir de los elementos establecidos en la 
-formalización del taller: los conjuntos de tareas $T_d$, órdenes $OT$ y operarios $O$; 
-los conjuntos de aptitud $E(t)$ por tipo de tarea; las precedencias internas $P(t)$; la 
-disponibilidad de repuestos por orden; y el horizonte diario de $480$ minutos para cada 
-operario.
+La función de aptitud toma ese individuo y, para cada operario, recorre las tareas asignadas en el 
+orden indicado por las prioridades. En cada intento verifica la aptitud del operario, la disponibilidad 
+de repuestos, el cumplimiento de precedencias, la ausencia de solapamientos dentro de la orden y el respeto 
+del horizonte diario. Las tareas que superan estas verificaciones actualizan los estados internos del 
+simulador; las que fallan generan penalizaciones específicas. Al finalizar, se consolidan métricas como 
+tareas ejecutadas, violaciones de precedencia, faltas de repuestos, asignaciones no aptas, solapamientos, 
+excedentes de horizonte, balance de carga y makespan, que posteriormente son combinadas en la función de 
+aptitud descrita en las subsecciones siguientes. El flujo completo del procedimiento se ilustra en la 
+Figura~\ref{fig:evaluacion-ag}.
 
-Durante el proceso de evaluación, la función de aptitud (fitness) utiliza esta información 
-para determinar la viabilidad de la solución propuesta. Para ello actualiza variables 
-como el tiempo acumulado por operario, las tareas completadas dentro de cada orden y 
-los intervalos programados, verificando que no existan solapamientos y que todas las 
-restricciones sean satisfechas o penalizadas adecuadamente.
-
-De esta manera, el modelado del problema proporciona el marco estructural que guía el 
-comportamiento del AG, permitiéndole explorar configuraciones viables dentro de un 
-espacio de búsqueda altamente restringido.
+El proceso evolutivo utiliza la configuración base detallada en la Sub-sección~\ref{subsec:configuracion-ag}, que fija el tamaño de la población, el número de generaciones, la estrategia de selección por ranking, el operador \textit{single point}, la tasa de mutación y la semilla de ejecución. Esta parametrización se mantiene constante durante el modelado y garantiza que la calibración posterior (Sub-secciones~\ref{subsec:cruce}--\ref{subsec:mutacion}) parta siempre del mismo marco operativo.
 
 
 
@@ -241,6 +237,7 @@ $P_{\text{apt}}, P_{\text{ot}}, E_{\text{hor}}, \sigma, C_{\max}$};
 \end{tikzpicture}%
 \shorthandon{>}
 \caption{Flujo del proceso de evaluación de un individuo.}
+\label{fig:evaluacion-ag}
 \end{figure}
 
 
