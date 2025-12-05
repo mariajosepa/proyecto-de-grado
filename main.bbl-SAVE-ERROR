@@ -552,6 +552,195 @@
       \field{title}{Application of Genetic Algorithms in Automated Mechanical Design}
       \field{year}{2024}
     \endentry
+    \entry{file_galindo_enjambres}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c99a17de957218379df7bd5d693554a0}{%
+           family={Galindo},
+           familyi={G\bibinitperiod},
+           given={A.\bibnamedelimi V.},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=029f03d65447312a79cddd0e490ebc2b}{%
+           family={Durán},
+           familyi={D\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5829229afae8cc096170deaded3fad75}
+      \strng{fullhash}{5829229afae8cc096170deaded3fad75}
+      \strng{fullhashraw}{5829229afae8cc096170deaded3fad75}
+      \strng{bibnamehash}{5829229afae8cc096170deaded3fad75}
+      \strng{authorbibnamehash}{5829229afae8cc096170deaded3fad75}
+      \strng{authornamehash}{5829229afae8cc096170deaded3fad75}
+      \strng{authorfullhash}{5829229afae8cc096170deaded3fad75}
+      \strng{authorfullhashraw}{5829229afae8cc096170deaded3fad75}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Inventum}
+      \field{title}{Estudio comparativo de la eficiencia y eficacia frente al uso de algoritmos genéticos y de enjambres}
+      \field{year}{2022}
+    \endentry
+    \entry{file_psovsga}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=1fec892f28d8a628aa66178a7fa44026}{%
+           family={Gharib},
+           familyi={G\bibinitperiod},
+           given={Abdelhakim},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d1177650a7568037c1ce63405ee11f44}{%
+           family={Benhra},
+           familyi={B\bibinitperiod},
+           given={Jamal},
+           giveni={J\bibinitperiod}}}%
+        {{hash=971a9d20a23f4741fc306c3a18fe4c54}{%
+           family={Chaouqi},
+           familyi={C\bibinitperiod},
+           given={Mohsine},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{fullhash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{fullhashraw}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{bibnamehash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{authorbibnamehash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{authornamehash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{authorfullhash}{3b83bc44eda2a17febe43da64d14c580}
+      \strng{authorfullhashraw}{3b83bc44eda2a17febe43da64d14c580}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Computer Applications}
+      \field{title}{A Performance Comparison of PSO and GA Applied to TSP}
+      \field{year}{2015}
+    \endentry
+    \entry{file_momeni_review}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=737cc4f1dcc3ebeb008edbf17946d082}{%
+           family={Momenikorbekandi},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d6ad4441404adead94ce0f7b6816e07b}{%
+           family={Kalganova},
+           familyi={K\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{fullhash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{fullhashraw}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{bibnamehash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{authorbibnamehash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{authornamehash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{authorfullhash}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \strng{authorfullhashraw}{f878f54b13b0e69954f2a2bb47f2c64a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Electronics}
+      \field{title}{Intelligent Scheduling Methods for Optimisation of Job Shop Scheduling Problems in the Manufacturing Sector: A Systematic Review}
+      \field{year}{2025}
+    \endentry
+    \entry{file_wang_erp}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=f21a8e1746c7e003133037dc9888a372}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Cheng},
+           giveni={C\bibinitperiod}}}%
+        {{hash=3b2a22ba47203115017834bbcf067218}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Xiao-Bing},
+           giveni={X\bibinithyphendelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{fullhash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{fullhashraw}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{bibnamehash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{authorbibnamehash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{authornamehash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{authorfullhash}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \strng{authorfullhashraw}{6a6792e2f64fd80b29ffacbcb4f38f49}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Industrial Engineering and Management}
+      \field{title}{Integrated production planning and control: A multi-objective optimization model}
+      \field{year}{2013}
+    \endentry
+    \entry{file_iot}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=043225cf6187539df70167873bbbf0ec}{%
+           family={Vigo\bibnamedelima Rodríguez},
+           familyi={V\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Gustavo\bibnamedelima André},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=f666d37430e2878cf4f0cd0b30fc2061}{%
+           family={Velarde\bibnamedelima Gonzales},
+           familyi={V\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={Eduardo\bibnamedelima Jose},
+           giveni={E\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=69294448fcaf39d9c335ed77f475d054}{%
+           family={Mendoza\bibnamedelimb De\bibnamedelimb Los\bibnamedelima Santos},
+           familyi={M\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Alberto\bibnamedelima Carlos},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{fullhash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{fullhashraw}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{bibnamehash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{authorbibnamehash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{authornamehash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{authorfullhash}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \strng{authorfullhashraw}{52c9d9b494c92bc4eb8ccbc36cedec6c}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Ingeniería Investiga}
+      \field{title}{La importancia de la optimización de procesos con IoT en el sector industrial}
+      \field{year}{2024}
+    \endentry
+    \entry{file_quantum}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=8a80cf1fdb1e978f6205762331da5a06}{%
+           family={Pérez-Armas},
+           familyi={P\bibinithyphendelim A\bibinitperiod},
+           given={Luis\bibnamedelima Fernando},
+           giveni={L\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=3323448d419478c58b157a528153ea84}{%
+           family={Creemers},
+           familyi={C\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=e239e3a945a8940fe3dee5b69010d6cf}{%
+           family={Deleplanque},
+           familyi={D\bibinitperiod},
+           given={Samuel},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{fullhash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{fullhashraw}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{bibnamehash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{authorbibnamehash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{authornamehash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{authorfullhash}{5b3f2f03869cf2515d2bda93feeefab1}
+      \strng{authorfullhashraw}{5b3f2f03869cf2515d2bda93feeefab1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Reports}
+      \field{title}{Solving the resource constrained project scheduling problem with quantum annealing}
+      \field{year}{2024}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

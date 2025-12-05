@@ -29,25 +29,7 @@ Corresponde al instante de finalización de la última tarea programada. Un make
 \section{Comparación AG vs SPT}
 \subsection{Descripción general de los resultados}
 
-La Tabla~\ref{tab:resumen-promedios} muestra los valores promedio obtenidos para cada métrica a partir de las 30 instancias simuladas.
-
-\begin{table}[H]
-\centering
-\caption{Promedios generales por algoritmo (30 instancias).}
-\label{tab:resumen-promedios}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.2cm}ccccc@{}}
-\toprule
-\textbf{Algoritmo} & \textbf{T. ejecutadas} & \textbf{T. rechazadas} & \textbf{Makespan} & \textbf{Carga total} & \textbf{STD carga} \\
-\midrule
-AG  & 29.53 & 6.47 & 157.37 & 703.17 & 30.10 \\
-SPT & 29.53 & 6.47 & 186.53 & 703.17 & 35.11 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-Ambos métodos ejecutan, en promedio, el mismo número de tareas. Sin embargo, el AG obtiene un makespan significativamente menor y logra un mejor balance entre operarios, lo cual sugiere que produce soluciones más estructuradas y eficientes.
+Los promedios generales se encuentran en la Tabla~\ref{tab:comparacion-metricas} del Capítulo~\ref{chap:ejecucion-obtencion-resultados}. A partir de esos valores se observa que ambos métodos ejecutan, en promedio, la misma cantidad de tareas y rechazan un número equivalente; sin embargo, el AG obtiene un makespan significativamente menor y logra un mejor balance entre operarios, lo cual sugiere cronogramas más estructurados y eficientes.
 
 % -------------------------------------------------------------------
 \subsection{Análisis de distribución}
