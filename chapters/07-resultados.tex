@@ -1,12 +1,12 @@
 \chapter{Análisis de Resultados}
 \label{chap:analisis-resultados}
 
-Este capítulo presenta el análisis de los resultados obtenidos en la comparación entre el Algoritmo Genético (AG), calibrado en el Capítulo~\ref{chap:ejecucion-obtencion-resultados}, y la heurística clásica \textit{Shortest Processing Time} (SPT). El objetivo es evaluar el desempeño de ambos métodos bajo condiciones realistas del taller, utilizando métricas relevantes para la programación diaria de tareas y considerando indicadores tanto operativos como computacionales. 
+Este capítulo presenta el análisis de los resultados obtenidos en la comparación entre el Algoritmo Genético (AG) y la heurística clásica \textit{Shortest Processing Time} (SPT). El objetivo es evaluar el desempeño de ambos métodos bajo condiciones realistas del taller, utilizando métricas relevantes para la programación diaria de tareas y considerando indicadores exclusivamente operativos.
 
 El análisis combina una perspectiva técnica—basada en métricas cuantitativas, comportamiento estadístico de las soluciones y eficiencia algorítmica—con una interpretación industrial orientada a la toma de decisiones.
 
 % -------------------------------------------------------------------
-\section{Comparación AG vs SPT}
+\section{Comparación Detallada AG vs SPT}
 \subsection{Descripción general de los resultados}
 
 Los promedios generales se encuentran en la Tabla~\ref{tab:comparacion-metricas} del Capítulo~\ref{chap:ejecucion-obtencion-resultados}. A partir de esos valores se observa que ambos métodos ejecutan, en promedio, la misma cantidad de tareas y rechazan un número equivalente; sin embargo, el AG obtiene un makespan significativamente menor y logra un mejor balance entre operarios, lo cual sugiere cronogramas más estructurados y eficientes.
@@ -124,7 +124,7 @@ Para el taller, un mejor balance significa menor riesgo de cuellos de botella, r
 \end{itemize}
 
 % -------------------------------------------------------------------
-\section{Discusión de resultados}
+\section{Discusión de los Hallazgos e Implicaciones}
 
 Los experimentos demuestran que, aunque el AG y el SPT ejecutan en promedio la misma cantidad de tareas, el AG produce cronogramas significativamente más eficientes. El makespan menor y la mejor distribución del trabajo son evidencia de que el AG es capaz de capturar estructuras profundas del problema que SPT ignora debido a su simplicidad.
 

@@ -2,7 +2,7 @@
 
 Se alcanzó exitosamente el objetivo general: desarrollar un modelo de automatización basado en algoritmos genéticos para la asignación de tareas en un ERP de talleres industriales, comparándolo con el método SPT bajo condiciones reproducibles.
 
-\textbf{Implementación del Algoritmo Genético.} Se desarrolló un AG con representación dual (asignación de operarios + prioridades de secuenciación), función de aptitud ponderada y operadores genéticos calibrados (300 generaciones, 15\% mutación, selección por ranking). El modelo es escalable, reproducible y ejecutable en tiempos prácticos (menor a 2 minutos por instancia).
+\textbf{Implementación del Algoritmo Genético.} Se desarrolló un AG con representación dual (asignación de operarios + prioridades de secuenciación), función de aptitud ponderada y operadores genéticos calibrados (300 generaciones, 15\% mutación, selección por ranking). El modelo es escalable, reproducible y ejecutable en tiempos prácticos.
 
 \textbf{Desempeño Comparativo.} Aunque AG y SPT ejecutan idéntico número de tareas (29.53 promedio en 30 instancias), el AG demuestra superior estructuración: makespan 15.6\% menor (157.37 vs 186.53 minutos) y balance de carga 14.3\% mejor (desviación estándar 30.10 vs 35.11). Esta eficiencia genera valor industrial mediante cronogramas más compactos y distribución equitativa de trabajo.
 
@@ -11,8 +11,6 @@ Se alcanzó exitosamente el objetivo general: desarrollar un modelo de automatiz
 \textbf{Validez Técnica.} El modelo formalizado proporciona marco riguroso. La validación experimental confirma: (1) Convergencia rápida en 300 generaciones; (2) Factibilidad de todas las soluciones bajo restricciones reales; (3) Estabilidad superior a SPT; (4) Reproducibilidad completa mediante semilla aleatoria fija y documentación detallada.
 
 \textbf{Contribuciones.} El proyecto formaliza empíricamente un problema de asignación en contexto ERP real, demostrando que técnicas evolutivas superan heurísticas clásicas en este dominio. Proporciona metodología reproducible aplicable a PYMES mediante software de código abierto (Python, PyGAD), reduciendo barreras de adopción.
-
-\textbf{Limitaciones.} El estudio utilizó instancias sintéticas (requeriría validación con datos históricos reales), horizonte limitado a un día laboral, número restringido de operarios (4-5) y duraciones determinísticas de tareas. A pesar de estas limitaciones, los hallazgos principales permanecen válidos.
 
 \textbf{Oportunidades Futuras.} Las limitaciones abren oportunidades de extensión: (1) Modelos híbridos AG-PSO o AG-ACO; (2) Job Shop Scheduling flexible con selección dinámica de máquinas; (3) Optimización multiobjetivo integrando inventarios y costos; (4) Aprendizaje automático para ajuste dinámico de parámetros; (5) Integración con IoT e Industria 4.0; (6) Computación cuántica (quantum annealing) para instancias mayores.
 
