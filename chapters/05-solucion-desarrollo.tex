@@ -29,22 +29,6 @@ límite diario de jornada--- dentro del proceso evolutivo. De esta manera, el AG
 mecanismo que genera y mejora iterativamente configuraciones de programación factibles y 
 alineadas con las condiciones operativas del entorno industrial.
 
-\subsection{Representación Computacional del Taller}
-
-La implementación del AG y del método SPT comparte una misma configuración digital del taller que centraliza la información estructural del proceso productivo. Esta representación contiene los catálogos de tareas identificados con la empresa aliada, las relaciones de precedencia observadas en campo, las habilidades disponibles por operario, las duraciones base de cada intervención y las reglas operativas fundamentales. Al mantener un único repositorio conceptual, ambos métodos trabajan sobre un entorno consistente y directamente vinculado con el comportamiento real del taller.
-
-Los componentes principales de esta configuración son:
-\begin{itemize}
-    \item \textbf{Catálogo de tareas}: relación de los 35 tipos de operaciones clasificados por familia.
-    \item \textbf{Relaciones de precedencia}: secuencias técnicas validadas que describen el orden correcto de ejecución en cada familia.
-    \item \textbf{Duraciones base}: estimaciones obtenidas con operarios expertos, sujetas posteriormente a variaciones controladas durante la generación de instancias.
-    \item \textbf{Operarios y aptitudes}: descripción del personal disponible y de las tareas que puede ejecutar según su especialización.
-    \item \textbf{Horizonte diario}: jornada de 480 minutos que acota el tiempo de programación de cada operario.
-    \item \textbf{Disponibilidad de repuestos}: representación simplificada de la existencia o ausencia de insumos clave por orden de trabajo.
-\end{itemize}
-
-Gracias a esta representación computacional, el algoritmo genético y la heurística SPT pueden evaluar soluciones dentro de un entorno controlado, reproducible y alineado con las condiciones operativas del taller real.
-
 
 \subsection{Representación del Individuo}
 
@@ -281,10 +265,6 @@ Los coeficientes responden a los siguientes criterios operativos:
 En conjunto, estas ponderaciones guían la búsqueda del algoritmo genético hacia soluciones 
 factibles, eficientes y alineadas con las necesidades reales del entorno industrial.
 
-\subsection{Integración con PyGAD}
-
-El AG se ejecuta definiendo tamaño de población, número de generaciones y probabilidades de cruce y mutación, mientras PyGAD administra la generación de individuos, la aplicación de los operadores genéticos y la preservación de los mejores cromosomas. La evaluación permanece a cargo del simulador del taller, por lo que ambos componentes comparten la misma formalización descrita previamente.
-
 \subsection{Operadores Genéticos y Parámetros del AG}
 
 El proceso evolutivo implementado en este proyecto se desarrolla mediante los operadores 
@@ -341,207 +321,6 @@ algoritmo, facilitando la validación y comparación de resultados.
 \label{subsec:configuracion-ag}
 
 Para los experimentos se utilizó una configuración inicial con 100 individuos por generación, 300 generaciones, diez padres seleccionados, cinco preservados por elitismo, selección por \textit{ranking}, cruce \textit{single point}, mutación \textit{random} aplicada al 15\% de los genes y una semilla aleatoria de 42. Esta configuración sirve como punto de partida antes de realizar los ajustes descritos en las subsecciones siguientes.
-
-\section{Ejecución de Simulaciones}
-
-El archivo \texttt{simulador.py} coordina el experimento completo. Para cada instancia generada se ejecutan consecutivamente el método SPT y el algoritmo genético, registrando métricas comparables que luego se consolidan para el análisis.
-
-\subsection{Procedimiento de Generación de Instancias}
-\label{subsec:procedimiento-instancias}
-
-Las instancias se generan con el módulo \texttt{generador\_instancias.py}, que consume la configuración formal del taller y construye escenarios completos para la evaluación de ambos métodos. El generador reside en \texttt{proyecto/config/generador\_instancias.py}, desarrollado ad hoc para articular los datos base alojados en \texttt{taller\_config}. Se ejecuta sobre la versión de Python disponible (3.14.0 en esta instalación, compatible con el requerimiento original de Python~3.11) y utiliza únicamente librerías estándar: \texttt{random} provee la aleatoriedad controlada y \texttt{typing} las anotaciones estáticas.
-
-Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales sin violar las reglas esenciales del proceso. Las duraciones operativas se derivan de tiempos base catalogados en \texttt{taller\_config} y se modifican aplicando factores de variación acotados para obtener duraciones diferenciadas pero coherentes. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por orden, replicando los cuellos de suministro que inciden en la programación diaria.
-
-Cada instancia resultante incorpora todos los elementos necesarios para la simulación: lista de órdenes consideradas, tareas elegidas por orden, mapeo entre órdenes y tareas, duraciones ajustadas, prerequisitos vigentes, estado de repuestos, plantillas de operarios disponibles y aptos y el horizonte temporal sobre el cual se evalúan los algoritmos. Gracias a este ensamblaje, el generador produce instancias realistas, reproducibles y con suficiente variabilidad para comparar enfoques como el algoritmo genético y la regla SPT. Cuando se requiere analizar múltiples escenarios, el mismo módulo crea lotes completos utilizando una semilla aleatoria, lo que garantiza reproducibilidad o variación controlada.
-
-\paragraph{Parámetros considerados.} Cada instancia especifica los elementos estructurales necesarios para recrear un día de operación:
-\begin{itemize}
-    \item conjunto de órdenes a atender;
-    \item listado de tareas concretas por orden;
-    \item habilidades y disponibilidad del personal;
-    \item duraciones base de cada tipo de tarea;
-    \item precedencias aplicables;
-    \item indicadores de repuestos disponibles.
-\end{itemize}
-
-\paragraph{Aleatoriedad y distribución de tiempos.} El generador recibe como entrada:
-\begin{itemize}
-    \item número mínimo y máximo de órdenes,
-    \item número de tareas por orden,
-    \item distribución temporal inducida por \(p(t)\),
-    \item disponibilidad probabilística de repuestos,
-    \item habilidades factibles para cada tipo de tarea.
-\end{itemize}
-
-\subsubsection{Procedimiento de creación de escenarios}
-A partir de estos parámetros se ejecuta el siguiente procedimiento:
-\begin{enumerate}
-    \item Seleccionar aleatoriamente las órdenes del día y las tareas asociadas.
-    \item Asignar tipos, duraciones y familias respetando la estructura de precedencias.
-    \item Generar la disponibilidad de repuestos para cada orden.
-    \item Determinar los operarios aptos para cada tipo de tarea.
-    \item Consolidar la instancia final \((OT, T_d, O)\) para su evaluación en la simulación.
-\end{enumerate}
-
-\subsubsection{Validación del modelo simulado con expertos}
-Los parámetros del generador se calibraron con el personal de Recti-Ram, confirmando que las duraciones reflejan tiempos reales de procesamiento, las precedencias respetan la secuencia técnica del taller, las matrices de habilidades representan la estructura del personal y el horizonte de 480 minutos coincide con la jornada laboral. Este procedimiento asegura que los escenarios utilizados sean representativos de las condiciones de producción del taller.
-
-\paragraph{Construcción de escenarios de prueba.} Para la fase experimental se emplearon combinaciones que exploran distintos números de órdenes, tamaños del conjunto de tareas, niveles de complejidad en las precedencias y disponibilidades de recursos y repuestos. Las instancias incorporan variabilidad en carga operativa, composición de órdenes y mezcla de repuestos, lo que permite comparar el desempeño de SPT y del algoritmo genético en contextos heterogéneos.
-
-\subsection{Algoritmo de Evaluación Operativa}
-
-El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller; en la práctica, corresponde al algoritmo que implementa la función de aptitud del sistema. El pseudocódigo resumido se presenta a continuación:
-
-\begin{algorithm}[H]
-\SetAlgoLined
-Inicializar estructuras: $tpo[o] \leftarrow 0$, $comp[ot] \leftarrow \emptyset$, $occ[ot] \leftarrow \emptyset$\;
-\ForEach{operario $o \in O$}{
-    Obtener conjunto de tareas asignadas $T_o$\;
-    Ordenar $T_o$ según prioridad descendente\;
-    \ForEach{tarea $i \in T_o$}{
-        Verificar aptitud: $o \in E(tipo(i))$\;
-        Verificar repuesto disponible\;
-        Verificar precedencias cumplidas en $comp[ot(i)]$\;
-        Calcular intervalo $[s_i,f_i) = [tpo[o], tpo[o] + p(tipo(i))]$\;
-        \If{$f_i > H$}{rechazar tarea; continuar}
-        \If{$[s_i,f_i)$ solapa con algún intervalo en $occ[ot(i)]$}{rechazar tarea; continuar}
-        Aceptar tarea: actualizar $tpo[o]$, $comp$, $occ$\;
-    }
-}
-\caption{Simulación operativa de programación de tareas}
-\end{algorithm}
-
-Este simulador es el núcleo de la evaluación: recibe las soluciones propuestas por cada algoritmo, aplica las restricciones industriales y produce las métricas utilizadas en el análisis comparativo.
-
-\subsection{Conjunto Final de Escenarios Utilizados en la Comparación}
-
-\subsubsection{Número y estructura de las instancias}
-Para la fase experimental se consideraron múltiples instancias generadas bajo diferentes configuraciones de número de órdenes, número de tareas, complejidad de precedencias y disponibilidad de recursos.
-
-\subsubsection{Variabilidad incorporada}
-Las instancias presentan variabilidad en tamaño del conjunto de tareas, carga operativa, composición de órdenes y mezcla de repuestos disponibles.
-
-\subsubsection{Justificación de los casos de estudio}
-Estas instancias permiten evaluar el desempeño de SPT y del algoritmo genético en condiciones diversas, representando escenarios realistas del taller.
-
-\subsection{Ejecución Conjunta de SPT y AG}
-
-Para cada instancia se ejecuta primero la heurística SPT y se registra su desempeño; luego se ejecuta el AG para obtener el mejor individuo y ambos resultados se evalúan con el simulador operativo, generando métricas comparables.
-
-\subsection{Consolidación de Resultados}
-
-Los datos generados por cada ejecución se almacenan en archivos CSV que posteriormente se utilizan en el Capítulo~7 para el análisis cuantitativo.
-
-\subsection{Reproducibilidad e Implementación}
-
-Para garantizar repetibilidad se fijan semillas aleatorias y se documentan los parámetros utilizados en cada corrida experimental. El código fuente del simulador, la implementación del algoritmo genético, el método SPT y los scripts de calibración se encuentran disponibles en el repositorio \\url{https://github.com/mariajosepa/algoritmo-tesis-jave.git}, junto con la configuración de parámetros descrita anteriormente.
-
-\section{Calibración del Algoritmo Genético}
-
-\subsection{Evaluación del Operador de Cruce}
-\label{subsec:cruce}
-
-Se compararon los operadores \textit{single\_point} y \textit{two\_points} bajo exactamente las mismas condiciones: misma población, mismas instancias, misma semilla aleatoria y la configuración base descrita en la Sub-sección~\ref{subsec:configuracion-ag}. El experimento se ejecutó sobre veinte instancias independientes, todas simuladas bajo un horizonte operativo de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:cruce-operadores-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para cada operador de cruce (horizonte de 480 minutos).}
-\label{tab:cruce-operadores-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4cm}cccc@{}}
-\toprule
-\textbf{Operador de cruce} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-\textit{single\_point} & 26.20 & 17.55 & 212.60 & 613.85 \\
-\textit{two\_points}   & 24.55 & 14.85 & 206.10 & 568.80 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-Aun cuando \textit{two\_points} obtiene un makespan ligeramente menor, \textit{single\_point} supera sistemáticamente a su contraparte en las métricas más relevantes para el taller (tareas ejecutadas y carga total). Por ello se seleccionó \textit{single\_point} para los experimentos de calibración restantes.
-
-\subsection{Evaluación del Número de Generaciones}
-\label{subsec:generaciones}
-
-Se evaluaron tres niveles de profundidad evolutiva (300, 800 y 1300 generaciones) manteniendo la misma configuración base. Cada configuración se aplicó sobre veinte instancias independientes con horizonte de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:generaciones-resultados-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
-\label{tab:generaciones-resultados-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}cccc@{}}
-\toprule
-\textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-300  & \textbf{31.40} & 6.75 & 178.58 & \textbf{758.80} \\
-800  & 29.90 & 8.55 & 174.33 & 722.60 \\
-1300 & 28.40 & 8.65 & 171.40 & 696.65 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-El mejor rendimiento se obtiene con 300 generaciones, valor que maximiza tareas ejecutadas y carga total sin incrementar el costo computacional. Las configuraciones más profundas no aportan mejoras y tienden a reducir la diversidad de la población.
-
-\subsection{Evaluación de la Probabilidad de Mutación}
-\label{subsec:mutacion}
-
-Finalmente se estudiaron probabilidades de mutación de 5\%, 15\% y 25\% empleando veinte instancias independientes. Los resultados promedio se muestran en la Tabla~\ref{tab:mutacion-resultados-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
-\label{tab:mutacion-resultados-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.5cm}cccc@{}}
-\toprule
-\textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-5\%  & \textbf{34.90} & 10.35 & 178.65 & \textbf{832.00} \\
-15\% & 30.20 & \textbf{6.65} & \textbf{168.75} & 712.30 \\
-25\% & 32.00 & 8.00 & 181.45 & 786.30 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-Una probabilidad de mutación del 15\% ofrece el mejor equilibrio entre exploración y estabilidad: reduce tareas rechazadas y logra el makespan más bajo sin sacrificar significativamente la productividad, por lo que se adoptó como valor final.
-
-\subsection{Configuración Final del AG}
-\label{tab:config-final-ag}
-
-La calibración descrita anteriormente permitió definir una configuración que equilibra calidad de soluciones y costo computacional. Se utiliza el operador de cruce \textit{single\_point} sobre un horizonte de 480 minutos, con \textbf{300 generaciones}, población de 100 individuos, selección por \textit{ranking}, diez padres por generación, cinco preservados mediante elitismo, mutación \textit{random} aplicada al 15\% de los genes y semilla fija 42. Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad evolutiva, además de tiempos de ejecución compatibles con la operación diaria del taller.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Configuración final del algoritmo genético empleada en las simulaciones.}
-\resizebox{0.8\textwidth}{!}{%
-\begin{tabular}{@{}lc@{}}
-\toprule
-\textbf{Parámetro} & \textbf{Valor seleccionado} \\
-\midrule
-Operador de cruce & \textit{single\_point} \\
-Número de generaciones & 300 \\
-Tamaño de población & 100 \\
-Método de selección & \textit{rank} \\
-Padres por generación & 10 \\
-Padres preservados & 5 \\
-Probabilidad de mutación & 15\% \\
-Semilla aleatoria & 42 \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\subsection{Implementación del Método SPT}
-
-El módulo \texttt{spt/spt.py} implementa la heurística Shortest Processing Time adaptada al taller. El método ordena las tareas según su duración, identifica operarios aptos, verifica repuestos y solapamientos dentro de cada orden y construye un cronograma priorizando las operaciones más cortas, respetando todas las restricciones del problema.
 
 \begin{figure}[H]
 \centering
@@ -758,6 +537,203 @@ procesamiento con un proceso operativo de programación ajustado al estado real 
 \shorthandon{>}
 \caption{Flujo operativo del método SPT en el taller.}
 \end{figure}
+
+
+\section{Ejecución de Simulaciones}
+
+El módulo de simulación coordina el experimento completo. Para cada instancia generada se ejecutan consecutivamente el método SPT y el algoritmo genético, registrando métricas comparables que luego se consolidan para el análisis.
+
+\subsection{Procedimiento de Generación de Instancias}
+\label{subsec:procedimiento-instancias}
+
+Las instancias se generan mediante un componente dedicado a la creación de escenarios, que consume la configuración formal del taller y construye casos completos para la evaluación de ambos métodos. Este generador se implementó para articular los datos base alojados en la configuración del sistema. Se ejecuta sobre la versión de Python disponible (3.14.0 en esta instalación, compatible con el requerimiento original de Python~3.11) y utiliza únicamente librerías estándar: \texttt{random} provee la aleatoriedad controlada y \texttt{typing} las anotaciones estáticas.
+
+Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales sin violar las reglas esenciales del proceso. Las duraciones operativas se derivan de tiempos base catalogados en el módulo de configuración y se modifican aplicando factores de variación acotados para obtener duraciones diferenciadas pero coherentes. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por orden, replicando los cuellos de suministro que inciden en la programación diaria.
+
+Cada instancia resultante incorpora todos los elementos necesarios para la simulación: lista de órdenes consideradas, tareas elegidas por orden, mapeo entre órdenes y tareas, duraciones ajustadas, prerequisitos vigentes, estado de repuestos, plantillas de operarios disponibles y aptos y el horizonte temporal sobre el cual se evalúan los algoritmos. Gracias a este ensamblaje, el generador produce instancias realistas, reproducibles y con suficiente variabilidad para comparar enfoques como el algoritmo genético y la regla SPT. Cuando se requiere analizar múltiples escenarios, el mismo módulo crea lotes completos utilizando una semilla aleatoria, lo que garantiza reproducibilidad o variación controlada.
+
+\paragraph{Parámetros considerados.} Cada instancia especifica los elementos estructurales necesarios para recrear un día de operación:
+\begin{itemize}
+    \item conjunto de órdenes a atender;
+    \item listado de tareas concretas por orden;
+    \item habilidades y disponibilidad del personal;
+    \item duraciones base de cada tipo de tarea;
+    \item precedencias aplicables;
+    \item indicadores de repuestos disponibles.
+\end{itemize}
+
+\paragraph{Aleatoriedad y distribución de tiempos.} El generador recibe como entrada:
+\begin{itemize}
+    \item número mínimo y máximo de órdenes,
+    \item número de tareas por orden,
+    \item distribución temporal inducida por \(p(t)\),
+    \item disponibilidad probabilística de repuestos,
+    \item habilidades factibles para cada tipo de tarea.
+\end{itemize}
+
+\subsubsection{Procedimiento de creación de escenarios}
+A partir de estos parámetros se ejecuta el siguiente procedimiento:
+\begin{enumerate}
+    \item Seleccionar aleatoriamente las órdenes del día y las tareas asociadas.
+    \item Asignar tipos, duraciones y familias respetando la estructura de precedencias.
+    \item Generar la disponibilidad de repuestos para cada orden.
+    \item Determinar los operarios aptos para cada tipo de tarea.
+    \item Consolidar la instancia final \((OT, T_d, O)\) para su evaluación en la simulación.
+\end{enumerate}
+
+\subsubsection{Validación del modelo simulado con expertos}
+Los parámetros del generador se calibraron con el personal de Recti-Ram, confirmando que las duraciones reflejan tiempos reales de procesamiento, las precedencias respetan la secuencia técnica del taller, las matrices de habilidades representan la estructura del personal y el horizonte de 480 minutos coincide con la jornada laboral. Este procedimiento asegura que los escenarios utilizados sean representativos de las condiciones de producción del taller.
+
+\paragraph{Construcción de escenarios de prueba.} Para la fase experimental se emplearon combinaciones que exploran distintos números de órdenes, tamaños del conjunto de tareas, niveles de complejidad en las precedencias y disponibilidades de recursos y repuestos. Las instancias incorporan variabilidad en carga operativa, composición de órdenes y mezcla de repuestos, lo que permite comparar el desempeño de SPT y del algoritmo genético en contextos heterogéneos.
+
+\subsection{Algoritmo de Evaluación Operativa}
+
+El componente de simulación determina si una asignación propuesta es factible y cuantifica su desempeño bajo las restricciones del taller; en la práctica, corresponde al algoritmo que implementa la función de aptitud del sistema. El pseudocódigo resumido se presenta a continuación:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Inicializar estructuras: $tpo[o] \leftarrow 0$, $comp[ot] \leftarrow \emptyset$, $occ[ot] \leftarrow \emptyset$\;
+\ForEach{operario $o \in O$}{
+    Obtener conjunto de tareas asignadas $T_o$\;
+    Ordenar $T_o$ según prioridad descendente\;
+    \ForEach{tarea $i \in T_o$}{
+        Verificar aptitud: $o \in E(tipo(i))$\;
+        Verificar repuesto disponible\;
+        Verificar precedencias cumplidas en $comp[ot(i)]$\;
+        Calcular intervalo $[s_i,f_i) = [tpo[o], tpo[o] + p(tipo(i))]$\;
+        \If{$f_i > H$}{rechazar tarea; continuar}
+        \If{$[s_i,f_i)$ solapa con algún intervalo en $occ[ot(i)]$}{rechazar tarea; continuar}
+        Aceptar tarea: actualizar $tpo[o]$, $comp$, $occ$\;
+    }
+}
+\caption{Simulación operativa de programación de tareas}
+\end{algorithm}
+
+Este simulador es el núcleo de la evaluación: recibe las soluciones propuestas por cada algoritmo, aplica las restricciones industriales y produce las métricas utilizadas en el análisis comparativo.
+
+\subsection{Conjunto Final de Escenarios Utilizados en la Comparación}
+
+\subsubsection{Número y estructura de las instancias}
+Para la fase experimental se consideraron múltiples instancias generadas bajo diferentes configuraciones de número de órdenes, número de tareas, complejidad de precedencias y disponibilidad de recursos.
+
+\subsubsection{Variabilidad incorporada}
+Las instancias presentan variabilidad en tamaño del conjunto de tareas, carga operativa, composición de órdenes y mezcla de repuestos disponibles.
+
+\subsubsection{Justificación de los casos de estudio}
+Estas instancias permiten evaluar el desempeño de SPT y del algoritmo genético en condiciones diversas, representando escenarios realistas del taller.
+
+\subsection{Ejecución Conjunta de SPT y AG}
+
+Para cada instancia se ejecuta primero la heurística SPT y se registra su desempeño; luego se ejecuta el AG para obtener el mejor individuo y ambos resultados se evalúan con el simulador operativo, generando métricas comparables.
+
+\subsection{Consolidación de Resultados}
+
+Los datos generados por cada ejecución se almacenan en archivos CSV que posteriormente se utilizan en el Capítulo~7 para el análisis cuantitativo.
+
+
+\section{Calibración del Algoritmo Genético}
+
+\subsection{Evaluación del Operador de Cruce}
+\label{subsec:cruce}
+
+Se compararon los operadores \textit{single\_point} y \textit{two\_points} bajo exactamente las mismas condiciones: misma población, mismas instancias, misma semilla aleatoria y la configuración base descrita en la Sub-sección~\ref{subsec:configuracion-ag}. El experimento se ejecutó sobre veinte instancias independientes, todas simuladas bajo un horizonte operativo de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:cruce-operadores-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para cada operador de cruce (horizonte de 480 minutos).}
+\label{tab:cruce-operadores-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4cm}cccc@{}}
+\toprule
+\textbf{Operador de cruce} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+\textit{single\_point} & 26.20 & 17.55 & 212.60 & 613.85 \\
+\textit{two\_points}   & 24.55 & 14.85 & 206.10 & 568.80 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Aun cuando \textit{two\_points} obtiene un makespan ligeramente menor, \textit{single\_point} supera sistemáticamente a su contraparte en las métricas más relevantes para el taller (tareas ejecutadas y carga total). Por ello se seleccionó \textit{single\_point} para los experimentos de calibración restantes.
+
+\subsection{Evaluación del Número de Generaciones}
+\label{subsec:generaciones}
+
+Se evaluaron tres niveles de profundidad evolutiva (300, 800 y 1300 generaciones) manteniendo la misma configuración base. Cada configuración se aplicó sobre veinte instancias independientes con horizonte de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:generaciones-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
+\label{tab:generaciones-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}cccc@{}}
+\toprule
+\textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+300  & \textbf{31.40} & 6.75 & 178.58 & \textbf{758.80} \\
+800  & 29.90 & 8.55 & 174.33 & 722.60 \\
+1300 & 28.40 & 8.65 & 171.40 & 696.65 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+El mejor rendimiento se obtiene con 300 generaciones, valor que maximiza tareas ejecutadas y carga total sin incrementar el costo computacional. Las configuraciones más profundas no aportan mejoras y tienden a reducir la diversidad de la población.
+
+\subsection{Evaluación de la Probabilidad de Mutación}
+\label{subsec:mutacion}
+
+Finalmente se estudiaron probabilidades de mutación de 5\%, 15\% y 25\% empleando veinte instancias independientes. Los resultados promedio se muestran en la Tabla~\ref{tab:mutacion-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
+\label{tab:mutacion-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.5cm}cccc@{}}
+\toprule
+\textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+5\%  & \textbf{34.90} & 10.35 & 178.65 & \textbf{832.00} \\
+15\% & 30.20 & \textbf{6.65} & \textbf{168.75} & 712.30 \\
+25\% & 32.00 & 8.00 & 181.45 & 786.30 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Una probabilidad de mutación del 15\% ofrece el mejor equilibrio entre exploración y estabilidad: reduce tareas rechazadas y logra el makespan más bajo sin sacrificar significativamente la productividad, por lo que se adoptó como valor final.
+
+\subsection{Configuración Final del AG}
+\label{tab:config-final-ag}
+
+La calibración descrita anteriormente permitió definir una configuración que equilibra calidad de soluciones y costo computacional. Se utiliza el operador de cruce \textit{single\_point} sobre un horizonte de 480 minutos, con \textbf{300 generaciones}, población de 100 individuos, selección por \textit{ranking}, diez padres por generación, cinco preservados mediante elitismo, mutación \textit{random} aplicada al 15\% de los genes y semilla fija 42. Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad evolutiva, además de tiempos de ejecución compatibles con la operación diaria del taller.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Configuración final del algoritmo genético empleada en las simulaciones.}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor seleccionado} \\
+\midrule
+Operador de cruce & \textit{single\_point} \\
+Número de generaciones & 300 \\
+Tamaño de población & 100 \\
+Método de selección & \textit{rank} \\
+Padres por generación & 10 \\
+Padres preservados & 5 \\
+Probabilidad de mutación & 15\% \\
+Semilla aleatoria & 42 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+
 
 \section{Código fuente disponible}
 
