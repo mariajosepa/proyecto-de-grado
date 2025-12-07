@@ -267,60 +267,49 @@ factibles, eficientes y alineadas con las necesidades reales del entorno industr
 
 \subsection{Operadores Genéticos y Parámetros del AG}
 
-El proceso evolutivo implementado en este proyecto se desarrolla mediante los operadores 
-genéticos estándar proporcionados por la librería PyGAD, configurados de manera que reflejen 
-las características del problema y favorezcan una búsqueda eficiente dentro del espacio de 
-soluciones. Cada operador contribuye a la exploración o explotación del espacio, mientras 
-que los parámetros controlan la estabilidad y la velocidad de convergencia del algoritmo.
+El proceso evolutivo implementado en este proyecto se rige por los operadores clásicos de los 
+algoritmos genéticos. Cada uno cumple una función específica dentro del ciclo evolutivo y puede 
+ajustarse mediante parámetros que equilibran exploración y explotación del espacio de búsqueda.
 
 \paragraph{Selección.}
-Se emplea selección por \textit{ranking}, mecanismo en el cual los individuos se ordenan de 
-acuerdo con su aptitud y se asignan probabilidades de selección según su posición relativa. 
-Este método es adecuado en contextos donde las diferencias entre aptitudes pueden ser 
-grandes debido a penalizaciones por restricciones, evitando que unos pocos individuos 
-dominen prematuramente la población y manteniendo una presión selectiva estable.
+Este operador define cómo se eligen los progenitores a partir de la población evaluada. Es 
+usual emplear esquemas como ruleta, torneo o ranking, donde la probabilidad de ser elegido 
+depende de la aptitud relativa del individuo. La selección determina la presión evolutiva, por 
+lo que su forma concreta se ajusta para evitar estancamientos o convergencias prematuras.
 
 \paragraph{Cruce.}
-Para la recombinación se utilizó un cruce de un solo punto (\textit{single point crossover}). 
-Este método divide el cromosoma en dos segmentos y combina parcialmente la asignación de 
-operarios con el vector de prioridades proveniente de otro progenitor. Dado que el cromosoma 
-está estructurado en dos bloques homogéneos (asignación y prioridad), un punto de cruce 
-introduce variabilidad sin descomponer significativamente la estructura semántica del 
-individuo.
+La recombinación toma dos o más progenitores y combina sus genes para producir descendencia. 
+Los esquemas de uno o varios puntos, así como los cruce uniformes, permiten intercambiar 
+segmentos completos del cromosoma respetando la estructura asignación-prioridad que define a 
+cada individuo. El punto exacto o la máscara utilizada dependen del nivel de variabilidad que 
+se desee introducir.
 
 \paragraph{Mutación.}
-La variación genética se incorpora mediante una tasa de mutación aplicada al 15\% de los 
-genes del cromosoma. En los genes de asignación, la mutación consiste en seleccionar 
-aleatoriamente un operario válido para el tipo de tarea; en los genes de prioridad, asigna 
-un valor continuo aleatorio en el intervalo $[0,1]$. Esta tasa moderada permite explorar 
-nuevas combinaciones manteniendo la estabilidad del proceso evolutivo y evitando 
-convergencias prematuras.
+La mutación altera una fracción configurable de genes después del cruce para introducir nuevas 
+combinaciones. En este problema, mutar un gen de asignación implica escoger otro operario válido 
+para la tarea, mientras que mutar un gen de prioridad asigna un valor continuo distinto en 
+$[0,1]$. La tasa aplicada controla el balance entre diversificación y estabilidad.
 
 \paragraph{Parámetros generales.}
-El algoritmo se ejecutó con los siguientes parámetros:
-\begin{itemize}
-    \item \textbf{Población:} 100 individuos por generación.
-    \item \textbf{Generaciones:} 300 ciclos evolutivos.
-    \item \textbf{Padres seleccionados por generación:} 10 individuos.
-    \item \textbf{Padres preservados (elitismo):} 5 mejores individuos.
-    \item \textbf{Tipo de selección:} \textit{ranking}, adecuado para distribuciones de aptitud desiguales.
-    \item \textbf{Operador de cruce:} \textit{single point}, divide el cromosoma en dos segmentos.
-    \item \textbf{Tipo de mutación:} \textit{random}.
-    \item \textbf{Probabilidad de mutación:} 5\% de los genes mutados por generación.
-    \item \textbf{Semilla aleatoria:} 42, para garantizar reproducibilidad de resultados.
-\end{itemize}
-
-Estos parámetros fueron seleccionados mediante validación empírica previa y se alinean con estándares 
-de la literatura de algoritmos genéticos. La configuración proporciona un equilibrio adecuado entre 
-exploración del espacio de búsqueda (favorecida por la mutación y la selección por ranking) y 
-refinamiento de soluciones prometedoras (garantizado por el elitismo y la población moderada). 
-La semilla fija permite reproducir exactamente los mismos resultados en futuras ejecuciones del 
-algoritmo, facilitando la validación y comparación de resultados.
+Además de los operadores, el algoritmo se controla mediante parámetros como el tamaño de población 
+(número de individuos por generación), la cantidad de generaciones ejecutadas, el número de padres 
+seleccionados en cada ciclo, el nivel de elitismo (individuos preservados sin modificación) y la 
+semilla aleatoria que garantiza reproducibilidad. Estos valores definen la intensidad del proceso 
+evolutivo y se ajustan de acuerdo con los recursos computacionales disponibles y el comportamiento 
+observado en las simulaciones.
 
 \subsection{Configuración Base del Algoritmo Genético}
 \label{subsec:configuracion-ag}
 
-Para los experimentos se utilizó una configuración inicial con 100 individuos por generación, 300 generaciones, diez padres seleccionados, cinco preservados por elitismo, selección por \textit{ranking}, cruce \textit{single point}, mutación \textit{random} aplicada al 15\% de los genes y una semilla aleatoria de 42. Esta configuración sirve como punto de partida antes de realizar los ajustes descritos en las subsecciones siguientes.
+Con los operadores y parámetros generales establecidos, el siguiente paso es construir una configuración 
+base sobre la cual se realizarán los ajustes experimentales descritos en la sección de calibración. Para 
+ello se fijaron los elementos no sujetos a ensayo en cada experimento. Este arreglo inicial emplea una 
+población de 100 individuos durante 300 
+generaciones, con diez padres seleccionados, cinco preservados mediante elitismo, selección por 
+\textit{ranking}, cruce de un punto y mutación \textit{random} aplicada al 5\% de los genes. Toda la 
+configuración se ejecuta con semilla aleatoria 42 para garantizar reproducibilidad. Cuando se analiza 
+un parámetro específico (por ejemplo, tipo de cruce o probabilidad de mutación), únicamente se modifica 
+ese componente, manteniendo constantes los restantes valores base.
 
 \begin{figure}[H]
 \centering
@@ -344,7 +333,7 @@ Para los experimentos se utilizó una configuración inicial con 100 individuos 
 \node[block, below=of pop] (fitness) {Evaluación \\ Función de aptitud};
 \node[block, below=of fitness] (select) {Selección \\ (ranking)};
 \node[block, below=of select] (crossover) {Cruce \\ (single point)};
-\node[block, below=of crossover] (mutation) {Mutación \\ (15\% de genes)};
+\node[block, below=of crossover] (mutation) {Mutación \\ (tasa configurada)};
 \node[block, below=of mutation] (elitism) {Preservación de élite \\ (5 mejores individuos)};
 \node[block, below=of elitism] (newpop) {Nueva población \\ $P^{(g+1)}$};
 
