@@ -361,6 +361,108 @@ Para los experimentos se utilizó una configuración inicial con 100 individuos 
 \caption{Flujo del ciclo evolutivo del algoritmo genético en PyGAD.}
 \end{figure}
 
+\section{Calibración del Algoritmo Genético}
+
+\subsection{Evaluación del Operador de Cruce}
+\label{subsec:cruce}
+
+Se compararon los operadores \textit{single\_point} y \textit{two\_points} bajo exactamente las mismas condiciones: misma población, mismas instancias, misma semilla aleatoria y la configuración base descrita en la Sub-sección~\ref{subsec:configuracion-ag}. El experimento se ejecutó sobre veinte instancias independientes, todas simuladas bajo un horizonte operativo de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:cruce-operadores-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para cada operador de cruce (horizonte de 480 minutos).}
+\label{tab:cruce-operadores-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4cm}cccc@{}}
+\toprule
+\textbf{Operador de cruce} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+\textit{single\_point} & 26.20 & 17.55 & 212.60 & 613.85 \\
+\textit{two\_points}   & 24.55 & 14.85 & 206.10 & 568.80 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Aun cuando \textit{two\_points} obtiene un makespan ligeramente menor, \textit{single\_point} supera sistemáticamente a su contraparte en las métricas más relevantes para el taller (tareas ejecutadas y carga total). Por ello se seleccionó \textit{single\_point} para los experimentos de calibración restantes.
+
+\subsection{Evaluación del Número de Generaciones}
+\label{subsec:generaciones}
+
+Se evaluaron tres niveles de profundidad evolutiva (300, 800 y 1300 generaciones) manteniendo la misma configuración base. Cada configuración se aplicó sobre veinte instancias independientes con horizonte de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:generaciones-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
+\label{tab:generaciones-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}cccc@{}}
+\toprule
+\textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+300  & \textbf{31.40} & 6.75 & 178.58 & \textbf{758.80} \\
+800  & 29.90 & 8.55 & 174.33 & 722.60 \\
+1300 & 28.40 & 8.65 & 171.40 & 696.65 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+El mejor rendimiento se obtiene con 300 generaciones, valor que maximiza tareas ejecutadas y carga total sin incrementar el costo computacional. Las configuraciones más profundas no aportan mejoras y tienden a reducir la diversidad de la población.
+
+\subsection{Evaluación de la Probabilidad de Mutación}
+\label{subsec:mutacion}
+
+Finalmente se estudiaron probabilidades de mutación de 5\%, 15\% y 25\% empleando veinte instancias independientes. Los resultados promedio se muestran en la Tabla~\ref{tab:mutacion-resultados-480}.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
+\label{tab:mutacion-resultados-480}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.5cm}cccc@{}}
+\toprule
+\textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
+\midrule
+5\%  & \textbf{34.90} & 10.35 & 178.65 & \textbf{832.00} \\
+15\% & 30.20 & \textbf{6.65} & \textbf{168.75} & 712.30 \\
+25\% & 32.00 & 8.00 & 181.45 & 786.30 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Una probabilidad de mutación del 15\% ofrece el mejor equilibrio entre exploración y estabilidad: reduce tareas rechazadas y logra el makespan más bajo sin sacrificar significativamente la productividad, por lo que se adoptó como valor final.
+
+\subsection{Configuración Final del AG}
+\label{tab:config-final-ag}
+
+La calibración descrita anteriormente permitió definir una configuración que equilibra calidad de soluciones y costo computacional. Se utiliza el operador de cruce \textit{single\_point} sobre un horizonte de 480 minutos, con 300 generaciones, población de 100 individuos, selección por \textit{ranking}, diez padres por generación, cinco preservados mediante elitismo, mutación \textit{random} aplicada al 15\% de los genes y semilla fija 42. Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad evolutiva, además de tiempos de ejecución compatibles con la operación diaria del taller.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Configuración final del algoritmo genético empleada en las simulaciones.}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor seleccionado} \\
+\midrule
+Operador de cruce & \textit{single\_point} \\
+Número de generaciones & 300 \\
+Tamaño de población & 100 \\
+Método de selección & \textit{rank} \\
+Padres por generación & 10 \\
+Padres preservados & 5 \\
+Probabilidad de mutación & 15\% \\
+Semilla aleatoria & 42 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
 \section{Enfoque de Solución: Método SPT}
 
 Como alternativa al enfoque evolutivo basado en algoritmos genéticos, se consideró una 
@@ -627,111 +729,6 @@ Estas instancias permiten evaluar el desempeño de SPT y del algoritmo genético
 Para cada instancia se ejecuta primero la heurística SPT y se registra su desempeño; luego se ejecuta el AG para obtener el mejor individuo y ambos resultados se evalúan con el simulador operativo, generando métricas comparables.
 
 Los datos generados por cada ejecución se almacenan en archivos CSV que posteriormente se utilizan en el Capítulo~7 para el análisis cuantitativo.
-
-
-\section{Calibración del Algoritmo Genético}
-
-\subsection{Evaluación del Operador de Cruce}
-\label{subsec:cruce}
-
-Se compararon los operadores \textit{single\_point} y \textit{two\_points} bajo exactamente las mismas condiciones: misma población, mismas instancias, misma semilla aleatoria y la configuración base descrita en la Sub-sección~\ref{subsec:configuracion-ag}. El experimento se ejecutó sobre veinte instancias independientes, todas simuladas bajo un horizonte operativo de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:cruce-operadores-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para cada operador de cruce (horizonte de 480 minutos).}
-\label{tab:cruce-operadores-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4cm}cccc@{}}
-\toprule
-\textbf{Operador de cruce} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-\textit{single\_point} & 26.20 & 17.55 & 212.60 & 613.85 \\
-\textit{two\_points}   & 24.55 & 14.85 & 206.10 & 568.80 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-Aun cuando \textit{two\_points} obtiene un makespan ligeramente menor, \textit{single\_point} supera sistemáticamente a su contraparte en las métricas más relevantes para el taller (tareas ejecutadas y carga total). Por ello se seleccionó \textit{single\_point} para los experimentos de calibración restantes.
-
-\subsection{Evaluación del Número de Generaciones}
-\label{subsec:generaciones}
-
-Se evaluaron tres niveles de profundidad evolutiva (300, 800 y 1300 generaciones) manteniendo la misma configuración base. Cada configuración se aplicó sobre veinte instancias independientes con horizonte de 480 minutos. Los resultados promedio se presentan en la Tabla~\ref{tab:generaciones-resultados-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para distintos números de generaciones (480 minutos).}
-\label{tab:generaciones-resultados-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}cccc@{}}
-\toprule
-\textbf{Generaciones} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-300  & \textbf{31.40} & 6.75 & 178.58 & \textbf{758.80} \\
-800  & 29.90 & 8.55 & 174.33 & 722.60 \\
-1300 & 28.40 & 8.65 & 171.40 & 696.65 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-El mejor rendimiento se obtiene con 300 generaciones, valor que maximiza tareas ejecutadas y carga total sin incrementar el costo computacional. Las configuraciones más profundas no aportan mejoras y tienden a reducir la diversidad de la población.
-
-\subsection{Evaluación de la Probabilidad de Mutación}
-\label{subsec:mutacion}
-
-Finalmente se estudiaron probabilidades de mutación de 5\%, 15\% y 25\% empleando veinte instancias independientes. Los resultados promedio se muestran en la Tabla~\ref{tab:mutacion-resultados-480}.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Resultados promedio del AG para diferentes probabilidades de mutación (480 minutos).}
-\label{tab:mutacion-resultados-480}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.5cm}cccc@{}}
-\toprule
-\textbf{Probabilidad de mutación} & \textbf{Tareas ejecutadas} & \textbf{Tareas rechazadas} & \textbf{Makespan} & \textbf{Carga total} \\
-\midrule
-5\%  & \textbf{34.90} & 10.35 & 178.65 & \textbf{832.00} \\
-15\% & 30.20 & \textbf{6.65} & \textbf{168.75} & 712.30 \\
-25\% & 32.00 & 8.00 & 181.45 & 786.30 \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
-
-Una probabilidad de mutación del 15\% ofrece el mejor equilibrio entre exploración y estabilidad: reduce tareas rechazadas y logra el makespan más bajo sin sacrificar significativamente la productividad, por lo que se adoptó como valor final.
-
-\subsection{Configuración Final del AG}
-\label{tab:config-final-ag}
-
-La calibración descrita anteriormente permitió definir una configuración que equilibra calidad de soluciones y costo computacional. Se utiliza el operador de cruce \textit{single\_point} sobre un horizonte de 480 minutos, con \textbf{300 generaciones}, población de 100 individuos, selección por \textit{ranking}, diez padres por generación, cinco preservados mediante elitismo, mutación \textit{random} aplicada al 15\% de los genes y semilla fija 42. Esta configuración proporciona un desempeño robusto en términos de tareas ejecutadas, carga total y estabilidad evolutiva, además de tiempos de ejecución compatibles con la operación diaria del taller.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Configuración final del algoritmo genético empleada en las simulaciones.}
-\resizebox{0.8\textwidth}{!}{%
-\begin{tabular}{@{}lc@{}}
-\toprule
-\textbf{Parámetro} & \textbf{Valor seleccionado} \\
-\midrule
-Operador de cruce & \textit{single\_point} \\
-Número de generaciones & 300 \\
-Tamaño de población & 100 \\
-Método de selección & \textit{rank} \\
-Padres por generación & 10 \\
-Padres preservados & 5 \\
-Probabilidad de mutación & 15\% \\
-Semilla aleatoria & 42 \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-
 
 \section{Código fuente disponible}
 
