@@ -272,31 +272,45 @@ algoritmos genéticos. Cada uno cumple una función específica dentro del ciclo
 ajustarse mediante parámetros que equilibran exploración y explotación del espacio de búsqueda.
 
 \paragraph{Selección.}
-Este operador define cómo se eligen los progenitores a partir de la población evaluada. Es 
-usual emplear esquemas como ruleta, torneo o ranking, donde la probabilidad de ser elegido 
-depende de la aptitud relativa del individuo. La selección determina la presión evolutiva, por 
-lo que su forma concreta se ajusta para evitar estancamientos o convergencias prematuras.
+La selección por ranking ordena a los individuos según su aptitud y asigna probabilidades en 
+función de su posición relativa dentro de la población, lo cual evita que diferencias extremas en 
+la aptitud dominen prematuramente la evolución y favorece una presión selectiva estable. 
+Este tipo de mecanismos ha sido ampliamente documentado en la literatura de algoritmos genéticos, 
+donde se considera una alternativa robusta frente a métodos proporcionales al fitness \cite{ref3,ref4}.
+
 
 \paragraph{Cruce.}
-La recombinación toma dos o más progenitores y combina sus genes para producir descendencia. 
-Los esquemas de uno o varios puntos, así como los cruce uniformes, permiten intercambiar 
-segmentos completos del cromosoma respetando la estructura asignación-prioridad que define a 
-cada individuo. El punto exacto o la máscara utilizada dependen del nivel de variabilidad que 
-se desee introducir.
+El operador de cruce de un punto (single-point crossover) divide el cromosoma en dos segmentos 
+y recombina material genético de ambos progenitores, promoviendo variabilidad y manteniendo 
+estructuras internas útiles. Este enfoque se ha utilizado tradicionalmente en problemas combinatorios 
+y de asignación debido a su simplicidad y capacidad para preservar bloques funcionales de 
+información \cite{ref3,ref10}.
 
 \paragraph{Mutación.}
-La mutación altera una fracción configurable de genes después del cruce para introducir nuevas 
-combinaciones. En este problema, mutar un gen de asignación implica escoger otro operario válido 
-para la tarea, mientras que mutar un gen de prioridad asigna un valor continuo distinto en 
-$[0,1]$. La tasa aplicada controla el balance entre diversificación y estabilidad.
+La mutación introduce variación en la población mediante modificaciones aleatorias en los genes, lo que 
+ayuda a prevenir la convergencia prematura hacia óptimos locales. La literatura coincide en que la
+mutación es esencial para mantener la diversidad y garantizar una exploración adecuada del espacio 
+de soluciones \cite{ref3,ref4}. En problemas de planificación y asignación, mutaciones sobre componentes 
+discretos del cromosoma permiten generar configuraciones no presentes en los progenitores, ampliando 
+el alcance de la búsqueda.
+
+\paragraph{Elitismo.}
+El elitismo asegura que los mejores individuos de una generación se preserven sin alteraciones en la 
+siguiente, lo que contribuye a estabilizar la evolución y acelerar la convergencia. Su pertinencia ha 
+sido demostrada en problemas de scheduling y asignación, donde retener soluciones de alta calidad evita 
+retrocesos en el desempeño global del algoritmo \cite{Delgado2005}.
 
 \paragraph{Parámetros generales.}
-Además de los operadores, el algoritmo se controla mediante parámetros como el tamaño de población 
-(número de individuos por generación), la cantidad de generaciones ejecutadas, el número de padres 
-seleccionados en cada ciclo, el nivel de elitismo (individuos preservados sin modificación) y la 
-semilla aleatoria que garantiza reproducibilidad. Estos valores definen la intensidad del proceso 
-evolutivo y se ajustan de acuerdo con los recursos computacionales disponibles y el comportamiento 
-observado en las simulaciones.
+Además de los operadores evolutivos, el algoritmo genético depende de un conjunto de parámetros 
+que controlan la dinámica del proceso de búsqueda. Entre ellos se encuentran el tamaño de la 
+población, que determina cuántos individuos se consideran en cada generación; la cantidad de 
+generaciones ejecutadas, que define la profundidad evolutiva del proceso; y la probabilidad de 
+mutación, que regula el nivel de variación introducido en cada ciclo. Otros parámetros relevantes 
+incluyen la cantidad de padres seleccionados para la reproducción, los criterios de reemplazo y la 
+semilla aleatoria utilizada para garantizar reproducibilidad. Estos elementos no constituyen 
+operadores en sí mismos, pero modulan la intensidad de la exploración y la velocidad de 
+convergencia del algoritmo, y por tanto se ajustan experimentalmente en las secciones de 
+configuración base y calibración.
 
 \subsection{Configuración Base del Algoritmo Genético}
 \label{subsec:configuracion-ag}
@@ -351,6 +365,29 @@ ese componente, manteniendo constantes los restantes valores base.
 \end{figure}
 
 \section{Calibración del Algoritmo Genético}
+
+La calibración de parámetros en un algoritmo genético es un paso 
+fundamental para garantizar su rendimiento, dado que aspectos como 
+el operador de cruce, el tamaño de la población o la probabilidad 
+de mutación afectan directamente la convergencia y la estabilidad 
+del proceso evolutivo. La literatura especializada señala que 
+los parámetros de un GA no son independientes entre sí y que su 
+ajuste requiere un proceso sistemático que explore configuraciones 
+alternativas manteniendo constantes los demás factores \cite{ref3,ref4}.
+
+Adicionalmente, estudios sobre control de parámetros en metaheurísticas 
+evidencian que valores estáticos pueden ser subóptimos y que la elección 
+adecuada depende del tipo de problema y de la dinámica de la población a lo 
+largo de las generaciones \cite{eibenParameterControl,LevelBasedParameterControl}. 
+Por esta razón, siguiendo prácticas reconocidas en la experimentación con 
+metaheurísticas, los ensayos de calibración se realizaron variando un parámetro 
+a la vez, evaluando su efecto sobre el desempeño del algoritmo mientras se 
+mantuvieron constantes los demás componentes.
+
+Este enfoque coincide con recomendaciones de investigaciones previas sobre
+planificación de tareas con algoritmos genéticos, donde la calibración 
+permite equilibrar calidad de solución, tiempo computacional y estabilidad 
+evolutiva \cite{Delgado2005,flowshop}.
 
 \subsection{Evaluación del Operador de Cruce}
 \label{subsec:cruce}
