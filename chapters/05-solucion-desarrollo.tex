@@ -12,6 +12,39 @@ un horizonte diario limitado. Esta combinación de factores da lugar a un espaci
 complejo y no lineal, típico de problemas NP-hard, lo que dificulta resolverlo mediante 
 métodos exactos en tiempos razonables.
 
+\section{Arquitectura General del Sistema}
+
+Antes de detallar los componentes de optimización y simulación, se presenta una vista estructural
+del flujo completo implementado en el proyecto. Esta arquitectura muestra cómo se conectan los
+módulos desde la configuración base del taller hasta la consolidación final de métricas.
+
+\begin{figure}[H]
+\centering
+\shorthandoff{>}
+\begin{tikzpicture}[
+node distance=1.8cm,
+every node/.style={draw, rounded corners, align=center, minimum width=4.5cm, minimum height=1cm}
+]
+
+\node (config) {Configuraci\'on del Taller \\ (TAREAS, PRECEDENCIAS, OPERARIOS)};
+\node (gen) [below of=config] {Generador de Instancias \\ (OT, variabilidad, repuestos)};
+\node (sim) [below of=gen] {Simulador de Programaci\'on};
+\node (alg) [below of=sim] {Algoritmo Gen\'etico \\ vs \\ Regla SPT};
+\node (met) [below of=alg] {C\'alculo de M\'etricas \\ Makespan, Balance, Carga};
+\node (res) [below of=met] {Resultados Consolidados};
+
+\draw[->] (config) -- (gen);
+\draw[->] (gen) -- (sim);
+\draw[->] (sim) -- (alg);
+\draw[->] (alg) -- (met);
+\draw[->] (met) -- (res);
+
+\end{tikzpicture}
+\shorthandon{>}
+\caption{Arquitectura general del sistema desarrollado. El módulo de configuración alimenta el generador de instancias, el cual produce escenarios evaluados por el simulador y los algoritmos de asignación.}
+\label{fig:arquitectura}
+\end{figure}
+
 \section{Entorno de Desarrollo}
 
 El sistema se implementó en el intérprete Python disponible en el entorno local (\texttt{python3 --version} reporta 3.14.0), aprovechando su compatibilidad con heurísticas evolutivas y las utilidades de la biblioteca estándar. La portabilidad se garantizó mediante un entorno virtual administrado con \texttt{venv}, herramienta incluida en la propia distribución de Python.
@@ -676,7 +709,34 @@ El módulo de simulación coordina el experimento completo. Para cada instancia 
 
 Las instancias se generan mediante un componente dedicado a la creación de escenarios, que consume la configuración formal del taller y construye casos completos para la evaluación de ambos métodos. Este generador se implementó para articular los datos base alojados en la configuración del sistema. Se ejecuta sobre la versión de Python disponible (3.14.0 en esta instalación, compatible con el requerimiento original de Python~3.11) y utiliza únicamente librerías estándar: \texttt{random} provee la aleatoriedad controlada y \texttt{typing} las anotaciones estáticas.
 
-Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales sin violar las reglas esenciales del proceso. Las duraciones operativas se derivan de tiempos base catalogados en el módulo de configuración y se modifican aplicando factores de variación acotados para obtener duraciones diferenciadas pero coherentes. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por orden, replicando los cuellos de suministro que inciden en la programación diaria.
+Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales sin violar las reglas esenciales del proceso. Las duraciones operativas se derivan de tiempos base catalogados en el módulo de configuración y se modifican aplicando factores de variación acotados para obtener duraciones diferenciadas pero coherentes. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por orden, replicando los cuellos de suministro que inciden en la programación diaria. La Figura~\ref{fig:ot_ejemplo} ilustra una orden de trabajo ejemplo construida con esta lógica de precedencias.
+
+\begin{figure}[H]
+\centering
+\shorthandoff{>}
+\begin{tikzpicture}[
+node distance=2cm,
+every node/.style={draw, align=center, minimum width=3cm}
+]
+
+\node (t1) {INSPECCI\'ON};
+\node (t2) [below of=t1] {PRUEBA HIDROST\'ATICA};
+\node (t3) [below of=t2] {EXTRAER CAMISAS};
+\node (t4) [below of=t3] {RECTIFICAR CILINDROS};
+\node (t5) [below of=t4] {CEPILLAR SUPERFICIE};
+\node (t6) [below of=t5] {ENSAMBLAR BLOQUE};
+
+\draw[->] (t1) -- (t2);
+\draw[->] (t2) -- (t3);
+\draw[->] (t3) -- (t4);
+\draw[->] (t4) -- (t5);
+\draw[->] (t5) -- (t6);
+
+\end{tikzpicture}
+\shorthandon{>}
+\caption{Ejemplo ilustrativo de una Orden de Trabajo generada automáticamente por el módulo de instancias. Las tareas seleccionadas respetan las precedencias definidas en el sistema.}
+\label{fig:ot_ejemplo}
+\end{figure}
 
 La disponibilidad de repuestos se modela con la estructura \texttt{repuestos\_por\_ot: Dict[int, List[int]]}.
 Para cada orden de trabajo \(ot\), la lista binaria asociada se alinea por índice con \texttt{mapeo\_ot[ot]}:

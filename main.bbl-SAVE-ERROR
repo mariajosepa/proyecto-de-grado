@@ -552,6 +552,103 @@
       \field{title}{Application of Genetic Algorithms in Automated Mechanical Design}
       \field{year}{2024}
     \endentry
+    \entry{ref4}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=36adce9ddd452369019833a738102893}{%
+           family={Bajpai},
+           familyi={B\bibinitperiod},
+           given={Pratibha},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{36adce9ddd452369019833a738102893}
+      \strng{fullhash}{36adce9ddd452369019833a738102893}
+      \strng{fullhashraw}{36adce9ddd452369019833a738102893}
+      \strng{bibnamehash}{36adce9ddd452369019833a738102893}
+      \strng{authorbibnamehash}{36adce9ddd452369019833a738102893}
+      \strng{authornamehash}{36adce9ddd452369019833a738102893}
+      \strng{authorfullhash}{36adce9ddd452369019833a738102893}
+      \strng{authorfullhashraw}{36adce9ddd452369019833a738102893}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Indian Journal of Computer Science and Engineering}
+      \field{title}{Genetic Algorithm – an Approach to Solve Global Optimization Problems}
+      \field{year}{2010}
+      \field{pages}{203}
+      \range{pages}{1}
+    \endentry
+    \entry{eibenParameterControl}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=cc5a50d71ff97e6f9595cd504cb5de10}{%
+           family={Eiben},
+           familyi={E\bibinitperiod},
+           given={Agoston\bibnamedelima E.},
+           giveni={A\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=64e33c7e948c6cc44ed78c0dda63717b}{%
+           family={Hinterding},
+           familyi={H\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4a8cba6efa3afc65630aa05f0cbd9b66}{%
+           family={Michalewicz},
+           familyi={M\bibinitperiod},
+           given={Zbigniew},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{fullhash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{fullhashraw}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{bibnamehash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{authorbibnamehash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{authornamehash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{authorfullhash}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \strng{authorfullhashraw}{e320db3d9a3fadbe3f2c4e412ba01a98}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Evolutionary Computation}
+      \field{number}{2}
+      \field{title}{Parameter Control in Evolutionary Algorithms}
+      \field{volume}{3}
+      \field{year}{1999}
+      \field{pages}{124\bibrangedash 141}
+      \range{pages}{18}
+    \endentry
+    \entry{LevelBasedParameterControl}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=36adce9ddd452369019833a738102893}{%
+           family={Bajpai},
+           familyi={B\bibinitperiod},
+           given={Pratibha},
+           giveni={P\bibinitperiod}}}%
+        {{hash=c943eb591a8a17ffdf3dfb4fa37d83ea}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={Shruti},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{fullhash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{fullhashraw}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{bibnamehash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{authorbibnamehash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{authornamehash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{authorfullhash}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \strng{authorfullhashraw}{6c41b720fbd1f1944d2af5fc5c46beb1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Computer Science}
+      \field{number}{3}
+      \field{title}{Level-Based Parameter Control in Genetic Algorithms}
+      \field{volume}{8}
+      \field{year}{2010}
+      \field{pages}{453\bibrangedash 462}
+      \range{pages}{10}
+    \endentry
     \entry{file_galindo_enjambres}{article}{}{}
       \name{author}{2}{}{%
         {{hash=c99a17de957218379df7bd5d693554a0}{%
@@ -573,8 +670,8 @@
       \strng{authornamehash}{5829229afae8cc096170deaded3fad75}
       \strng{authorfullhash}{5829229afae8cc096170deaded3fad75}
       \strng{authorfullhashraw}{5829229afae8cc096170deaded3fad75}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Inventum}
@@ -607,8 +704,8 @@
       \strng{authornamehash}{3b83bc44eda2a17febe43da64d14c580}
       \strng{authorfullhash}{3b83bc44eda2a17febe43da64d14c580}
       \strng{authorfullhashraw}{3b83bc44eda2a17febe43da64d14c580}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{International Journal of Computer Applications}
@@ -636,8 +733,8 @@
       \strng{authornamehash}{f878f54b13b0e69954f2a2bb47f2c64a}
       \strng{authorfullhash}{f878f54b13b0e69954f2a2bb47f2c64a}
       \strng{authorfullhashraw}{f878f54b13b0e69954f2a2bb47f2c64a}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Electronics}
@@ -733,8 +830,8 @@
       \strng{authornamehash}{5b3f2f03869cf2515d2bda93feeefab1}
       \strng{authorfullhash}{5b3f2f03869cf2515d2bda93feeefab1}
       \strng{authorfullhashraw}{5b3f2f03869cf2515d2bda93feeefab1}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Scientific Reports}
