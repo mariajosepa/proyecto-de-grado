@@ -184,6 +184,23 @@ de configuración denominado \texttt{taller\_config}, el cual consolida la estru
 tareas, las relaciones de precedencia, las habilidades de los operarios, la disponibilidad 
 de repuestos, la duración base de las actividades y el horizonte de planificación diario.
 
+En términos de implementación, este archivo no es un texto descriptivo sino un módulo Python con
+estructuras explícitas que actúan como parámetros del modelo. El diccionario \texttt{TAREAS}
+asigna un identificador entero a cada operación real del taller (35 en total), y \texttt{TAREAS\_INV}
+permite recuperar el nombre a partir del identificador para fines de trazabilidad y reporte.
+\texttt{PRECEDENCIAS} define, para cada tarea, la lista de prerequisitos técnicos que deben
+completarse antes de su ejecución. \texttt{DURACIONES\_BASE} fija los tiempos nominales de proceso por
+tipo de tarea, usados como referencia para generar duraciones diarias con variación controlada.
+\texttt{BLOQUES} y \texttt{CULATAS} agrupan los IDs de operarios por frente de trabajo, mientras que
+\texttt{OPERARIOS\_APTOS} establece la matriz de habilidades: para cada operario, el subconjunto exacto
+de tareas que puede ejecutar. Finalmente, \texttt{HORIZONTE} define el límite temporal diario (480 minutos)
+que restringe la programación factible.
+
+Esta separación entre configuración estructural fija (catálogos, precedencias, habilidades y horizonte)
+y parámetros variables por instancia (órdenes del día, tareas activas, repuestos disponibles y duraciones ajustadas)
+permite mantener consistencia operativa en todos los experimentos y, al mismo tiempo, introducir variabilidad controlada
+para comparar los algoritmos en escenarios diversos.
+
 \subsection{Flujo operativo y restricciones reales}
 
 El taller de reparación de motores opera bajo un flujo secuencial condicionado por 

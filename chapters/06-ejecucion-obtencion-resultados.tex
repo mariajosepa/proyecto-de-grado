@@ -10,7 +10,7 @@ El sistema recibe una instancia diaria compuesta por:
     \item \textbf{tiempos\_procesamiento}: duración base por tipo de tarea;
     \item \textbf{operarios\_aptos}: conjunto de operarios que pueden ejecutar cada tarea;
     \item \textbf{operarios disponibles};
-    \item \textbf{repuestos\_por\_ot}: disponibilidad de insumos para cada OT;
+    \item \textbf{repuestos\_por\_ot}: vector binario por OT (alineado con \texttt{mapeo\_ot}) donde 1 indica repuesto disponible y 0 ausencia de repuesto para la tarea correspondiente;
     \item \textbf{prerequisitos}: precedencias internas dentro de la misma OT;
     \item \textbf{mapeo\_ot}: tareas asociadas a cada orden de trabajo;
     \item \textbf{horizonte}: tiempo máximo de trabajo diario por operario.

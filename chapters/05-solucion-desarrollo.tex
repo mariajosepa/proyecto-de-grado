@@ -678,6 +678,14 @@ Las instancias se generan mediante un componente dedicado a la creación de esce
 
 Conceptualmente, la herramienta construye un conjunto de órdenes de trabajo y, para cada una, selecciona un número aleatorio de tareas dentro de rangos configurables. Esta selección respeta las precedencias reales definidas para el taller y puede relajar algunas relaciones de forma probabilística, lo que introduce ramificaciones opcionales sin violar las reglas esenciales del proceso. Las duraciones operativas se derivan de tiempos base catalogados en el módulo de configuración y se modifican aplicando factores de variación acotados para obtener duraciones diferenciadas pero coherentes. En paralelo, se asigna de manera estocástica la disponibilidad de repuestos por tarea y por orden, replicando los cuellos de suministro que inciden en la programación diaria.
 
+La disponibilidad de repuestos se modela con la estructura \texttt{repuestos\_por\_ot: Dict[int, List[int]]}.
+Para cada orden de trabajo \(ot\), la lista binaria asociada se alinea por índice con \texttt{mapeo\_ot[ot]}:
+cada posición representa una tarea concreta de esa orden, con valor \(1\) si el repuesto está disponible
+y \(0\) si no lo está. La generación es aleatoria por tarea mediante una prueba de Bernoulli:
+\texttt{random.random() < prob\_falta\_repuesto}. Si la condición se cumple, se registra \(0\); en caso contrario,
+se registra \(1\). Con el valor por defecto \texttt{prob\_falta\_repuesto = 0.15}, en promedio se obtiene
+aproximadamente un 15\% de tareas sin repuesto y un 85\% con repuesto disponible.
+
 Cada instancia resultante incorpora todos los elementos necesarios para la simulación: lista de órdenes consideradas, tareas elegidas por orden, mapeo entre órdenes y tareas, duraciones ajustadas, prerequisitos vigentes, estado de repuestos, plantillas de operarios disponibles y aptos y el horizonte temporal sobre el cual se evalúan los algoritmos. Gracias a este ensamblaje, el generador produce instancias realistas, reproducibles y con suficiente variabilidad para comparar enfoques como el algoritmo genético y la regla SPT. Cuando se requiere analizar múltiples escenarios, el mismo módulo crea lotes completos utilizando una semilla aleatoria, lo que garantiza reproducibilidad o variación controlada.
 
 \paragraph{Parámetros considerados.} Cada instancia especifica los elementos estructurales necesarios para recrear un día de operación:
