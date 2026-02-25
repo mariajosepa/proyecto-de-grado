@@ -27,6 +27,17 @@ Operativamente, la jornada sigue el siguiente comportamiento conceptual:
 Este flujo describe el contexto real que posteriormente se formaliza para alimentar la simulación y los algoritmos
  de optimización.
 
+\subsection{Ejemplo de Estructura de Precedencias en una Orden Real}
+
+La Figura~\ref{fig:precedencias-orden-real} muestra la estructura de dependencias de una orden de trabajo real del taller. Cada nodo representa una tarea con su identificador y nombre, mientras que las flechas direccionadas indican la relación de precedencia: una tarea solo puede iniciarse una vez que sus tareas predecesoras hayan sido completadas. Este tipo de restricciones son típicas en procesos de reparación de motores, donde ciertas operaciones (como pruebas de funcionamiento) deben realizarse al final, y otras (como rimar guías) pueden ejecutarse en paralelo siempre que no sea por el mismo operario. El diagrama ilustra cómo las restricciones de precedencia generan un grafo dirigido acíclico (DAG) que debe ser respetado durante la programación de las tareas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/diagrama_tareas.jpg}
+\caption{Estructura de precedencias de una orden de trabajo real del taller. Los nodos representan tareas identificadas por número y nombre, y las flechas indican relaciones de dependencia donde una tarea no puede iniciarse hasta que todas sus predecesoras hayan sido completadas. Este grafo dirigido acíclico es típico en procesos de reparación de motores.}
+\label{fig:precedencias-orden-real}
+\end{figure}
+
 \section{Supuestos operativos y alcance}
 
 Los supuestos del modelo parten de la caracterización levantada con el taller Recti-Ram. Se considera que:

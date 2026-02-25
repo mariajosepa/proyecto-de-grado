@@ -51,6 +51,22 @@ El sistema se implementó en el intérprete Python disponible en el entorno loca
 
 La ejecución requiere dos dependencias externas: \textbf{NumPy~1.26.4} para el tratamiento eficiente de arreglos y cálculos numéricos, y \textbf{PyGAD~3.2.0} como base de la implementación del algoritmo genético. Las rutinas de aleatoriedad se apoyan en el módulo \texttt{random}, parte del núcleo de Python, por lo que no demanda instalación adicional. Con esta configuración mínima se reproducen todas las etapas del proyecto sin depender de librerías adicionales.
 
+\section{Metodología de Gestión del Desarrollo}
+
+La implementación del presente proyecto se realizó bajo la metodología \textbf{Kanban}, un enfoque de gestión visual basado en el flujo de trabajo continuo originario de la manufactura esbelta japonesa. Kanban se estructura alrededor de tres principios fundamentales: (i) visualización del trabajo mediante tableros que muestran tareas en diferentes estados (por hacer, en progreso, completado); (ii) limitación del trabajo en proceso (WIP, \textit{Work In Progress}) para evitar sobrecarga y mejorar la concentración en tareas actuales; y (iii) mejora continua mediante la retroalimentación y ajuste dinámico del flujo.
+
+Para este proyecto, Kanban resultó especialmente útil por las siguientes razones:
+
+\begin{enumerate}
+    \item \textbf{Transparencia del progreso:} El tablero Kanban permitió visualizar en tiempo real el estado de cada componente del proyecto (adquisición de requisitos, desarrollo del simulador, implementación del AG, validación experimental, redacción de documentación). Esta transparencia facilitó la identificación rápida de cuellos de botella y permitió priorizar esfuerzos de forma ágil.
+    
+    \item \textbf{Flexibilidad ante cambios:} Durante el desarrollo emergieron necesidades imprevistas, tales como ajustes en la representación del cromosoma, recalibración de parámetros genéticos y expansión del conjunto de instancias de prueba. Kanban permite incorporar estos cambios sin replanificación exhaustiva, adaptándose orgánicamente al flujo existente.
+    
+    \item \textbf{Mejora iterativa:} Kanban incentiva la reflexión periódica sobre el proceso. Retrospectivas frecuentes facilitaron la identificación de ineficiencias, como la necesidad de automatizar regeneración de instancias o mejorar la documentación de parámetros genéticos, conduciendo a mejoras concretas en la productividad.
+\end{enumerate}
+
+Esta aproximación resultó particularmente alineada con la naturaleza iterativa de la optimización mediante algoritmos genéticos, permitiendo paralelizar validaciones experimentales mientras se avanzaba en refinamientos del código.
+
 \section{Enfoque de Solución: Algoritmos Genéticos (AG)}
 
 Frente a la complejidad operativa descrita, se implementa un enfoque de optimización basado en 
@@ -831,3 +847,36 @@ La implementación completa del algoritmo genético, el método SPT y el simulad
 \begin{center}
 \url{https://github.com/mariajosepa/algoritmo-tesis-jave.git}
 \end{center}
+
+\section{Limitaciones del Modelo}
+
+Aunque el algoritmo genético desarrollado demuestra superior desempeño respecto a heurísticas clásicas, es importante reconocer sus limitaciones en relación al contexto industrial real. Estas limitaciones no invalidan los resultados, pero sí establecen un alcance explícito del modelo y orientan futuras extensiones.
+
+\subsection{Disponibilidad de Máquinas no Contemplada}
+
+La limitación más significativa del modelo actual radica en que \textbf{el algoritmo genético no incorpora la disponibilidad de máquinas (equipos o recursos específicos) como restricción de programación}. El modelo únicamente representa restricciones respecto a la disponibilidad de operarios (asignación de habilidades) y operarios específicos para cada tipo de tarea.
+
+En consecuencia, es posible que el algoritmo asigne simultáneamente dos o más tareas a operarios distintos en intervalos temporales que se solapan, cuando ambas tareas requieren el uso de la misma máquina o equipo compartido. En el contexto real del taller, esta situación es inviable: una máquina no puede ser utilizada por múltiples operarios al mismo tiempo, lo que generaría conflictos de acceso a recursos y comprometería la factibilidad operativa de la solución propuesta.
+
+\paragraph{Ejemplo Ilustrativo.} Considérese una rectificadora disponible en el taller con capacidad para una única operación simultánea. Si el algoritmo asigna la tarea ``Rectificación de cilindro'' (tipo A, duración 30 min) al operario $o_1$ en el intervalo $[60, 90)$, y simultáneamente asigna la tarea ``Rectificación de eje'' (tipo A, duración 45 min) al operario $o_2$ en el intervalo $[75, 120)$, ambas tareas requieren la misma máquina. Los intervalos son $[60,90)$ y $[75,120)$, que se solapan en $[75,90)$. En la práctica, solo una de las dos tareas podría ejecutarse en ese lapso, forzando un retraso cascada en la programación real y violando la factibilidad garantizada por el simulador.
+
+\paragraph{Implicaciones en la Validez de Resultados.} Este aspecto es particularmente relevante cuando:
+
+\begin{enumerate}
+    \item Varias órdenes de trabajo incluyen tareas del mismo tipo (que requieren máquinas idénticas).
+    \item El catálogo de máquinas disponibles en el taller es limitado en comparación con los tipos de tareas a ejecutar.
+    \item La capacidad de las máquinas es unitaria o muy restringida.
+\end{enumerate}
+
+Sin embargo, en el contexto de validación del presente proyecto, la rectificadora Recti-Ram operativa durante la recolección de datos mostró una utilización relativamente baja de maquinaria compartida en el segmento de órdenes típicas, lo que atenúa (pero no elimina) el impacto potencial de esta limitación. Para instancias con concentración alta de tareas de tipos similares, la solapación de recursos maquinales resultaría más probable, recomendando una extensión del modelo que incorpore explícitamente disponibilidad de máquinas como restricción adicional.
+
+\paragraph{Extensión Futura Recomendada.} La incorporación de máquinas al modelo requeriría:
+
+\begin{enumerate}
+    \item Ampliar la representación del individuo para incluir asignación de máquinas además de operarios.
+    \item Redefinir el algoritmo de evaluación para verificar, además de operarios, que ningún intervalo de tiempo de una máquina contenga solapamientos de tareas que requieren esa máquina.
+    \item Ajustar la función de aptitud para penalizar conflictos de recursos maquinales.
+    \item Validar experimentalmente el nuevo modelo con instancias que presenten mayor densidad de tareas por tipo de máquina.
+\end{enumerate}
+
+Esta extensión transformaría el problema hacia un \textit{Flexible Job Shop Scheduling Problem} (FJSSP) más completo, incrementando significativamente la complejidad del espacio de búsqueda pero mejorando la representatividad del contexto industrial real.
