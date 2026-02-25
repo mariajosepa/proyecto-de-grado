@@ -90,6 +90,35 @@ El AG obtiene una desviación estándar notablemente menor, lo que indica un rep
 Para el taller, un mejor balance significa menor riesgo de cuellos de botella, reducción de sobrecarga individual y mayor estabilidad operativa.
 
 % -------------------------------------------------------------------
+\subsection{Análisis del tiempo de ejecución}
+
+Con el fin de cuantificar el costo computacional de ambos enfoques, se ejecutó un experimento
+controlado sobre 10 instancias generadas con semilla fija (\textit{seed} = 42), cada una con
+2 órdenes de trabajo. La Tabla~\ref{tab:tiempos_ejecucion} resume los estadísticos descriptivos
+de los tiempos de ejecución por algoritmo.
+
+\begin{table}[H]
+\centering
+\caption{Comparación de tiempos de ejecución entre AG y SPT (10 instancias, 2 OT por instancia, \textit{seed} = 42).}
+\label{tab:tiempos_ejecucion}
+\begin{tabular}{lccccc}
+\toprule
+Algoritmo & Promedio (s) & Mediana (s) & Mínimo (s) & Máximo (s) & Desv. Est. (s) \\
+\midrule
+AG  & 3.1284 & 2.9697 & 2.6971 & 3.7797 & 0.3907 \\
+SPT & 0.000103 & 0.000103 & 0.000088 & 0.000124 & 0.0000099 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los resultados muestran que SPT presenta tiempos prácticamente instantáneos (del orden de
+\(10^{-4}\) segundos), comportamiento coherente con una heurística determinística de baja complejidad.
+En contraste, el AG requiere en promedio 3.13 segundos por instancia, debido a la evaluación
+iterativa de poblaciones durante el proceso evolutivo (300 generaciones y 100 individuos por
+población en la configuración final). Aunque este costo es mayor que el de SPT, sigue siendo
+operativamente bajo para los tamaños de instancia evaluados y compatible con una planeación diaria.
+
+% -------------------------------------------------------------------
 \subsection{Ventajas y desventajas de cada enfoque}
 
 \paragraph{Algoritmo Genético (AG):}  
