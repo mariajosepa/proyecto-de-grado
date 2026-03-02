@@ -1,0 +1,13 @@
+\chapter*{Abstract}
+
+This project develops and validates a genetic algorithm (GA) based model for automating task assignment in industrial workshop ERP systems. Manual task allocation in automotive technology workshops often results in worker overload, idle times, and delivery delays. The proposed GA-based approach integrates into the ERP work order management module, considering worker capabilities, spare parts availability, and workload distribution constraints.
+
+The core problem is modeled as a variant of Job Shop Scheduling with practical constraints including task precedences, skill requirements, parts availability, and daily time horizons. The GA employs a dual-representation chromosome encoding both operator assignments and task sequencing priorities, evaluated through a fitness function that respects domain-specific constraints. The implementation uses Python 3.14.0, NumPy 1.26.4, and PyGAD 3.2.0, with calibrated parameters: 300 generations, population of 100, 15\% mutation rate, and ranking-based selection.
+
+Experimental validation across 30 test instances from Rectificadora Recti-Ram workshop demonstrates significant advantages over the Shortest Processing Time (SPT) heuristic. The GA achieved 15.6\% reduction in makespan (157.37 vs 186.53 time units) and 14.3\% improvement in load balance (standard deviation 30.10 vs 35.11), while maintaining equivalent task completion rates. Both methods executed ~29.53 tasks daily, confirming quality gains stem from superior sequencing rather than increased capacity. The GA requires ~3.13 seconds per instance compared to milliseconds for SPT, yielding operationally viable computational costs.
+
+Industrially, the 15.6\% efficiency gain represents approximately 29.16 additional productive minutes per day, equivalent to 117.6 annual hours. Improved load balance reduces bottlenecks, worker fatigue, and operational errors while enabling greater order volume capacity. This research contributes formalized methodology and reproducible solution using open-source tools, reducing adoption barriers for small and medium enterprises. Future extensions include hybrid metaheuristics, flexible job shop scheduling, multi-objective optimization, and Industry 4.0 integration.
+
+Genetic algorithms demonstrate viability as practical tools for industrial task automation, outperforming classical heuristics while maintaining adaptability and reproducibility in real operational environments.
+
+
