@@ -25,7 +25,7 @@ A diferencia de los métodos tradicionales de asignación de tareas, que pueden 
 La auto\-matización en in\-geniería industrial comprende un conjunto de metodologías, técnicas y herramientas orientadas a optimizar el uso de recursos, reducir desperdicios y mejorar el rendimiento operativo en entornos productivos. Diversos estudios han señalado que la mejora de la eficiencia en talleres y plantas manu\-factureras depende directamente de la capacidad para programar tareas, asignar recursos y minimizar tiempos improductivos \cite{flowshop,flexjobshop}. En los talleres industriales modernos, donde existe alta variabilidad de tareas y hetero\-geneidad en los tiempos de ejecución, la auto\-matización se convierte en un elemento clave para garantizar un flujo de trabajo continuo y una gestión eficiente de las órdenes de trabajo \cite{industry4}.
 \end{sloppypar}
 
-Estas técnicas abarcan desde enfoques de mejora continua, como Lean Manufacturing y Six Sigma, hasta métodos formales de secuenciación basados en reglas de prioridad —tales como SPT, FCFS y EDD— que constituyen la base histórica de la programación industrial \cite{meisel2010,valletesis}. Asimismo, la literatura reciente destaca la importancia de combinar estas metodologías con algoritmos avanzados de optimización, dada la complejidad creciente de los sistemas productivos y la naturaleza NP-hard de muchos problemas de scheduling \cite{flowshop, industry4}.
+Estas técnicas abarcan desde enfoques de mejora continua, como Lean Manufacturing y Six Sigma, hasta métodos formales de secuenciación basados en reglas de prioridad —tales como SPT, FCFS y EDD— que constituyen la base histórica de la programación industrial \cite{meisel2010}. Asimismo, la literatura reciente destaca la importancia de combinar estas metodologías con algoritmos avanzados de optimización, dada la complejidad creciente de los sistemas productivos y la naturaleza NP-hard de muchos problemas de scheduling \cite{flowshop, industry4}.
 
 A continuación se presentan las principales técnicas de automatización utilizadas en la industria para la asignación y programación de tareas, todas ellas relevantes como puntos de comparación frente a métodos evolutivos como los algoritmos genéticos.
 
@@ -53,7 +53,7 @@ La Investigación de Operaciones (IO) ha desarrollado modelos matemáticos para 
 
 Estos problemas son ampliamente conocidos por su complejidad computacional, siendo Job Shop y Flexible Job Shop NP-hard \cite{flowshop,flexjobshop}. Si bien los modelos exactos permiten obtener soluciones óptimas, en la práctica su uso se limita a problemas de pequeña escala debido al crecimiento exponencial del espacio de búsqueda. Investigaciones recientes han demostrado que, incluso con técnicas avanzadas como Constraint Programming, resolver problemas de scheduling con múltiples restricciones sigue siendo un reto significativo para sistemas reales \cite{teppan2022}.
 
-Por esta razón, en escenarios industriales complejos se emplean heurísticas, reglas de despacho y metaheurísticas que permiten obtener soluciones de buena calidad en tiempos computacionales reducidos \cite{meisel2010,valletesis}.
+Por esta razón, en escenarios industriales complejos se emplean heurísticas, reglas de despacho y metaheurísticas que permiten obtener soluciones de buena calidad en tiempos computacionales reducidos \cite{meisel2010}.
 
 \subsection{Reglas de prioridad (Dispatching Rules)}
 
@@ -65,10 +65,10 @@ Las reglas más representativas incluyen:
     \item \textbf{FCFS (First Come, First Served)} Procesa tareas en el orden en que llegan. Aunque sencilla, puede generar tiempos improductivos o cargas desbalanceadas \cite{flexjobshop}.
     \item \textbf{EDD (Earliest Due Date)} Minimiza el retraso (tardiness) priorizando tareas con fechas de entrega más próximas. Es una regla ampliamente usada en la industria gráfica y manufactura ligera \cite{meisel2010}.
     \item \textbf{LPT (Longest Processing Time)} Favorece las tareas más largas y es útil en escenarios donde se busca balancear carga entre máquinas paralelas.
-    \item \textbf{Reglas híbridas} Combinan múltiples criterios como tiempo, urgencia y vencimiento. Son más flexibles y representan la transición entre heurísticas clásicas y metaheurísticas \cite{valletesis}.
+    \item \textbf{Reglas híbridas} Combinan múltiples criterios como tiempo, urgencia y vencimiento. Son más flexibles y representan la transición entre heurísticas clásicas y metaheurísticas.
 \end{itemize}
 
-Estas reglas son consideradas baseline industrial y sirven como punto de referencia para evaluar técnicas más avanzadas como algoritmos genéticos o algoritmos híbridos \cite{meisel2010,valletesis}.
+Estas reglas son consideradas baseline industrial y sirven como punto de referencia para evaluar técnicas más avanzadas como algoritmos genéticos o algoritmos híbridos \cite{meisel2010}.
 
 \subsection{Métodos heurísticos clásicos}
 
@@ -151,7 +151,7 @@ frente a métodos tradicionales en precisión y tiempos de procesamiento.
 Por otra parte, investigaciones sobre heurísticas industriales, como las reglas de 
 despacho SPT, EDD y FCFS, han demostrado ser métodos simples y eficientes para problemas 
 básicos de secuenciación, pero con limitaciones marcadas en problemas con múltiples 
-restricciones o estructuras complejas de precedencia \cite{valletesis,flowshop}. Esta 
+restricciones o estructuras complejas de precedencia \cite{flowshop}. Esta 
 brecha entre simplicidad y capacidad de adaptación es precisamente lo que motiva la 
 comparación entre SPT y algoritmos evolutivos en el presente estudio.
 
